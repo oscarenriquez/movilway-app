@@ -9,9 +9,9 @@ import movilway.dao.util.GenericDao;
 
 public abstract class GenericServiceImpl<T> implements GenericService<T> {
 
-	private GenericDao<T> genericDao;
+	protected GenericDao<T> genericDao;
 	
-	public GenericDao<T> getGenericDao() {
+	private GenericDao<T> getGenericDao() {
 		return genericDao;
 	}
 	
