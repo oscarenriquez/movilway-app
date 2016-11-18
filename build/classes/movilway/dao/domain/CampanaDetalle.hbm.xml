@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17/11/2016 03:43:34 PM by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="movilway.dao.domain.CampanaDetalle" table="campana_detalle" optimistic-lock="version">
+        <id name="detalleId" type="java.lang.Long">
+            <column name="detalle_id" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="agente" class="movilway.dao.domain.Agente" fetch="join">
+            <column name="agente_id" />
+        </many-to-one>
+        <many-to-one name="campana" class="movilway.dao.domain.Campana" fetch="join">
+            <column name="campana_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="puntoVenta" class="movilway.dao.domain.PuntoVenta" fetch="join">
+            <column name="puntoventa_id" not-null="true" />
+        </many-to-one>
+        <property name="estatus" type="java.lang.String">
+            <column name="estatus" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

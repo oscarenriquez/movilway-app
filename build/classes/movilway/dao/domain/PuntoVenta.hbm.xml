@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17/11/2016 03:43:34 PM by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="movilway.dao.domain.PuntoVenta" table="punto_venta" optimistic-lock="version">
+        <id name="puntoventaId" type="java.lang.Long">
+            <column name="puntoventa_id" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="estado" class="movilway.dao.domain.Estado" fetch="select">
+            <column name="estado_id" />
+        </many-to-one>
+        <many-to-one name="pais" class="movilway.dao.domain.Pais" fetch="select">
+            <column name="pais_id" />
+        </many-to-one>
+        <many-to-one name="provincia" class="movilway.dao.domain.Provincia" fetch="select">
+            <column name="provincia_id" />
+        </many-to-one>
+        <many-to-one name="tipoPuntoVenta" class="movilway.dao.domain.TipoPuntoVenta" fetch="select">
+            <column name="tipopuntoventa_id" not-null="true" />
+        </many-to-one>
+        <property name="telefono" type="java.lang.Integer">
+            <column name="telefono" />
+        </property>
+        <property name="descripcion" type="java.lang.String">
+            <column name="descripcion" length="4000" />
+        </property>
+        <property name="nivel" type="java.lang.String">
+            <column name="nivel" length="400" />
+        </property>
+        <property name="regionprovinciaId" type="java.lang.Long">
+            <column name="regionprovincia_id" />
+        </property>
+        <property name="direccion" type="java.lang.String">
+            <column name="direccion" length="400" />
+        </property>
+        <property name="observaciones" type="java.lang.String">
+            <column name="observaciones" length="4000" />
+        </property>
+        <property name="DPuntoventasuperior" type="java.lang.Long">
+            <column name="d_puntoventasuperior" />
+        </property>
+        <property name="saldo" type="big_decimal">
+            <column name="saldo" precision="15" />
+        </property>
+        <property name="saldoFechahora" type="java.util.Date">
+            <column name="saldo_fechahora" length="19" not-null="true" />
+        </property>
+        <property name="latitud" type="java.lang.Float">
+            <column name="latitud" precision="12" scale="0" />
+        </property>
+        <property name="longitud" type="java.lang.Float">
+            <column name="longitud" precision="12" scale="0" />
+        </property>
+        <property name="puntoAbastecimiento" type="big_decimal">
+            <column name="punto_abastecimiento" precision="15" />
+        </property>
+        <property name="conctacto" type="java.lang.String">
+            <column name="conctacto" length="100" />
+        </property>
+    </class>
+</hibernate-mapping>

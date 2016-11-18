@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17/11/2016 03:43:34 PM by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="movilway.dao.domain.RespuestaLlamada" table="respuesta_llamada" optimistic-lock="version">
+        <id name="respuestaId" type="java.lang.Long">
+            <column name="respuesta_id" />
+            <generator class="increment" />
+        </id>
+        <property name="empresaId" type="java.lang.Long">
+            <column name="empresa_id" not-null="true" />
+        </property>
+        <property name="descripcion" type="java.lang.String">
+            <column name="descripcion" length="4000" />
+        </property>
+        <property name="abrev" type="java.lang.String">
+            <column name="abrev" length="500" />
+        </property>
+        <property name="estatus" type="java.lang.Boolean">
+            <column name="estatus" not-null="true" />
+        </property>
+        <property name="efectiva" type="java.lang.Boolean">
+            <column name="efectiva" not-null="true" />
+        </property>
+        <property name="generaLlamada" type="java.lang.Boolean">
+            <column name="genera_llamada" not-null="true" />
+        </property>
+        <set name="llamadas" table="llamada" inverse="true" lazy="true" fetch="join">
+            <key>
+                <column name="respuesta_id" />
+            </key>
+            <one-to-many class="movilway.dao.domain.Llamada" />
+        </set>
+    </class>
+</hibernate-mapping>

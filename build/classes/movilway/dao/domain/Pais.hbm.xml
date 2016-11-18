@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17/11/2016 03:43:34 PM by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="movilway.dao.domain.Pais" table="pais" optimistic-lock="version">
+        <id name="paisId" type="java.lang.Long">
+            <column name="pais_id" />
+            <generator class="increment" />
+        </id>
+        <property name="descripcion" type="java.lang.String">
+            <column name="descripcion" length="4000" />
+        </property>
+        <property name="abrev" type="java.lang.String">
+            <column name="abrev" length="100" />
+        </property>
+        <set name="estados" table="estado" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pais_id" not-null="true" />
+            </key>
+            <one-to-many class="movilway.dao.domain.Estado" />
+        </set>
+        <set name="provincias" table="provincia" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pais_id" not-null="true" />
+            </key>
+            <one-to-many class="movilway.dao.domain.Provincia" />
+        </set>
+        <set name="regionProvincias" table="region_provincia" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pais_id" not-null="true" />
+            </key>
+            <one-to-many class="movilway.dao.domain.RegionProvincia" />
+        </set>
+        <set name="puntoVentas" table="punto_venta" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pais_id" />
+            </key>
+            <one-to-many class="movilway.dao.domain.PuntoVenta" />
+        </set>
+    </class>
+</hibernate-mapping>

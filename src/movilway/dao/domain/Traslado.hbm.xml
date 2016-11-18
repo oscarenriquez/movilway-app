@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17/11/2016 03:43:34 PM by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="movilway.dao.domain.Traslado" table="traslado" optimistic-lock="version">
+        <id name="trasladoId" type="java.lang.Long">
+            <column name="traslado_id" />
+            <generator class="increment" />
+        </id>
+        <property name="montoTransf" type="big_decimal">
+            <column name="monto_transf" precision="15" />
+        </property>
+        <property name="montoAntesDestino" type="big_decimal">
+            <column name="monto_antes_destino" precision="15" />
+        </property>
+        <property name="montoDespuesDestino" type="big_decimal">
+            <column name="monto_despues_destino" precision="15" />
+        </property>
+        <property name="puntoOrigenId" type="big_decimal">
+            <column name="punto_origen_id" precision="15" />
+        </property>
+        <property name="puntoDestinoId" type="big_decimal">
+            <column name="punto_destino_id" precision="15" />
+        </property>
+        <property name="fechahora" type="java.util.Date">
+            <column name="fechahora" length="19" not-null="true" />
+        </property>
+        <property name="montoAntesOrigen" type="big_decimal">
+            <column name="monto_antes_origen" precision="15" />
+        </property>
+        <property name="montoDespuesOrigen" type="big_decimal">
+            <column name="monto_despues_origen" precision="15" />
+        </property>
+        <property name="empresaId" type="java.lang.Long">
+            <column name="empresa_id" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

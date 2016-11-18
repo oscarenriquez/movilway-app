@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17/11/2016 03:43:34 PM by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="movilway.dao.domain.RegionProvincia" table="region_provincia" optimistic-lock="version">
+        <id name="regionprovinciaId" type="java.lang.Long">
+            <column name="regionprovincia_id" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="estado" class="movilway.dao.domain.Estado" fetch="select">
+            <column name="estado_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="pais" class="movilway.dao.domain.Pais" fetch="select">
+            <column name="pais_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="provincia" class="movilway.dao.domain.Provincia" fetch="select">
+            <column name="provincia_id" not-null="true" />
+        </many-to-one>
+        <property name="descripcion" type="java.lang.String">
+            <column name="descripcion" length="4000" />
+        </property>
+        <property name="abrev" type="java.lang.String">
+            <column name="abrev" length="100" />
+        </property>
+    </class>
+</hibernate-mapping>

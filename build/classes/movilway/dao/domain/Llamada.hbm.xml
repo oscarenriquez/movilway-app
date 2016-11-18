@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17/11/2016 03:43:34 PM by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="movilway.dao.domain.Llamada" table="llamada" optimistic-lock="version">
+        <composite-id name="id" class="movilway.dao.domain.LlamadaId">
+            <key-property name="detalleId" type="java.lang.Long">
+                <column name="detalle_id" />
+            </key-property>
+            <key-property name="corrLlamada" type="java.lang.Integer">
+                <column name="corr_llamada" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="receptorLlamada" class="movilway.dao.domain.ReceptorLlamada" fetch="join">
+            <column name="receptor_id" />
+        </many-to-one>
+        <many-to-one name="respuestaLlamada" class="movilway.dao.domain.RespuestaLlamada" fetch="join">
+            <column name="respuesta_id" />
+        </many-to-one>
+        <property name="fechahoraInicio" type="java.util.Date">
+            <column name="fechahora_inicio" length="19" not-null="true" />
+        </property>
+        <property name="fechahoraFin" type="java.util.Date">
+            <column name="fechahora_fin" length="19" not-null="true" />
+        </property>
+        <property name="comentarios" type="java.lang.String">
+            <column name="comentarios" length="4000" />
+        </property>
+        <property name="telefonoLlamado" type="java.lang.Integer">
+            <column name="telefono_llamado" />
+        </property>
+        <property name="referencia" type="java.lang.String">
+            <column name="referencia" length="4000" />
+        </property>
+    </class>
+</hibernate-mapping>

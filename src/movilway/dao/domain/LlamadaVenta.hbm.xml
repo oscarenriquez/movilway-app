@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17/11/2016 03:43:34 PM by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="movilway.dao.domain.LlamadaVenta" table="llamada_venta" optimistic-lock="version">
+        <composite-id name="id" class="movilway.dao.domain.LlamadaVentaId">
+            <key-property name="detalleId" type="java.lang.Long">
+                <column name="detalle_id" />
+            </key-property>
+            <key-property name="corrLlamada" type="java.lang.Long">
+                <column name="corr_llamada" />
+            </key-property>
+        </composite-id>
+        <property name="montoTraspaso" type="big_decimal">
+            <column name="monto_traspaso" precision="15" not-null="true" />
+        </property>
+        <property name="origenPuntoventaId" type="java.lang.Long">
+            <column name="origen_puntoventa_id" not-null="true" />
+        </property>
+        <property name="destinoPuntoventaId" type="java.lang.Long">
+            <column name="destino_puntoventa_id" not-null="true" />
+        </property>
+        <property name="comentarios" type="java.lang.String">
+            <column name="comentarios" length="4000" />
+        </property>
+    </class>
+</hibernate-mapping>
