@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="movilway.dao.domain">
+    <class name="movilway.dao.domain.Usuario" schema="outsmobi_security_movilway" table="s_user" batch-size="10">
+        <id name="id" type="java.lang.Long">
+            <column name="USER_ID" />
+            <generator class="increment" />
+        </id>
+        <property name="user" type="java.lang.String">
+            <column name="USERLOGIN" />
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="PASSWD" />
+        </property>
+        <property name="nombre" type="java.lang.String">
+            <column name="FNAME" />
+        </property>
+        <property name="apellido" type="java.lang.String">
+            <column name="LNAME" />
+        </property>
+        <property name="eMail" type="java.lang.String" access="field">
+            <column name="EMAIL" />
+        </property>
+        <property name="enabled" type="java.lang.Boolean">
+            <column name="ENABLED" />
+        </property>
+        <property name="pwdPolicy" type="java.lang.Integer">
+            <column name="PWD_POLICY" />
+        </property>
+        <property name="forceNewPwd" type="java.lang.Boolean">
+            <column name="FORCE_NEWPASS" />
+        </property>
+        <property name="locale" type="java.lang.String">
+            <column name="LOCALE" />
+        </property>
+        <property name="ldap" type="java.lang.Boolean">
+            <column name="IS_LDAP" />
+        </property>
+        <property name="dominio" type="java.lang.String">
+            <column name="DN" />
+        </property>
+        <property name="direccionIp" type="java.lang.String">
+            <column name="DIRECCION_IP" />
+        </property>
+        <property name="nacl" type="java.lang.String">
+            <column name="NACL" />
+        </property>
+        <property name="pwdQuestion" type="java.lang.String">
+            <column name="PASSQUESTION" />
+        </property>
+        <property name="pwdPhrase" type="java.lang.String">
+            <column name="PASSPHRASE" />
+        </property>
+        <property name="userPhoto" type="binary">
+            <column name="USERPHOTO" />
+        </property>        
+       
+    </class>
+</hibernate-mapping>

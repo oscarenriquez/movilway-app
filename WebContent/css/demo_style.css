@@ -1,0 +1,431 @@
+.calendario_Scroll {
+	min-width: 30px;
+	font-size: 10px;    
+	text-align: center; 
+}
+
+.table_Scroll{
+	font-size: 17px; 
+	text-align: center; 
+}
+
+.image_Scroll{
+	background-color:#3683D9;
+}
+
+.image_Scroll img{
+	 width: 15px;
+}
+.table_demo {  
+	margin:0px;padding:0px;
+	width:100%; 
+	text-align: center; 
+}
+.table_demo div table{
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.4em;
+    font-style: normal;
+    border-collapse:separate;
+}
+
+.table_demo div table   th {
+	text-align: center;
+    padding:15px;
+    color:#fff;
+    text-shadow:1px 1px 1px #1B08FA;
+    border:1px solid #fff;
+    border-bottom:3px solid;
+    background-color:#66a9bd; 
+    background: -moz-linear-gradient(
+        center bottom,
+        rgb(123,192,67) 2%,
+        rgb(139,198,66) 51%,
+        rgb(158,217,41) 87%
+        );
+    -webkit-border-top-left-radius:5px;
+    -webkit-border-top-right-radius:5px;
+    -moz-border-radius:5px 5px 0px 0px;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+}
+
+.table_demo div table tfoot th{
+    color:#666;
+}
+/**cubiculos**/
+.table_demo div table tbody td{
+    padding:10px;
+    text-align:center;
+    background-color:#CAF1F3; 
+    border: 2px solid #FFFFFF;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    border-radius:2px;
+    color:#0A0A0A;
+    text-shadow:1px 1px 1px #fff;
+}
+
+/**hora actual**/
+.hora_actual{
+    color: #0A0A0A; 
+    text-align:center;
+    padding:10px 0px;
+    text-shadow:1px 1px 1px #444;
+    background-color: #87B4D8;
+}
+
+
+/* #minWidth{
+	display: none;
+} */
+
+#principalCalendario, #principal, #contenidos{
+	text-align: left;
+}
+
+/**
+Css para formulario Creacion citas
+**/
+.elementReadOnly{
+	color: rgba(218, 206, 118, 1);
+	
+}
+
+.panel-medidor{
+	color: white;
+	font-size: 13px; 
+}
+ 
+.panel-medidor label{ 
+	text-align: left; 
+	color: rgba(218, 206, 118, 1);
+}
+
+ 
+.panel-medidor div{ 
+	padding-top: 2px;
+	
+}
+.panel-medidor div ul li{ 
+	color: #fff; 
+	
+}
+.panel-medidor div ul li a{ 
+	color: #fff; 
+	
+}
+
+.panel-RedSocial{
+	color: white;
+	text-align: center;
+	padding: 8px;
+	border: double; 
+	font-size: 13px;
+}
+
+.panel-RedSocial div{ 
+	padding-top: 2px;
+	
+}
+.panel-RedSocial div ul li{ 
+	color: #fff; 
+	
+} 
+.panel-RedSocial div ul li a{ 
+	color: #fff; 
+	
+}
+
+/**Ticket**/
+
+#pricing-table {
+    text-align: center;
+    width: 100%;  
+    padding: 20px;
+}
+
+#pricing-table .plan {
+    font: 90% 'Lucida Sans', 'trebuchet MS', Arial, Helvetica;
+	background: #C4D9E6;
+	border: 1px solid #ddd;
+	color: #333;
+	padding: 20px;
+	width: 350px; 
+	position: relative;
+	margin: auto;
+
+}
+
+#pricing-table #most-popular {
+    z-index: 2;
+    top: -13px;
+    border-width: 3px;
+    padding: 30px 20px;
+    border-radius: 5px;
+    box-shadow: 20px 0 10px -10px rgba(0, 0, 0, .15), -20px 0 10px -10px rgba(0, 0, 0, .15);    
+}
+
+#pricing-table .plan:nth-child(1) {
+    border-radius: 5px 0 0 5px;        
+}
+
+#pricing-table .plan:nth-child(4) {
+    border-radius: 0 5px 5px 0;        
+}
+ 
+#pricing-table h3 {
+    font-weight: normal;
+    font: bold 30px Arial;
+    padding: 20px;
+    margin: -20px -20px 50px -20px;
+    background-color: #eee;
+    background-image: linear-gradient(#fff, #eee);
+}
+
+#pricing-table #most-popular h3 {
+    background-color: #ddd;
+    background-image: linear-gradient(#eee, #ddd);
+    margin-top: -30px;
+    padding-top: 30px;
+    border-radius: 5px 5px 0 0;         
+}
+
+#pricing-table .plan:nth-child(1) h3 {
+    border-radius: 5px 0 0 0;       
+}
+
+#pricing-table .plan:nth-child(4) h3 {
+    border-radius: 0 5px 0 0;       
+}   
+
+#pricing-table h3 span {
+    display: block;
+    font: bold 25px/100px Arial;
+    color: #777;
+    background: #fff;
+    border: 5px solid #fff;
+    height: 100px;
+    width: 100px;
+    margin: 10px auto -65px;
+    border-radius: 100px;
+    box-shadow: 0 5px 20px #ddd inset, 0 3px 0 #999 inset;
+}
+ 
+
+#pricing-table ul {
+    margin: 20px 0 0 0;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+}
+
+#pricing-table li {
+    border-top: 1px solid #0C0C0C;
+    padding: 10px 0;
+    font-size: 14px;
+}
+ 
+ #pricing-table li label {
+    font: bold 14px Arial;
+}
+
+#pricing-table .signup {
+    position: relative;
+    padding: 8px 20px;
+    margin: 20px 0 0 0;  
+    color: #fff;
+    font: bold 14px Arial;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;       
+    background-color: #3FC3CE;
+	background-image: linear-gradient(#3FB1CE, #30BCBC);
+    border-radius: 3px;     
+    text-shadow: 0 1px 0 rgba(0,0,0,.3);        
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .5), 0 2px 0 rgba(0, 0, 0, .7);
+}
+
+#pricing-table .signup:hover {
+    background-color: #AFE9E9;
+    background-image: linear-gradient(#3FB1CE, #30BCBC); 
+}
+
+#pricing-table .signup:active, #pricing-table .signup:focus {
+    background: #62bc30;       
+    top: 2px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .7) inset; 
+}
+
+.clear:before, .clear:after {
+  content:"";
+  display:table
+}
+
+.clear:after {
+  clear:both
+}
+
+.clear {
+  zoom:1
+}
+
+/**Campo requerido**/
+
+.requeridos input:required, .requeridos textarea:required {
+    box-shadow: 0 0 5px #d45252;
+    border-color: #d45252;
+}
+
+ 
+ 
+/*Mobil*/
+@media only screen and (min-device-width: 600px) and (max-device-width: 750px) {
+	 .calendario_Scroll {
+		min-width: 40%;
+		font-size: 15px;    
+		padding-top: 20px; 
+	}
+	
+	.table_demo td {
+	text-align: center;
+	font-size: 8px; 
+	}
+	.table_Scroll{ 
+		padding: 20px;
+		font-size: 15px;
+	}
+	
+ }
+ 
+ @media (max-width: 768px) {
+	 #principalCalendario{
+		width: 100%;
+	}
+	 .calendario_Scroll {
+		min-width: 40%;
+		font-size: 15px;    
+		padding-top: 20px; 
+	}
+	
+	.table_demo td {
+	text-align: center;
+	font-size: 8px; 
+	}
+	.table_Scroll{ 
+		padding: 20px;
+		font-size: 15px;
+	}
+	
+ }
+ 
+  @media (max-width: 1024px) {
+ 
+ 	.calendario_Scroll {
+	font-size: 8px;     
+	}
+	
+	.table_Scroll{
+		  font-size: 8px; 
+	}
+	
+	#table_demo{
+		  overflow-x: scroll;
+   		  overflow-y: hidden;
+   		  font-size: 15px;
+	}
+	
+	.table_demo td {
+		text-align: center;
+		font-size: 13px; 
+	}
+	
+	.image_Scroll img{
+	  width: 7px;
+	}
+  }
+  
+  
+   @media (max-width: 1280px) {
+	 .calendario_Scroll {
+		font-size: 8px;     
+	}
+	 
+	 #table_demo{
+		  overflow-x: scroll;
+   		  overflow-y: hidden;
+   		  font-size: 15px;
+	}
+	
+	.table_demo td {
+		text-align: center;
+		font-size: 13px; 
+	}
+	
+	.image_Scroll img{
+		 width: 7px;
+	}
+	  
+  }
+  
+        
+    @media (max-width: 800px) {
+    
+   .calendario_Scroll {
+		font-size: 15px;
+		padding-top: 20px;
+		min-width: 100%;
+		height: 300px;  
+	}
+ 
+  	 .table_Scroll{ 
+		padding: 40px;
+		font-size: 15px;
+	}
+	
+	.table_demo td {
+	text-align: center;
+	font-size: 13px; 
+	}
+	
+	.table_demo tr:first-child th{
+		font-size: 12px; 
+	}
+	
+	#principalCalendario{
+   		width: 100%; 	
+   }
+  }
+
+ /*  
+ @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+	
+	#minWidth {
+		display: block;
+		display: block;
+		font-size: x-large;
+		font-family: sans-serif; 
+	}
+	
+	 #principalCalendario, #horarios, #principal, #contenidos{
+		display: none;
+	}
+	
+	.table_Scroll, .table_demo, .panel-medidor, .panel-RedSocial {
+		display: none;
+	}
+} */
+
+/* @media only screen and (orientation:landscape) {
+	#principalCalendario, #horarios, #principal, #contenidos {
+		display: block;
+	}
+	.table_Scroll, .table_demo, .panel-medidor, .panel-RedSocial {
+			display: block;
+	}
+	#minWidth {
+		display: none;
+	}
+} */
+  

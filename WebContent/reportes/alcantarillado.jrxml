@@ -1,0 +1,1002 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="citaXAgente" pageWidth="612" pageHeight="792" columnWidth="562" leftMargin="25" rightMargin="25" topMargin="25" bottomMargin="25">
+	<property name="ireport.zoom" value="1.8150000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="275"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#C3CFD9">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#E6F3FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1"/>
+	<parameter name="p_logoempagua" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Users\\DIANA\\Pictures\\LogoEMPAGUA-small.jpg"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_detCampa" class="java.lang.String"/>
+	<parameter name="p_user" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT  F.MEDIDOR MEDIDOR, F.NOMBRE_CLIENTE CLIENTE, F.DIRECCION DIRECCION,
+  NVL(F.CUENTA_ALCANTARILLADO,'--') CALCANTARILLADO,  --INFO GENERAL
+    NVL( DF.RAZON_SOCIAL,'--') RAZONSOC,
+      NVL(DF.LECTURA_MEDIDOR, 0) LECMEDIDOR, EM.ESTADO estMedidor,--CARGADATOS
+    NVL( DF.NOM_ENTREVISTADO,'--') NOMBENTREVISTA,  NVL(DF.TEL_CONTACTO,'--') TELENTREVISTA,
+     CASE WHEN  F.SIGV2TIPOSTELEFONOID IS NOT NULL THEN
+        (SELECT TIPO  FROM VICMAN.SIGV2_TIPOS_TELEFONO WHERE SIGV2TIPOSTELEFONOID = F.SIGV2TIPOSTELEFONOID)
+        ELSE '--'
+      END TIPOTELENTREVISTA, nvl(DF.EMAIL,'--') MAILENTREVISTA,-- INFO ENTREVISTA
+    DECODE(DF.USO_SUELO,
+            'H', 'HABITADO',
+            'D', 'DESHABITADO',
+            'E', 'EN CONSTRUCCION',
+            'B', 'BALDIO',
+            '--') USOSUELO, NVL(DF.HABITANTES, 0) CANTHABITANTES, NVL(DF.TRABAJADORES, 0) CANTTRABAJADORES, --INFO USO
+    --INICIA INFO TIPO DEL USO
+    DECODE(DF.FRACCIONAMIENTO, 1, 'SI', 'NO') FRACCIONAMIENTO,
+    CASE
+         WHEN  DF.UNIFAMILIAR = '1' THEN 'UNIFAMILIAR'
+         WHEN  DF.CONDOMINIO_VERTICAL = '1' THEN 'CONDOMINIO VERTICAL'
+         WHEN  DF.CONDOMINIO_HORIZONTAL = '1' THEN 'CONDOMINIO HORIZONTAL'
+     ELSE '--' END  VIVIENDA, 	NVL(DF.NIVELES, 0) NIVELVIVIENDA,
+    CASE WHEN  DF.SUBT_COMERCIOID IS NOT NULL THEN
+        (SELECT SUB_TIPO FROM VICMAN.SIGV2_SUB_TIPOS_USOS WHERE SIGV2SUBTIPOSUSOSID = DF.SUBT_COMERCIOID)
+        ELSE '--'
+      END VENTAPRODUCTO, 	NVL(DF.NUM_LOCALES, 0) CATLOCALES,
+    CASE WHEN  DF.SUBT_SERVICIOID IS NOT NULL THEN
+        (SELECT SUB_TIPO FROM VICMAN.SIGV2_SUB_TIPOS_USOS WHERE SIGV2SUBTIPOSUSOSID = DF.SUBT_SERVICIOID)
+        ELSE '--'
+      END SERVICIOS,
+    CASE WHEN  DF.SUBT_ALIMENTOSID IS NOT NULL THEN
+        (SELECT SUB_TIPO FROM VICMAN.SIGV2_SUB_TIPOS_USOS WHERE SIGV2SUBTIPOSUSOSID = DF.SUBT_ALIMENTOSID)
+        ELSE '--'
+      END ALMBEBIDAS,
+    CASE WHEN  DF.SUBT_INDUSTRIAID IS NOT NULL THEN
+        (SELECT SUB_TIPO FROM VICMAN.SIGV2_SUB_TIPOS_USOS WHERE SIGV2SUBTIPOSUSOSID = DF.SUBT_INDUSTRIAID)
+        ELSE '--'
+      END INDUSTRIA,
+    CASE WHEN  DF.SUBT_OTROSID IS NOT NULL THEN
+        (SELECT SUB_TIPO FROM VICMAN.SIGV2_SUB_TIPOS_USOS WHERE SIGV2SUBTIPOSUSOSID = DF.SUBT_OTROSID)
+        ELSE '--'
+      END OTROS, nvl(DF.OBSERVACIONES, '--') OBSER1, --FIN INFO TIPO DEL USO
+    -- INICIA INFO ABASTECIMIENTO
+    DECODE(DF.EMPAGUA, 1, 'SI', 'NO') EMPAGUA, DECODE(DF.MARISCAL, 1, 'SI', 'NO') MARISCAL, DECODE(DF.POZO_PROPIO, 1, 'SI', 'NO') POZOPROPIO,
+     CASE WHEN  DF.PIPAS = 1 THEN
+        DF.NUM_PIPAS
+        ELSE 0 END PIPAS,  nvl(DF.FRECUENCIA, '--') FRECPIPAS, -- FIN INFO TIPO ABASTACEIMIENTO
+       NVL( DF.CANDELAS_VISIBLES, 0)CANDELAS_VISIBLES, decode( DF.PLANTA_TRATAMIENTO , 1, 'SI', 'NO')PLANTA_TRATAMIENTO,
+          CASE WHEN  DF.POZO_ABSORCION = 1 THEN
+        DF.CANT_POZO_ABSOR
+        ELSE 0 END POZO_ABSORCION,
+--INICIA ALMACENAMIENTO
+ CASE
+         WHEN  DF.CISTERNA_ELEVADA = '1' THEN 'CISTERNA ELEVADA'
+         WHEN  DF.CISTERNA_SUBTERRANEA = '1' THEN 'CISTERNA SUBTERRANEAL'
+     ELSE '--' END  CISTERNA, nvl(DF.NUM_CISTERNAS, 0) CANTCISTERNA,
+     CASE WHEN  DF.TONELES = 1 THEN
+        DF.NUM_TONELES
+        ELSE 0 END TONELES,--FIN  ALMACENAMIENTO
+    --INICIA SERVICIOS
+    DECODE( (NVL(DF.SANITARIOS, 0) ), 0, '--', DF.SANITARIOS ) SANITARIOS, DECODE( (NVL(DF.LAVAMANOS, 0) ), 0, '--', DF.LAVAMANOS ) LAVAMANOS,
+    DECODE( (NVL(DF.LAVAPLATOS, 0) ), 0, '--', DF.LAVAPLATOS ) LAVAPLATOS, DECODE( (NVL(DF.DUCHAS, 0) ), 0, '--', DF.DUCHAS ) DUCHAS,
+    DECODE( (NVL(DF.CHORROS, 0) ), 0, '--', DF.CHORROS ) CHORROS, DECODE( (NVL(DF.LAVADORA, 0) ), 0, '--', DF.LAVADORA ) LAVADORA,
+    DECODE( (NVL(DF.PILA, 0) ), 0, '--', DF.PILA ) PILA, DECODE( (NVL(DF.PISCINA, 0) ), 0, '--', DF.PISCINA ) PISCINA,
+    DECODE( (NVL(DF.M2JARDIN, 0) ), 0, '--', (DF.M2JARDIN ||' MTS2' )) M2JARDIN,--FIN SERVICIOS
+     decode(TIPO_FICHA, 'F', 'FICHAJE', 'A', 'ALCANTARILLADO', 'R', 'RUTEO', 'FICHAJE Y ALCANTARILLADO') tipoFicha,
+    ( decode(F.tipo_ficha, 'L', 'FA', F.TIPO_FICHA) ||'-'||F.SIGV2FICHASID) IDentificadorFicha, nvl(DF.OBSERVACIONES2, '--') OBSERCALCA
+FROM
+    VICMAN.SIGV2_FICHAS F,
+    VICMAN.SIGV2_DETALLE_FICHAS DF, VICMAN.SIGV2_ESTADOS_MEDIDOR EM
+WHERE F.SIGV2DETALLECAMPANIASID =  $P{p_detCampa}
+AND F.SIGV2ESTADOSMEDIDORID = EM.SIGV2ESTADOSMEDIDORID
+AND F.SIGV2FICHASID = DF.SIGV2FICHASID]]>
+	</queryString>
+	<field name="MEDIDOR" class="java.lang.String"/>
+	<field name="CLIENTE" class="java.lang.String"/>
+	<field name="DIRECCION" class="java.lang.String"/>
+	<field name="CALCANTARILLADO" class="java.lang.String"/>
+	<field name="RAZONSOC" class="java.lang.String"/>
+	<field name="LECMEDIDOR" class="java.math.BigDecimal"/>
+	<field name="ESTMEDIDOR" class="java.lang.String"/>
+	<field name="NOMBENTREVISTA" class="java.lang.String"/>
+	<field name="TELENTREVISTA" class="java.lang.String"/>
+	<field name="TIPOTELENTREVISTA" class="java.lang.String"/>
+	<field name="MAILENTREVISTA" class="java.lang.String"/>
+	<field name="USOSUELO" class="java.lang.String"/>
+	<field name="CANTHABITANTES" class="java.math.BigDecimal"/>
+	<field name="CANTTRABAJADORES" class="java.math.BigDecimal"/>
+	<field name="FRACCIONAMIENTO" class="java.lang.String"/>
+	<field name="VIVIENDA" class="java.lang.String"/>
+	<field name="NIVELVIVIENDA" class="java.math.BigDecimal"/>
+	<field name="VENTAPRODUCTO" class="java.lang.String"/>
+	<field name="CATLOCALES" class="java.math.BigDecimal"/>
+	<field name="SERVICIOS" class="java.lang.String"/>
+	<field name="ALMBEBIDAS" class="java.lang.String"/>
+	<field name="INDUSTRIA" class="java.lang.String"/>
+	<field name="OTROS" class="java.lang.String"/>
+	<field name="OBSER1" class="java.lang.String"/>
+	<field name="EMPAGUA" class="java.lang.String"/>
+	<field name="MARISCAL" class="java.lang.String"/>
+	<field name="POZOPROPIO" class="java.lang.String"/>
+	<field name="PIPAS" class="java.math.BigDecimal"/>
+	<field name="FRECPIPAS" class="java.lang.String"/>
+	<field name="CANDELAS_VISIBLES" class="java.math.BigDecimal"/>
+	<field name="PLANTA_TRATAMIENTO" class="java.lang.String"/>
+	<field name="POZO_ABSORCION" class="java.math.BigDecimal"/>
+	<field name="CISTERNA" class="java.lang.String"/>
+	<field name="CANTCISTERNA" class="java.math.BigDecimal"/>
+	<field name="TONELES" class="java.math.BigDecimal"/>
+	<field name="SANITARIOS" class="java.lang.String"/>
+	<field name="LAVAMANOS" class="java.lang.String"/>
+	<field name="LAVAPLATOS" class="java.lang.String"/>
+	<field name="DUCHAS" class="java.lang.String"/>
+	<field name="CHORROS" class="java.lang.String"/>
+	<field name="LAVADORA" class="java.lang.String"/>
+	<field name="PILA" class="java.lang.String"/>
+	<field name="PISCINA" class="java.lang.String"/>
+	<field name="M2JARDIN" class="java.lang.String"/>
+	<field name="TIPOFICHA" class="java.lang.String"/>
+	<field name="IDENTIFICADORFICHA" class="java.lang.String"/>
+	<field name="OBSERCALCA" class="java.lang.String"/>
+	<pageHeader>
+		<band height="54">
+			<image>
+				<reportElement x="0" y="0" width="59" height="50"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{p_logoempagua}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="4" width="562" height="25" forecolor="#3399FF" backcolor="#FFFFFF">
+					<property name="net.sf.jasperreports.export.pdf.tag.h1" value="full"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empresa Municipal de Agua de la Ciudad de Guatemala]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="15" width="562" height="31" forecolor="#3399FF" backcolor="#FFFFFF">
+					<property name="net.sf.jasperreports.export.pdf.tag.h1" value="full"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[EMPAGUA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="503" y="0" width="58" height="20" forecolor="#CC0000"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{IDENTIFICADORFICHA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="72" splitType="Stretch">
+			<staticText>
+				<reportElement x="9" y="12" width="86" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLIENTE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="1" width="86" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MEDIDOR:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="24" width="86" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="227" y="0" width="130" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CUENTA ALCANTARILLADO: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="36" width="86" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RAZON SOCIAL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="47" width="86" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTADO MED.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="227" y="48" width="130" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LECTURA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="95" y="1" width="131" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{MEDIDOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="12" width="464" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CLIENTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="24" width="464" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DIRECCION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="36" width="464" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{RAZONSOC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="358" y="1" width="83" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CALCANTARILLADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="47" width="131" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ESTMEDIDOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="357" y="48" width="164" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{LECMEDIDOR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="442" y="1" width="32" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="474" y="1" width="85" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TIPOFICHA}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="186">
+			<staticText>
+				<reportElement x="0" y="5" width="560" height="13"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Double"/>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<leftPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+					<rightPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ENTREVISTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="21" width="86" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NOMBRE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="32" width="86" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[TIPO CONTACTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="226" y="32" width="48" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NUMERO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="395" y="32" width="37" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[E-MAIL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="50" width="560" height="13"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Double"/>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<leftPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+					<rightPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[USO Y TIPO DEL SUELO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="67" width="91" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[USO DEL SUELO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="265" y="67" width="113" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CANT. HABITANTES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="79" width="91" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[FRACCIONAMIENTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="91" width="89" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[VIVIENDA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="265" y="91" width="113" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CANT. NIVELES:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="265" y="104" width="113" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CANT. LOCALES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="116" width="89" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[SERVICIOS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="265" y="116" width="113" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ALMTOS. Y BEBIDAS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="104" width="89" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[COMERCIO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="265" y="128" width="113" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[OTROS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="128" width="89" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[INDUSTRIA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="265" y="79" width="113" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CANT. TRABAJADORES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="140" width="89" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[OBSERVACIONES:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="95" y="21" width="464" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOMBENTREVISTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="32" width="131" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TIPOTELENTREVISTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="278" y="32" width="117" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TELENTREVISTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="432" y="32" width="127" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{MAILENTREVISTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="94" y="67" width="168" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{USOSUELO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="378" y="67" width="181" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{CANTHABITANTES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="378" y="79" width="181" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{CANTTRABAJADORES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="79" width="167" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{FRACCIONAMIENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="91" width="167" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{VIVIENDA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="378" y="91" width="181" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{NIVELVIVIENDA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="103" width="167" height="13"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{VENTAPRODUCTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="378" y="103" width="181" height="13"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{CATLOCALES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="116" width="167" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{SERVICIOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="378" y="116" width="181" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ALMBEBIDAS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="128" width="167" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{INDUSTRIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="378" y="128" width="181" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{OTROS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="152" width="553" height="25"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{OBSER1}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="161">
+			<staticText>
+				<reportElement x="0" y="0" width="274" height="13"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Double"/>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<leftPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+					<rightPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ABASTECIMIENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="17" width="68" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[EMPAGUA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="29" width="68" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[MARISCAL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="417" y="66" width="68" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[POZO PROPIO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="66" width="69" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[PIPAS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="151" y="66" width="104" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[FRECUENCIA PIPAS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="0" width="274" height="13"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Double"/>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<leftPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+					<rightPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALMACENAMIENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="294" y="17" width="84" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CISTERNA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="294" y="29" width="84" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CANT. CISTERNAS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="294" y="41" width="84" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[TONELES:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="101" width="560" height="13"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Double"/>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<leftPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+					<rightPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SERVICIOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="148" width="68" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[PILA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="125" width="69" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[SANITARIOS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="137" width="74" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DUCHAS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="373" y="137" width="70" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[PISCINA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="149" width="74" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[LAVADORA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="125" width="74" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[LAVAMANOS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="373" y="125" width="70" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[LAVAPLATOS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="136" width="69" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CHORROS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="373" y="147" width="70" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[JARDIN:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="77" y="17" width="163" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{EMPAGUA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="77" y="29" width="178" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{MARISCAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="485" y="66" width="78" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{POZOPROPIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="73" y="66" width="78" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PIPAS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="66" width="162" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{FRECPIPAS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="378" y="17" width="181" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CISTERNA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="378" y="28" width="181" height="13"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{CANTCISTERNA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="379" y="41" width="180" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{TONELES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="73" y="125" width="127" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{SANITARIOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="273" y="125" width="100" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LAVAMANOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="274" y="149" width="99" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LAVADORA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="445" y="137" width="114" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PISCINA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="445" y="125" width="114" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LAVAPLATOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="73" y="137" width="127" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CHORROS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="274" y="136" width="99" height="13"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DUCHAS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="73" y="148" width="127" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PILA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="445" y="149" width="114" height="11"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{M2JARDIN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="53" width="560" height="13"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Double"/>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<leftPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+					<rightPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTALACIONES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="78" width="70" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CANDELAS VIS.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="73" y="78" width="78" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{CANDELAS_VISIBLES}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="150" y="78" width="105" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[PLANTA TRATAMIENTO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="255" y="78" width="162" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PLANTA_TRATAMIENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="485" y="78" width="75" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{POZO_ABSORCION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="417" y="78" width="68" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[POZO ABSOR:]]></text>
+			</staticText>
+		</band>
+		<band height="51">
+			<textField>
+				<reportElement x="7" y="16" width="553" height="26"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{OBSERCALCA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="6" y="4" width="89" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[OBSERVACIONES:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="39">
+			<textField pattern="HH:mm:ss">
+				<reportElement x="519" y="18" width="42" height="9"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="480" y="18" width="44" height="9"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora       :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="518" y="9" width="41" height="9"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="479" y="9" width="44" height="9"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha     :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="517" y="0" width="43" height="9"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{p_user}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="480" y="0" width="44" height="9"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuario  :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="441" y="27" width="66" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[No. de Pagina :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="518" y="27" width="25" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[De : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="502" y="27" width="20" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="543" y="27" width="18" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

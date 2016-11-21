@@ -2,13 +2,21 @@ package movilway.service.impl;
 
 import movilway.service.RespuestaLlamadaService;
 import movilway.service.util.GenericServiceImpl;
+import movilway.dao.RespuestaLlamadaDao;
 import movilway.dao.domain.RespuestaLlamada;
+import movilway.dao.impl.RespuestaLlamadaDaoHibernateImpl;
+import movilway.dao.util.GenericDao;
 
 public class RespuestaLlamadaServiceImpl<T> extends GenericServiceImpl<T> implements RespuestaLlamadaService<T> {
 
 	private static RespuestaLlamadaService<RespuestaLlamada> service;
-
-	private RespuestaLlamadaServiceImpl(){}
+	private RespuestaLlamadaDao<RespuestaLlamada> dao;
+	
+	@SuppressWarnings("unchecked")
+	private RespuestaLlamadaServiceImpl(){
+		dao = RespuestaLlamadaDaoHibernateImpl.getInstance();
+		genericDao =  (GenericDao<T>) dao;
+	}
 	
 	public static final RespuestaLlamadaService<RespuestaLlamada> getInstance(){		
 		if(service == null) {

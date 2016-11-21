@@ -1,14 +1,22 @@
 package movilway.service.impl;
 
+import movilway.dao.TipoPuntoVentaDao;
+import movilway.dao.domain.TipoPuntoVenta;
+import movilway.dao.impl.TipoPuntoVentaDaoHibernateImpl;
+import movilway.dao.util.GenericDao;
 import movilway.service.TipoPuntoVentaService;
 import movilway.service.util.GenericServiceImpl;
-import movilway.dao.domain.TipoPuntoVenta;
 
 public class TipoPuntoVentaServiceImpl<T> extends GenericServiceImpl<T> implements TipoPuntoVentaService<T> {
 
 	private static TipoPuntoVentaService<TipoPuntoVenta> service;
-
-	private TipoPuntoVentaServiceImpl(){}
+	private TipoPuntoVentaDao<TipoPuntoVenta> dao;
+	
+	@SuppressWarnings("unchecked")
+	private TipoPuntoVentaServiceImpl(){
+		dao = TipoPuntoVentaDaoHibernateImpl.getInstance();
+		genericDao =  (GenericDao<T>) dao;
+	}
 	
 	public static final TipoPuntoVentaService<TipoPuntoVenta> getInstance(){		
 		if(service == null) {

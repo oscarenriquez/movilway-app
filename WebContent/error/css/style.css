@@ -1,0 +1,40 @@
+/*font face Chalet*/
+@font-face {
+	font-family: "Chalet";
+	src: url("../fonts/Chalet.eot");
+	src: url("../fonts/Chalet.eot?#iefix") format("embedded-opentype"),
+		 url("../fonts/Chalet.woff") format("woff"),
+		 url("../fonts/Chalet.ttf") format("truetype"),
+		 url("../fonts/Chalet.svg#Chalet") format("svg");
+	font-weight: bold;
+	font-style: all;
+}
+
+h1{	
+	color: #f0ad4e;
+	font-family: "Chalet", Helvetica, Verdana;
+	font-size: 6em;
+	display: block;
+	padding-top: 1em;
+	text-align: center;
+	text-shadow: 1px 1px #000;	
+}
+
+.clss-error{
+	color: #ffffff;	
+	font-family: "Chalet", Helvetica, Verdana;
+	font-size: 4em;
+	display: block;	
+	text-align: center;
+	text-shadow: 2px 2px #000;
+}
+
+@media(max-width: 1080px) {
+	h1{
+		font-size: 4em;		
+	}
+	
+	.clss-error{
+		font-size: 3em;
+	}
+}

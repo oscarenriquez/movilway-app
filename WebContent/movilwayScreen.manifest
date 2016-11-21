@@ -1,0 +1,34 @@
+CACHE MANIFEST
+#version 1.0 
+
+CACHE:
+# index.html is cached by default anyway -- this is just to be explicit
+./html/index.html 
+./script/jquery-1.9.1.js
+./img/favicon.ico
+./img/iphone_sig.jpg
+./css/sun.css
+./script/cache.js
+./script/homeScreen.js
+./sigeOffline.html
+
+# / is wildcard for all pages  
+# so, for all pages, offline.html will be displayed if the user is offline
+# NB path is relative to this file
+FALLBACK:
+/sigeOffline.html
+
+# Resources that require the user to be online
+NETWORK:
+
+./css/init.css
+./css/style.css
+./css/page.css
+./css/bootstrap-theme-green.css
+./script/valiteDesk.js
+./script/page.js
+./script/idleTimeOut.js
+./script/userAgentScript.js
+./script/view/documents.js
+./img/font4.jpg
+*

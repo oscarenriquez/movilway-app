@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+ 
+    <!-- A time/date based rolling appender -->
+    <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
+     	<param name="File" value="${catalina.home}/logs/sig.log" />
+        <param name="Append" value="true" />
+        <param name="ImmediateFlush" value="true" />
+        <param name="MaxFileSize" value="200MB" />
+        <param name="MaxBackupIndex" value="100" /> 
+        <layout class="org.apache.log4j.PatternLayout">
+             <param name="ConversionPattern" value="%d{dd-MM-yyyy HH:mm:ss} [%t] %p %c (%F:%L) - %m%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+	        <param name="levelMin" value="ERROR" />
+	        <param name="levelMax" value="FATAL" />
+	    </filter>
+    </appender>
+ 
+    <appender name="journaldev-hibernate" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{dd-MM-yyyy HH:mm:ss} [%t] %p %c (%F:%L) - %m%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+	        <param name="levelMin" value="ERROR" />
+	        <param name="levelMax" value="FATAL" />
+	    </filter>
+    </appender>
+    
+    <appender name="emailAppender" class="org.apache.log4j.net.SMTPAppender">
+	    <param name="BufferSize" value="1024" />
+	    <param name="SMTPHost" value="10.5.2.5" />
+	    <param name="From" value="logweb@empagua.com" />
+	    <param name="To" value="webapp@empagua.com" />
+	    <param name="Subject" value="Alarmas-MOVILWAY" />
+	    <layout class="org.apache.log4j.PatternLayout">
+	        <param name="ConversionPattern" value="%d{dd-MM-yyyy HH:mm:ss} [%t] %p %c (%F:%L) - %m%n" />
+	    </layout>
+	    <filter class="org.apache.log4j.varia.LevelRangeFilter">
+	        <param name="LevelMin" value="ERROR" />
+	        <param name="LevelMax" value="FATAL" />
+	    </filter>
+	</appender>
+ 
+    <logger name="com.journaldev.hibernate" additivity="false">
+        <appender-ref ref="journaldev-hibernate" />
+    </logger>
+ 
+    <logger name="org.hibernate" additivity="false">
+        <appender-ref ref="FILE" />
+    </logger>
+    
+    <root>
+        <priority value="INFO"></priority>
+        <appender-ref ref="FILE" />
+        <appender-ref ref="journaldev-hibernate" />
+        <appender-ref ref="emailAppender" />  
+    </root>
+ 
+</log4j:configuration>

@@ -165,5 +165,54 @@ public abstract class GenericDaoHibernateApplication <T> implements GenericDao<T
 		} catch (HibernateException he) {
 			throw new InfraestructureException(he);
 		}
-	}	
+	}
+	
+	/**
+	 * Permite obtener una lista de entidades con pagineo de acuerdo al hql que recibe como parámetro.
+	 * 
+	 * @param hql
+	 * @param parameters
+	 * @param first
+	 * @param amount
+	 * @return
+	 * @throws InfraestructureException
+	 */
+	public List<Object> executeQueryPaginated(String hql, Object[] parameters, int first, int amount) throws InfraestructureException {
+		Session session = getSession();
+
+		Query query = session.createQuery(hql);
+		for (int i = 0; i < parameters.length; i++) {
+			query.setParameter(i, parameters[i]);
+		}
+
+		query.setFirstResult(first);
+		query.setMaxResults(amount);
+
+		@SuppressWarnings("unchecked")
+		List<Object> result = query.list();
+
+		return result;
+	}
+	
+	/**
+	 * Retorna una lista de entidades de acuerdo al resultado del query que se crea del hql y parameters que recibe.
+	 * 
+	 * @param hql
+	 * @param parameters
+	 * @return
+	 * @throws InfraestructureException
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Object> executeQuery(String hql, Object[] parameters) throws InfraestructureException {
+		Session session = getSession();
+
+		Query query = session.createQuery(hql);
+		for (int i = 0; i < parameters.length; i++) {
+			query.setParameter(i, parameters[i]);
+		}
+
+		List<Object> result = query.list();
+
+		return result;
+	}
 }

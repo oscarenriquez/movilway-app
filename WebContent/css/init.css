@@ -1,0 +1,199 @@
+body {
+	background-attachment: fixed;
+	background-image: url(../img/gray-background.jpg);
+	background-repeat: no-repeat;
+	background-position: bottom center;
+	-webkit-background-size:cover;
+	-moz-background-size: cover;
+	background-size: cover;
+	margin-bottom: 70px;
+}
+
+footer {
+	bottom: 0;
+	margin-bottom: 0;
+	border-width: 1px 0 0;
+}
+
+.footer-init {
+	position: absolute;
+	right: 0;
+	left: 0;
+	z-index: -1;
+}
+
+.footer-init > * {
+	color: white;
+	text-align: center;
+}
+
+.container > header h1,
+.container > header h2 {
+	color: #fff;
+	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+}
+@media (min-width: 768px) and (max-width: 900px){
+	.container > header h1{
+		font-size: 25px;
+		line-height: 30px;
+		margin: 0;
+		padding: 0;
+	}
+	.container > header h2 {
+		font-size: 12px;
+		margin: 0;
+		padding: 0;
+	}
+}
+@media (max-width: 767px){
+	.container > header h1{
+		font-size: 22px;
+		line-height: 25px;
+		margin: 0;
+		padding: 0;
+	}
+	.container > header h2 {
+		font-size: 12px;
+		margin: 0;
+		padding: 0;
+	}
+}
+.overlay {
+    animation: 0.4s ease-in-out 0s normal none 1 fade;
+    background: radial-gradient(circle, rgba(100, 100, 100, 0.60), rgba(0, 0, 0, 0.6)) repeat scroll 0 0 transparent;
+    -webkit-background-size: 100%;
+	-moz-background-size: 100%;
+	background-size: 100%;
+    display: none;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.overlay.up {
+    animation: 0.4s ease-in-out 0s normal both 1 fadeout;
+}
+.overlay .wrapper {
+    animation: 0.6s ease 0s normal both 1 bounceInDown;
+    background-color: #597485;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 0 200px rgba(0, 0, 0, 0.4) inset;
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    width: 510px;
+}
+.overlay.up .wrapper {
+    animation: 0.6s ease 0s normal both 1 bounceInUp;
+}
+.overlay p {
+    color: #FFFFFF;
+    font-size: 16px;
+    line-height: 1.2;
+    margin-bottom: 5px;
+    width: auto;
+}
+.overlay .wrapper small {
+    color: rgba(247, 247, 226, 0.3);
+    margin-top: -5px;
+}
+.overlay .wrapper small a {
+    color: rgba(247, 247, 226, 0.5);
+    text-decoration: none;
+}
+.overlay .wrapper small a:hover {
+    color: rgba(247, 247, 226, 0.8);
+    text-decoration: underline;
+}
+.overlay h2 {
+    color: #FFFFFF;
+    font: 30px HelveticaNeue-Light,Helvetica,Arial,sans-serif;
+    margin: 0 0 10px;
+}
+.overlay h2 strong {
+    font-family: HelveticaNeue,Helvetica,Arial,sans-serif;
+    font-weight: bold;
+}
+.form-4 input[type=button],
+.form-4 input[type=submit] {
+/* Width and position */
+    width: 100px;
+    padding: 8px 5px;
+  
+    /* Styles */
+    border: 1px solid #0273dd; /* Fallback */
+    border: 1px solid rgba(0,0,0,0.4);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.3),
+        inset 0 10px 10px rgba(255,255,255,0.1);
+    border-radius: 3px;
+    background: #38a6f0;
+    cursor:pointer;
+  
+    /* Font styles */
+    font-family: 'Ubuntu', 'Lato', sans-serif;
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.8);
+    float:left;
+}
+
+.form-4 input[type=button]:hover,
+.form-4 input[type=submit]:hover { 
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+}
+
+.form-4 input[type=button]:active,
+.form-4 input[type=submit]:active { 
+    background: #287db5;
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.6);
+    border-color: #000; /* Fallback */
+    border-color: rgba(0,0,0,0.9);
+}
+
+.no-boxshadow .form-4 input[type=button]:hover
+.no-boxshadow .from-4 input[type=submit]:hover {
+    background: #2a92d8;
+}
+
+img.icono1 {
+	margin-right: 13px;
+	max-width: 65px;
+}
+
+img.icono2 {
+	max-width: 65px;
+	position: relative;
+	right: -25px;
+}
+
+@media (max-width: 767px) {
+	body {
+		margin: 0px !important;
+	}
+	
+	#wrapper9{
+		display:none;
+	}
+	
+	.footer-init {
+		font-size: 12px;
+		position:relative;
+		z-index: -1;
+	}
+	
+	.overlay .wrapper {
+	    display: block;
+	    margin: 10px auto;
+	    padding: 10px;
+	    width: 90%;
+	}
+	
+	img.icono2 {
+		max-width: 65px;
+		position: relative;
+		right: -15px;
+	}
+}

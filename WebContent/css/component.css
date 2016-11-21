@@ -1,0 +1,884 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('../fonts/icomoon.eot?9q3xcb');
+	src:url('../fonts/icomoon.eot?#iefix9q3xcb') format('embedded-opentype'),
+		url('../fonts/icomoon.woff?9q3xcb') format('woff'),
+		url('../fonts/icomoon.ttf?9q3xcb') format('truetype'),
+		url('../fonts/icomoon.svg?9q3xcb#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Windows Chrome ugly fix http://stackoverflow.com/questions/13674808/chrome-svg-font-rendering-breaks-layout/14345363#14345363 */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	@font-face {
+		font-family: 'icomoon';
+		src: url('../fonts/icomoon.svg#icomoon') format('svg');
+	};
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+.icon-team:before {
+	content: "\e64a";
+}
+.icon-blog:before {
+	content: "\e62b";
+}
+.icon-portfolio:before {
+	content: "\e604";
+}
+.icon-services:before {
+	content: "\e62b";
+}
+.icon-contact:before {
+	content: "\e611";
+}
+.icon-home:before {
+	content: "\e600";
+}
+.icon-newspaper:before {
+	content: "\e604";
+}
+.icon-pencil2:before {
+	content: "\e606";
+}
+.icon-image:before {
+	content: "\e601";
+}
+.icon-images:before {
+	content: "\e602";
+}
+.icon-play:before {
+	content: "\e603";
+}
+.icon-connection:before {
+	content: "\e605";
+}
+/*book*/
+.icon-1:before {
+	content: "\e607";
+}
+/*books*/
+.icon-2:before {
+	content: "\e608";
+}
+/*profile*/
+.icon-3:before {
+	content: "\e609";
+}
+/*qrcode*/
+.icon-4:before {
+	content: "\e60a";
+}
+/*copy*/
+.icon-5:before {
+	content: "\e60b";
+}
+/*cart*/
+.icon-6:before {
+	content: "\e60c";
+}
+/*coin*/
+.icon-7:before {
+	content: "\e60d";
+}
+/*credit*/
+.icon-8:before {
+	content: "\e60e";
+}
+/*calculate*/
+.icon-9:before {
+	content: "\e60f";
+}
+/*phone*/
+.icon-10:before {
+	content: "\e610";
+}
+/*mobile*/
+.icon-11:before {
+	content: "\e611";
+}
+/*pushpin*/
+.icon-12:before {
+	content: "\e612";
+}
+.icon-location:before {
+	content: "\e613";
+}
+.icon-compass:before {
+	content: "\e614";
+}
+.icon-map:before {
+	content: "\e615";
+}
+.icon-disk:before {
+	content: "\e616";
+}
+.icon-undo:before {
+	content: "\e617";
+}
+.icon-redo:before {
+	content: "\e618";
+}
+.icon-busy:before {
+	content: "\e619";
+}
+.icon-user:before {
+	content: "\e61a";
+}
+.icon-spinner:before {
+	content: "\e61b";
+}
+.icon-cogs:before {
+	content: "\e61c";
+}
+.icon-cog:before {
+	content: "\e61d";
+}
+.icon-hammer:before {
+	content: "\e61e";
+}
+.icon-wand:before {
+	content: "\e61f";
+}
+.icon-aid:before {
+	content: "\e620";
+}
+.icon-pie:before {
+	content: "\e621";
+}
+.icon-stats:before {
+	content: "\e622";
+}
+.icon-bars:before {
+	content: "\e623";
+}
+.icon-bars2:before {
+	content: "\e624";
+}
+.icon-dashboard:before {
+	content: "\e625";
+}
+.icon-meter:before {
+	content: "\e626";
+}
+.icon-switch:before {
+	content: "\e627";
+}
+.icon-lightning:before {
+	content: "\e628";
+}
+.icon-menu:before {
+	content: "\e629";
+}
+.icon-bookmark:before {
+	content: "\e62a";
+}
+.icon-bookmarks:before {
+	content: "\e62b";
+}
+.icon-close:before {
+	content: "\e62c";
+}
+.icon-checkmark-circle:before {
+	content: "\e62d";
+}
+.icon-cancel-circle:before {
+	content: "\e62e";
+}
+.icon-blocked:before {
+	content: "\e62f";
+}
+.icon-info:before {
+	content: "\e630";
+}
+.icon-info2:before {
+	content: "\e631";
+}
+.icon-checkmark:before {
+	content: "\e632";
+}
+.icon-checkmark2:before {
+	content: "\e633";
+}
+.icon-spell-check:before {
+	content: "\e634";
+}
+.icon-plus:before {
+	content: "\e635";
+}
+.icon-enter:before {
+	content: "\e636";
+}
+.icon-loop:before {
+	content: "\e637";
+}
+.icon-mail:before {
+	content: "\e638";
+}
+.icon-mail2:before {
+	content: "\e639";
+}
+.icon-instagram:before {
+	content: "\e63a";
+}
+.icon-apple:before {
+	content: "\e63b";
+}
+.icon-pen:before {
+	content: "\e63c";
+}
+.icon-quill:before {
+	content: "\e63d";
+}
+.icon-dice:before {
+	content: "\e63e";
+}
+.icon-copy2:before {
+	content: "\e63f";
+}
+.icon-stack:before {
+	content: "\e640";
+}
+.icon-folder:before {
+	content: "\e641";
+}
+.icon-folder-open:before {
+	content: "\e642";
+}
+.icon-tag:before {
+	content: "\e643";
+}
+.icon-tags:before {
+	content: "\e644";
+}
+.icon-envelope:before {
+	content: "\e645";
+}
+.icon-address-book:before {
+	content: "\e646";
+}
+.icon-calendar:before {
+	content: "\e647";
+}
+.icon-calendar2:before {
+	content: "\e648";
+}
+.icon-user2:before {
+	content: "\e649";
+}
+.icon-users:before {
+	content: "\e64a";
+}
+.icon-user3:before {
+	content: "\e64b";
+}
+.icon-users2:before {
+	content: "\e64c";
+}
+.icon-alarm:before {
+	content: "\e64d";
+}
+.icon-bell:before {
+	content: "\e64e";
+}
+.icon-keyboard:before {
+	content: "\e64f";
+}
+.icon-print:before {
+	content: "\e650";
+}
+.icon-screen:before {
+	content: "\e651";
+}
+.icon-spinner2:before {
+	content: "\e652";
+}
+.icon-tree:before {
+	content: "\e653";
+}
+.icon-link:before {
+	content: "\e654";
+}
+.icon-cloud-download:before {
+	content: "\e655";
+}
+.icon-cloud-upload:before {
+	content: "\e656";
+}
+.icon-target:before {
+	content: "\e657";
+}
+a, li {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+
+/* Global CSS that are applied for all screen sizes */
+
+.nav-menuAux ul {
+	max-width: 1240px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: 1em;
+	font-weight: 300;
+}
+
+.nav-menuAux li span {
+	display: block;
+}
+
+.nav-menuAux a {
+	display: block;
+	color: rgba(249, 249, 249, .9);
+	text-decoration: none;
+	-webkit-transition: color .5s, background .5s, height .5s;
+	-moz-transition: color .5s, background .5s, height .5s;
+	-o-transition: color .5s, background .5s, height .5s;
+	-ms-transition: color .5s, background .5s, height .5s;
+	transition: color .5s, background .5s, height .5s;
+}
+
+.nav-menuAux i{
+	/* Make the font smoother for Chrome */
+	-webkit-transform: translate3d(0, 0, 0);
+	-moz-transform: translate3d(0, 0, 0);
+	-o-transform: translate3d(0, 0, 0);
+	-ms-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+}
+
+/* Remove the blue Webkit background when element is tapped */
+
+a, button {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+/* Hover effect for the whole navigation to make the hovered item stand out */
+
+.no-touch .nav-menuAux ul:hover a {
+	color: rgba(249, 249, 249, .5);
+}
+
+.no-touch .nav-menuAux ul:hover a:hover {
+	color: rgba(249, 249, 249, 0.99);
+}
+
+/* Adding some background color to the different menu items */
+
+.nav-menuAux li:nth-child(12n+1) {
+	background: rgb(208, 101, 3);
+}
+
+.nav-menuAux li:nth-child(12n+2) {
+	background: rgb(233, 147, 26);
+}
+
+.nav-menuAux li:nth-child(12n+3) {
+	background: rgb(22, 145, 190);
+}
+
+.nav-menuAux li:nth-child(12n+4) {
+	background: rgb(22, 107, 162);
+}
+
+.nav-menuAux li:nth-child(12n+5) {
+	background: rgb(27, 54, 71);
+}
+
+.nav-menuAux li:nth-child(12n+6) {
+	background: rgb(21, 40, 54);
+}
+.nav-menuAux li:nth-child(12n+7) {
+	background: rgb(3, 110, 208);
+}
+
+.nav-menuAux li:nth-child(12n+8) {
+	background: rgb(7, 208, 3);
+}
+
+.nav-menuAux li:nth-child(12n+9) {
+	background: rgb(3, 208, 101);
+}
+
+.nav-menuAux li:nth-child(12n+10) {
+	background: rgb(3, 208, 204);
+}
+
+.nav-menuAux li:nth-child(12n+11) {
+	background: rgb(3, 233, 229);
+}
+
+.nav-menuAux li:nth-child(12n+12) {
+	background: rgb(11, 251, 247);
+}
+
+/* For screen bigger than 800px */
+@media (min-width: 50em) {
+
+	.nav-menuAux ul {
+		text-align: center;
+	}
+
+	/* Transforms the list into a horizontal navigation */
+	.nav-menuAux li {
+		/*float: left;*/
+		margin: 0 -2px;
+		display: inline-block;
+		width: 16.66666666666667%;
+		text-align: center;
+		vertical-align: top;
+		-webkit-transition: border .5s;
+		-moz-transition: border .5s;
+		-o-transition: border .5s;
+		-ms-transition: border .5s;
+		transition: border .5s;
+	}
+
+	.nav-menuAux a {
+		display: block;
+		width: auto;
+	}
+
+	/* hover, focused and active effects that add a little colored border to the different items */
+	.no-touch .nav-menuAux li:nth-child(12n+1) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+1) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+1) a:focus {
+		background: rgb(208, 101, 3);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+2) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+2) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+2) a:focus {
+		background: rgb(233, 147, 26);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+3) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+3) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+3) a:focus {
+		background: rgb(22, 145, 190);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+4) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+4) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+4) a:focus {
+		background: rgb(22, 107, 162);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+5) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+5) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+5) a:focus {
+		background: rgb(27, 54, 71);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+6) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+6) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+6) a:focus {
+		background: rgb(21, 40, 54);
+	}
+	.no-touch .nav-menuAux li:nth-child(12n+7) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+7) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+7) a:focus {
+		background: rgb(3, 110, 208);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+8) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+8) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+8) a:focus {
+		background: rgb(7, 208, 3);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+9) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+9) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+9) a:focus {
+		background: rgb(3, 208, 101);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+10) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+10) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+10) a:focus {
+		background: rgb(3, 208, 204);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+11) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+11) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+11) a:focus {
+		background: rgb(3, 233, 229);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+12) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+12) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+12) a:focus {
+		background: rgb(11, 251, 247);
+	}
+	/* Placing the icon */
+	
+	.icon {
+		padding-top: 1em;
+	}
+
+	.icon + span {
+		margin-top: 1.1em;
+		-webkit-transition: margin .5s;
+		-moz-transition: margin .5s;
+		-o-transition: margin .5s;
+		-ms-transition: margin .5s;
+		transition: margin .5s;
+	}
+
+	/* Animating the height of the element*/
+	.nav-menuAux a {
+		height: 10em;
+	}
+
+	.no-touch .nav-menuAux a:hover ,
+	.nav-menuAux a:active ,
+	.nav-menuAux a:focus {
+		/*height: 14em;*/
+	}	
+
+	/* Making the text follow the height animation */
+	.no-touch .nav-menuAux a:hover .icon + span {
+		margin-top: 3.2em;
+		-webkit-transition: margin .5s;
+		-moz-transition: margin .5s;
+		-o-transition: margin .5s;
+		-ms-transition: margin .5s;
+		transition: margin .5s;
+	}
+
+	/* Positioning the icons and preparing for the animation*/
+	.nav-menuAux i {
+		position: relative;
+		display: inline-block;
+		margin: 0 auto;
+		padding: 0.4em;
+		border-radius: 50%;
+		font-size: 1.3em;
+		box-shadow: 0 0 0 30px transparent;
+		background: rgba(255,255,255,0.1);
+		-webkit-transform: translate3d(0, 0, 0);
+		-moz-transform: translate3d(0, 0, 0);
+		-o-transform: translate3d(0, 0, 0);
+		-ms-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+		-webkit-transition: box-shadow .6s ease-in-out;
+		-moz-transition: box-shadow .6s ease-in-out;
+		-o-transition: box-shadow .6s ease-in-out;
+		-ms-transition: box-shadow .6s ease-in-out;
+		transition: box-shadow .6s ease-in-out;
+	}	
+	
+	/* Animate the box-shadow to create the effect */
+	.no-touch .nav-menuAux a:hover i,
+	.no-touch .nav-menuAux a:active i,
+	.no-touch .nav-menuAux a:focus i {		
+		box-shadow: 0 0 0 0 rgba(255,255,255,0.2);
+		-webkit-transition: box-shadow .4s ease-in-out;
+		-moz-transition: box-shadow .4s ease-in-out;
+		-o-transition: box-shadow .4s ease-in-out;
+		-ms-transition: box-shadow .4s ease-in-out;
+		transition: box-shadow .4s ease-in-out;
+	}
+		
+}
+
+@media (min-width: 50em) and (max-width: 61.250em) {
+
+	/* Size and font adjustments to make it fit into the screen*/
+	.nav-menuAux ul {
+		font-size: 1em;
+	}
+
+}
+
+/* The "tablet" and "mobile" version */
+
+@media (max-width: 49.938em) {		
+	
+	/* Instead of adding a border, we transition the background color */
+	.no-touch .nav-menuAux li:nth-child(12n+1) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+1) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+1) a:focus {
+		background: rgb(208, 101, 3);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+2) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+2) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+2) a:focus {
+		background: rgb(233, 147, 26);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+3) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+3) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+3) a:focus {
+		background: rgb(22, 145, 190);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+4) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+4) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+4) a:focus {
+		background: rgb(22, 107, 162);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+5) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+5) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+5) a:focus {
+		background: rgb(27, 54, 71);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+6) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+6) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+6) a:focus {
+		background: rgb(21, 40, 54);
+	}
+	.no-touch .nav-menuAux li:nth-child(12n+7) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+7) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+7) a:focus {
+		background: rgb(3, 110, 208);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+8) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+8) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+8) a:focus {
+		background: rgb(7, 208, 3);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+9) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+9) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+9) a:focus {
+		background: rgb(3, 208, 101);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+10) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+10) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+10) a:focus {
+		background: rgb(3, 208, 204);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+11) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+11) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+11) a:focus {
+		background: rgb(3, 233, 229);
+	}
+	
+	.no-touch .nav-menuAux li:nth-child(12n+12) a:hover,
+	.no-touch .nav-menuAux li:nth-child(12n+12) a:active,
+	.no-touch .nav-menuAux li:nth-child(12n+12) a:focus {
+		background: rgb(11, 251, 247);
+	}
+
+	.nav-menuAux ul li {
+		-webkit-transition: background 0.5s;
+		-moz-transition: background 0.5s;
+		-o-transition: background 0.5s;
+		-ms-transition: background 0.5s;
+		transition: background 0.5s;
+	}	
+
+}
+
+/* CSS specific to the 2x3 columns version */
+@media (min-width:32.5em) and (max-width: 49.938em) {
+	
+	/* Creating the 2 column layout using floating elements once again */
+	.nav-menuAux li {
+		display: block;
+		float: left;
+		width: 50%;
+	}
+	
+	/* Adding some padding to make the elements look nicer*/
+	.nav-menuAux a {
+		padding: 0.8em;		
+	}
+
+	/* Displaying the icons on the left, and the text on the right side using inlin-block*/
+	.nav-menuAux li span, 
+	.nav-menuAux li span.icon {
+		display: inline-block;
+	}
+
+	.nav-menuAux li span.icon {
+		width: 50%;
+	}
+
+	.nav-menuAux li .icon + span {
+		font-size: 1em;
+	}
+
+	.icon + span {
+		position: relative;
+		top: -0.2em;
+	}
+
+	/* Adaptating to the icons to animate the size and border of the rounded background in a more discreet way */
+	.nav-menuAux li i {
+		display: inline-block;
+		padding: 8% 9%;
+		border: 4px solid transparent;
+		border-radius: 50%;
+		font-size: 1.5em;
+		background: rgba(255,255,255,0.1);
+		-webkit-transition: border .5s;
+		-moz-transition: border .5s;
+		-o-transition: border .5s;
+		-ms-transition: border .5s;
+		transition: border .5s;
+	}
+
+	/* Transition effect on the border color */
+	.no-touch .nav-menuAux li:hover i,
+	.no-touch .nav-menuAux li:active i,
+	.no-touch .nav-menuAux li:focus i {
+		border: 4px solid rgba(255,255,255,0.1);
+	}
+	
+}
+
+/* Adapting the font size and width for smaller screns*/
+@media (min-width: 32.5em) and (max-width: 38.688em) {
+	
+	.nav-menuAux li span.icon {
+		width: 50%;
+	}
+
+	.nav-menuAux li .icon + span {
+		font-size: 0.9em;
+	}
+}
+
+/* Styling the toggle menu link and hiding it */
+.nav-menuAux .navtoogle{
+	display: none;	
+	width: 100%;
+	padding: 0.5em 0.5em 0.8em;
+	text-align: left;
+	color: rgb(7, 16, 15);
+	font-size: 1em;
+	cursor: pointer;
+}
+
+.navtoogle i{
+	z-index:-1;
+}
+
+.icon-menu {
+	line-height: 0;
+	font-size: 1.6em;
+}
+
+@media (max-width: 32.438em) {
+
+	/* Unhiding the styled menu link */
+	.nav-menuAux .navtoogle{
+		margin: 0;
+		display: block;
+	}
+	
+	/* Animating the height of the navigation when the button is clicked */
+	
+	/* When JavaScript is disabled, we hide the menu */
+	.no-js .nav-menuAux ul {
+		max-height: 30em;
+		overflow: hidden;
+	}
+	
+	/* When JavaScript is enabled, we hide the menu */
+	.js .nav-menuAux ul {
+		max-height: 0em;
+		overflow: hidden;
+	}
+	
+	/* Displaying the menu when the user has clicked on the button*/
+	.js .nav-menuAux .active + ul {		
+		max-height: 30em;
+		overflow: hidden;
+		-webkit-transition: max-height .4s;
+		-moz-transition: max-height .4s;
+		-o-transition: max-height .4s;
+		-ms-transition: max-height .4s;
+		transition: max-height .4s;
+	}
+
+	/* Adapting the layout of the menu for smaller screens : icon on the left and text on the right*/
+	
+	.nav-menuAux li span {
+		display: inline-block;
+		height: 100%;
+	}
+
+	.nav-menuAux a {
+		padding: 0.5em;		
+	}
+	
+	.icon + span {
+		margin-left: 1em;
+		font-size: 0.8em;
+	}
+	
+	/* Adding a left border of 8 px with a different color for each menu item*/
+	.nav-menuAux li:nth-child(12n+1) {
+		border-left: 8px solid rgb(174, 78, 1);
+	}
+
+	.nav-menuAux li:nth-child(12n+2) {
+		border-left: 8px solid rgb(191, 117, 20);
+	}
+
+	.nav-menuAux li:nth-child(12n+3) {
+		border-left: 8px solid rgb(13, 111, 150);
+	}
+
+	.nav-menuAux li:nth-child(12n+4) {
+		border-left: 8px solid rgb(10, 75, 117);
+	}
+
+	.nav-menuAux li:nth-child(12n+5) {
+		border-left: 8px solid rgb(16, 34, 44);
+	}
+
+	.nav-menuAux li:nth-child(12n+6) {
+		border-left: 8px solid rgb(9, 18, 25);
+	}
+	.nav-menuAux li:nth-child(12n+7) {
+		border-left: 8px solid rgb(4, 82, 156);
+	}
+
+	.nav-menuAux li:nth-child(12n+8) {
+		border-left: 8px solid rgb(7, 150, 3);
+	}
+
+	.nav-menuAux li:nth-child(12n+9) {
+		border-left: 8px solid rgb(3, 155, 101);
+	}
+
+	.nav-menuAux li:nth-child(12n+10) {
+		border-left: 8px solid rgb(3, 170, 204);
+	}
+
+	.nav-menuAux li:nth-child(12n+11) {
+		border-left: 8px solid rgb(3, 180, 229);
+	}
+
+	.nav-menuAux li:nth-child(12n+12) {
+		border-left: 8px solid rgb(11, 200, 247);
+	}
+	/* make the nav bigger on touch screens */
+	.touch .nav-menuAux a {
+		padding: 0.8em;
+	}
+
+}
+

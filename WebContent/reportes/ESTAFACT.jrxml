@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ESTAFACT" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Users\\DIANA\\Desktop\\ESTASUB3.jasper"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_tcncon" class="java.lang.String"/>
+	<parameter name="p_logoempagua" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\DIANA\\Pictures\\LogoEMPAGUA-small.jpg"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_logociudad" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\DIANA\\Pictures\\LOGO_2010.jpg"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="subRepESTASUB2" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Users\\DIANA\\Documents\\AppWeb\\sige\\WebContent\\reportes\\ESTASUB2.jasper"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="subRepESTASUB4" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Users\\DIANA\\Documents\\AppWeb\\sige\\WebContent\\reportes\\ESTASUB4.jasper"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="subRepESTASUB1" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Users\\DIANA\\Documents\\AppWeb\\sige\\WebContent\\reportes\\ESTASUB1.jasper"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+  T1.TCNCON,
+  T1.CCTIPD||' '||T1.CCLDOC||' '||T1.CCNDOC DOC_CARGO,
+  TO_DATE(T1.CCAZDO*10000+T1.CCMEDO*100+T1.CCDIDO,'YYYYMMDD') FECHA_EMI,
+  TO_DATE(T1.CCAZVE*10000+T1.CCMEVE*100+T1.CCDIVE,'YYYYMMDD') FECHA_VENC,
+  T1.CCVDOC MONTO_CARGO_Q,
+  T1.CCSALT SALDO_CARGO_Q,
+  NVL(T1.CCVDOC,0)-NVL(T1.CCSALT,0) TOT_ABONOS_Q,
+  T2.TCSRIE||' '||T2.TCNIMP SERIE,
+  T4.CCTPD2||' '||T4.CCLDC2||' '||T4.CCNDC2 DOC_ABONO,
+  TO_DATE(T5.CCAZDO*10000+T5.CCMEDO*100+T5.CCDIDO,'YYYYMMDD') FECHA_ABONO,
+  T5.CCUSRD USUARIO_ABONO,
+  TO_DATE(T4.CCAZAF*10000+T4.CCMEAF*100+T4.CCDIAF,'YYYYMMDD') FECHA_AFEC,
+  T4.CCVAAF
+FROM
+  STCDATEMP.C4DOCTOS T1,
+  STCDATEMP.V4BILHED T2,
+  STCDATEMP.C4AFECRU T4,
+  STCDATEMP.C4DOCTOS T5
+WHERE
+  T2.TCTIRE=T1.CCTIPD AND
+  T2.TCLERE=T1.CCLDOC AND
+  T2.TCNURE=T1.CCNDOC AND
+  T4.CCTPD1(+)=T2.TCTIRE AND
+  T4.CCLDC1(+)=T2.TCLERE AND
+  T4.CCNDC1(+)=T2.TCNURE AND
+  T5.CCTIPD(+)=T4.CCTPD2 AND
+  T5.CCLDOC(+)=T4.CCLDC2 AND
+  T5.CCNDOC(+)=T4.CCNDC2 AND
+  T1.CCCABO='C' AND
+  T1.CCANUL!='A' AND
+  T1.TCNCON = $P{p_tcncon}
+UNION ALL
+SELECT
+  V1.TCNCON,
+  V1.CCTIPD||' '||V1.CCLDOC||' '||V1.CCNDOC DOC_CARGO,
+  V1 .FECHA_EMI, V1.FECHA_VENC,
+  V1.MONTO_CARGO_Q,
+  V1.SALDO_CARGO_Q,
+  V1.TOT_ABONOS_Q,
+  V1.SERIE||' '||V1.FACTURA SERIE,
+  T2.CCTPD2||' '||T2.CCLDC2||' '||T2.CCNDC2 DOC_ABONO,
+  TO_DATE(T3.CCAZDO*10000+T3.CCMEDO*100+T3.CCDIDO,'YYYYMMDD')FECHA_ABONO,
+  T3.CCUSRD USUARIO_ABONO,
+  TO_DATE(T2.CCAZAF*10000+T2.CCMEAF*100+T2.CCDIAF,'YYYYMMDD') FECHA_AFEC,
+  T2.CCVAAF
+FROM
+    (
+        SELECT T1.TCNCON,
+               T1.CCTIPD, T1.CCLDOC, T1.CCNDOC,
+            TO_DATE(T1.CCAZDO*10000+T1.CCMEDO*100+T1.CCDIDO,'YYYYMMDD') FECHA_EMI,
+            TO_DATE(T1.CCAZVE*10000+T1.CCMEVE*100+T1.CCDIVE,'YYYYMMDD') FECHA_VENC,
+            T1.CCVDOC MONTO_CARGO_Q,
+            T1.CCSALT SALDO_CARGO_Q,
+            NVL(T1.CCVDOC,0)-NVL(T1.CCSALT,0) TOT_ABONOS_Q,
+            T2.FCSRIE SERIE, T2.FCDOIM FACTURA,
+            T2.FCTOTF
+        FROM STCDATEMP.C4DOCTOS T1,
+             STCDATEMP.F4PRFHED T2
+        WHERE T2.FCTDOC=T1.CCTIPD AND
+              T2.FCLDOC=T1.CCLDOC AND
+              T2.FCNDOC=T1.CCNDOC AND
+              T1.CCCABO='C' AND
+              T1.CCANUL!='A'
+        ) V1,
+  STCDATEMP.C4AFECRU T2,
+  STCDATEMP.C4DOCTOS T3
+WHERE
+  T2.CCTPD1(+)=V1.CCTIPD AND
+  T2.CCLDC1(+)=V1.CCLDOC AND
+  T2.CCNDC1(+)=V1.CCNDOC AND
+  T3.CCTIPD(+)=T2.CCTPD2 AND
+  T3.CCLDOC(+)=T2.CCLDC2 AND
+  T3.CCNDOC(+)=T2.CCNDC2 AND
+  V1.TCNCON = $P{p_tcncon}
+UNION ALL
+  SELECT
+  T1.TCNCON,
+  T1.CCTIPD||' '||T1.CCLDOC||' '||T1.CCNDOC DOC_CARGO,
+  TO_DATE(T1.CCAZDO*10000+T1.CCMEDO*100+T1.CCDIDO,'YYYYMMDD') FECHA_EMI,
+  TO_DATE(T1.CCAZVE*10000+T1.CCMEVE*100+T1.CCDIVE,'YYYYMMDD') FECHA_VENC,
+  T1.CCVDOC MONTO_CARGO_Q,
+  T1.CCSALT SALDO_CARGO_Q,
+  NVL(T1.CCVDOC,0)-NVL(T1.CCSALT,0) TOT_ABONOS_Q,
+  NULL||' '||NULL,
+  T2.CCTPD2||' '||T2.CCLDC2||' '||T2.CCNDC2 DOC_ABONO,
+  TO_DATE(T3.CCAZDO*10000+T3.CCMEDO*100+T3.CCDIDO,'YYYYMMDD') FECHA_ABONO,
+  T3.CCUSRD USUARIO_ABONO,
+  TO_DATE(T2.CCAZAF*10000+T2.CCMEAF*100+T2.CCDIAF,'YYYYMMDD') FECHA_AFEC,
+  T2.CCVAAF
+FROM
+  STCDATEMP.C4DOCTOS T1,
+  STCDATEMP.C4AFECRU T2,
+  STCDATEMP.C4DOCTOS T3
+WHERE
+  T2.CCTPD1(+)=T1.CCTIPD AND
+  T2.CCLDC1(+)=T1.CCLDOC AND
+  T2.CCNDC1(+)=T1.CCNDOC AND
+  T3.CCTIPD(+)=T2.CCTPD2 AND
+  T3.CCLDOC(+)=T2.CCLDC2 AND
+  T3.CCNDOC(+)=T2.CCNDC2 AND
+  T1.CCCABO='C' AND
+  T1.CCANUL!='A' AND
+  NOT EXISTS ( SELECT 1
+                 FROM STCDATEMP.V4BILHED
+                WHERE TCNCON=T1.TCNCON
+                  AND TCTIRE=T1.CCTIPD
+                  AND TCLERE=T1.CCLDOC
+                  AND TCNURE=T1.CCNDOC ) AND
+  NOT EXISTS ( SELECT 1
+                 FROM STCDATEMP.F4PRFHED
+                WHERE TCNCON=T1.TCNCON
+                AND FCTDOC=T1.CCTIPD
+                AND FCLDOC=T1.CCLDOC
+                AND FCNDOC=T1.CCNDOC ) AND
+  T1.TCNCON =$P{p_tcncon}
+ORDER BY FECHA_EMI]]>
+	</queryString>
+	<field name="TCNCON" class="java.math.BigDecimal"/>
+	<field name="DOC_CARGO" class="java.lang.String"/>
+	<field name="FECHA_EMI" class="java.sql.Timestamp"/>
+	<field name="FECHA_VENC" class="java.sql.Timestamp"/>
+	<field name="MONTO_CARGO_Q" class="java.math.BigDecimal"/>
+	<field name="SALDO_CARGO_Q" class="java.math.BigDecimal"/>
+	<field name="TOT_ABONOS_Q" class="java.math.BigDecimal"/>
+	<field name="SERIE" class="java.lang.String"/>
+	<field name="DOC_ABONO" class="java.lang.String"/>
+	<field name="FECHA_ABONO" class="java.sql.Timestamp"/>
+	<field name="USUARIO_ABONO" class="java.lang.String"/>
+	<field name="FECHA_AFEC" class="java.sql.Timestamp"/>
+	<field name="CCVAAF" class="java.math.BigDecimal"/>
+	<variable name="MONTO_CARGO_Q_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{MONTO_CARGO_Q}]]></variableExpression>
+	</variable>
+	<variable name="TOT_ABONOS_Q_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOT_ABONOS_Q}]]></variableExpression>
+	</variable>
+	<variable name="TCVDET_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="TCVAAF_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<group name="DOC_CARGO">
+		<groupExpression><![CDATA[$F{DOC_CARGO}]]></groupExpression>
+		<groupHeader>
+			<band height="13">
+				<textField isBlankWhenNull="true">
+					<reportElement x="0" y="0" width="62" height="13"/>
+					<textElement textAlignment="Center">
+						<font size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{DOC_CARGO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+					<reportElement x="62" y="0" width="57" height="13"/>
+					<textElement textAlignment="Center">
+						<font size="7"/>
+					</textElement>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{FECHA_EMI}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+					<reportElement x="119" y="0" width="57" height="13"/>
+					<textElement textAlignment="Center">
+						<font size="7"/>
+					</textElement>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{FECHA_VENC}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement x="689" y="0" width="58" height="13"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{SALDO_CARGO_Q}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="233" y="0" width="57" height="13"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{MONTO_CARGO_Q}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="632" y="0" width="57" height="13"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{TOT_ABONOS_Q}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="290" y="0" width="57" height="13"/>
+					<textElement textAlignment="Center">
+						<font size="7"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{SERIE}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="101" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="753" height="100"/>
+				<subreportParameter name="p_tcncon">
+					<subreportParameterExpression><![CDATA[$P{p_tcncon}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_logociudad">
+					<subreportParameterExpression><![CDATA[$P{p_logociudad}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_logoempagua">
+					<subreportParameterExpression><![CDATA[$P{p_logoempagua}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{subRepESTASUB1}]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="1" y="2" width="752" height="25" backcolor="#E6E6E6"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="5" y="8" width="57" height="13"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Doc. Cargo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="62" y="8" width="57" height="13"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fec.Emis.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="119" y="8" width="57" height="13"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fec.Venc.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="176" y="8" width="57" height="13"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Val.Det.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="233" y="8" width="57" height="13"/>
+				<box rightPadding="5"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tot.Cargos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="8" width="57" height="13"/>
+				<box leftPadding="4"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Num.Fiscal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="8" width="57" height="13"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Doc. Abono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="404" y="8" width="57" height="13"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fec.Afecta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="461" y="8" width="57" height="13"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fec.Abono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="518" y="8" width="57" height="13"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cajero]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="575" y="8" width="57" height="13"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Val.Pago]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="632" y="8" width="57" height="13"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Pagos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="689" y="8" width="58" height="13"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saldo Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="753" height="13" forecolor="#FFFFFF" backcolor="#CCCCFF"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="347" y="0" width="57" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DOC_ABONO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="518" y="0" width="57" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{USUARIO_ABONO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="404" y="0" width="57" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{FECHA_AFEC}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="575" y="0" width="57" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{CCVAAF}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="461" y="0" width="57" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{FECHA_ABONO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="4" width="45" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Fecha : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="4" width="50" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Hora   : ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="2" width="752" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.25" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="314" y="4" width="76" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Pag. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="390" y="4" width="40" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="45" y="4" width="74" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm:ss">
+				<reportElement x="180" y="3" width="95" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="88" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="753" height="18"/>
+				<subreportParameter name="p_tcncon">
+					<subreportParameterExpression><![CDATA[$P{p_tcncon}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{subRepESTASUB4}]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="0" y="26" width="753" height="62"/>
+				<subreportParameter name="p_tcncon">
+					<subreportParameterExpression><![CDATA[$P{p_tcncon}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{subRepESTASUB2}]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>
