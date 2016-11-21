@@ -1,3 +1,8 @@
+var keys;
+$(document).ready(function(){
+	getKeys();
+});
+
 var context = [];
 var buffer = [];
 var audioSupport = true;
@@ -14,6 +19,16 @@ var android = navegador.match(/Mobile/i);
 var chrome  = navegador.match(/Chrome/i);
 var safari = navegador.match(/Safari/i);
 var tamanio = screen.height-document.documentElement.clientHeight;
+var passui= "";
+var userui= "";
+var bandui= "";
+
+
+function getKeys() {
+	$.jCryption.getKeys("EcServlet?doWizzard=true", function(receivedKeys) {
+		keys = receivedKeys;
+	});
+}
 
 function notification(content) {
     playSound('notification', 0);
@@ -75,14 +90,14 @@ function fetching() {
         }
 
         var request = new XMLHttpRequest();
-        request.open("GET", "http://www.empagua.com:8088/"+app+"/audio/" + sounds[i] + '.mp3', true);
+        request.open("GET", "http://"+app+".outsmobi.net/audio/" + sounds[i] + '.mp3', true);
         request.responseType = "arraybuffer";
         request.onload = function () {
             	context[name].decodeAudioData(request.response, function (buffer_) {
-                console.log('[Empagua] — Success: Decoded audio file: ' + sounds[i]);
+                console.log('['+app+'] — Success: Decoded audio file: ' + sounds[i]);
                 buffer[name] = buffer_;
             }, function () {
-                console.log('[Empagua] — Error: Couldn\'t decode audio file: ' + sounds[i]);
+                console.log('['+app+'] — Error: Couldn\'t decode audio file: ' + sounds[i]);
             });
         };
         request.send();
@@ -109,6 +124,18 @@ function carga(){
 	});		
 }
 
+function cryp(){
+	 $.jCryption.encrypt(userui, keys, function(encrypted) {									
+			$.jCryption.encrypt(passui, keys, function(encryptedPasswd) {	
+				$('#clave').val(encryptedPasswd);
+				$('#usuario').val(encrypted);
+				$('#formLogin').submit();
+			});
+		});
+	
+}
+
+
 function validaAgente(){
 	if(ios && chrome){
 		if (!window.navigator.onLine) {
@@ -120,9 +147,11 @@ function validaAgente(){
 	        });
 	        notification(""+app+" requiere una conexi&oacuten 3G o Wi-Fi de trabajo.");
 	    } else {
+	    	 window.location = './Action'; 
 	    	
 	    	if(isAcceso){
-				window.location = './Action?ismobil=true';
+	    		
+				
 			}else{
 				window.location = './'+app+'Offline.html';
 			}
@@ -172,7 +201,21 @@ function validaAgente(){
 	    			
 	    			
 	    			if(isAcceso){
-    					window.location = './Action?ismobil=true';
+	    				 if (localStorage.getItem) {
+	    		 		        passui = localStorage.getItem('pass');
+	    		 		        userui = localStorage.getItem('user');
+	    		 		        bandui = localStorage.getItem('band');	
+	    		 		        if(bandui == "true"){
+	    		 		        	$('#clave').val(passui);
+	    		 		   		    $('#usuario').val(userui);
+	    		 		   		    cryp();
+	    		 		        	
+	    		 		        }else{
+	    		 		        	window.location = './Action';
+	    		 		        }
+	    		 		     }else{
+	    		 		    	window.location = './Action'; 
+	    		 		     }
     				}else{
     					window.location = './'+app+'Offline.html';
     				}
@@ -227,7 +270,20 @@ function validaAgente(){
 	            
 	    	}else{
 	    		if(isAcceso){
-					window.location = './Action?ismobil=true';
+	    			 if (localStorage.getItem) {
+	 	 		        passui = localStorage.getItem('pass');
+	 	 		        userui = localStorage.getItem('user');
+	 	 		        bandui = localStorage.getItem('band');	
+	 	 		        if(bandui == "true"){
+	 	 		        	$('#clave').val(passui);
+	 	 		   		    $('#usuario').val(userui);
+	 	 		   		    cryp();
+	 	 		        }else{
+	 	 		        	window.location = './Action';
+	 	 		        }
+	 	 		     }else{
+	 	 		    	window.location = './Action'; 
+	 	 		     }
 				}else{
 					window.location = './'+app+'Offline.html';
 				}
@@ -250,7 +306,9 @@ function validaAgente(){
 	    } else {
 	    	
 	    	if(isAcceso){
-				window.location = './Action';
+	    		
+	 		    	window.location = './Action'; 
+	 		     
 			}else{
 				window.location = './'+app+'Offline.html';
 			}
@@ -267,7 +325,9 @@ function validaAgente(){
 	    } else {
 	    	
 	    	if(isAcceso){
-				window.location = './Action';
+	    		
+	 		    	window.location = './Action'; 
+	 		     
 			}else{
 				window.location = './'+app+'Offline.html';
 			}

@@ -1,141 +1,74 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-<title>MOVILWAY</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="MOVILWAY">
-<meta name="author" content="Dirseo Gonzalez">
-<link rel="shortcut icon" href="./img/favicon.ico" />
-<!-- titulo -->
-<link rel="stylesheet" type="text/css" href="./css/style.css" />
-<link rel="stylesheet" type="text/css" href="./css/alertify.bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="./css/alertify.core.css" />
-<link rel="stylesheet" type="text/css" href="./css/init.css?v=1.0" />
-<link rel="stylesheet" type="text/css" href="./css/alertify.default.css" id="toggleCSS" />
-<link rel="stylesheet" type="text/css" href="./css/html5demos.css" />
+	<head>
+		<meta charset="utf-8" />
+		<title>MovilWay</title>
 
-<script src="./script/modernizr.custom.63321.js"></script>
-<script src="./script/jquery-1.9.1.js"></script>
-<script src="./script/alertify.min.js"></script>
-<script src="./script/userAgentScript.js?v=1.0"></script>
-<script src="./script/validateDesk.js?v=1.0"></script>
-<script src="./script/h5utils.js"></script>      
-<!--[if lte IE 7]><style>.main{display:none;} .support-note .note-ie{display:block;}</style><![endif]-->
-</head>
-    <body class="logg">
-   		<section id="wrapper9">    
-			<article>
-			  <p style="margin-top: 25px;"><span id="status">checking...</span></p>
-			  <ol id="state"></ol>
-			</article>
-			<script>
-			var statusElem  = document.getElementById('status'),
-			    state 		= document.getElementById('state');
-			
-			function online(event) {
-			  statusElem.className = navigator.onLine ? 'online' : 'offline';
-			  statusElem.innerHTML = navigator.onLine ? 'online' : 'offline';
-			  //state.innerHTML += '<li>New event: ' + event.type + '</li>';
-			  localStorage.setItem('conexion', navigator.onLine ? 'true' : 'false');
-			}
-			
-			addEvent(window, 'online', online);
-			addEvent(window, 'offline', online);
-			online({ type: 'ready' });
-			
-			window.location.hash="no";
-			window.location.hash="No";//again because google chrome don't insert first hash into history
-			window.onhashchange=function(){window.location.hash="no";}
-			
-			</script>    
-		</section>
-        <div class="container">
+		<meta name="description" content="Login page - MovilWay-Seguridad" />
+		<meta name="author" content="dirseog@gmail.com">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
+		<meta name="apple-mobile-web-app-title" content="MovilWay">
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="mobile-web-app-capable" content="yes">
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="./img/favicon.ico" type="image/x-icon">
+  	    <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Open+Sans'>
+  	    <link rel="stylesheet" href="./css/checkbox.css">
+        <link rel="stylesheet" href="./css/style3.css">
+        <link rel="stylesheet" href="./css/bootstrap.min.css" />
 		
-			<header>
-			
-				<h1 id="cabecera">
-					
-				</h1>
-				<h2>
-					<strong>
-						¿Olvidaste tu contrase&ntilde;a?
-					</strong>
-					<br>
-					Haz click <a id="more" href="#"><strong><span style="color: red;">AQUI</span></strong></a> para generar una nueva contrase&ntilde;a
-				</h2>
-				
-				<div class="support-note">
-					<span class="note-ie">Lo sentimos, la version de su navegador no es compatible con la aplicacion.</span>
-				</div>
-				
-			</header>
-			<section class="main">
-				<form class="form-2" id="formLogin" name="formLogin" method="post" action="./Action" >
-				<input type="hidden" id="key1" name="key" value="-5" />
-				    <h1></h1>	
-					<p class="float">
-						<label for="login"><i class="icon-user"></i>Usuario</label>
-						<input type="text" name="usuario" id="usuario" placeholder="Usuario" onKeyUp="this.value=this.value.toUpperCase();">
-					</p>
-					<p class="float">
-						<label for="password"><i class="icon-lock"></i>Password</label>
-						<input type="password" name="clave"  id="clave" placeholder="Password" class="showpassword">
-					</p>
-					<p class="clearfix"> 
-						<input type="submit" name="dologin" id="dologin" value="Ingresar">
-						
-					</p>
-				</form>​​
-			</section>
-			
-        </div>
-        
-        <div class="overlay">
-		<div class="wrapper">
-		<h2><strong>Recuperar Contraseña</strong> </h2>
-		<p>
-		Por favor ingrese los datos que se le solicitan para confirmar su identidad. 
-		</p>
-		<form class="form-4" id="formcatpcha" name="formcatpcha" method="post" action="./Action" >
-		<input type="hidden" id="key2" name="key" value="-3" />
-		<p class="float">
-			<input type="text" name="userlogin" id="userlogin" placeholder="Usuario" onKeyUp="this.value=this.value.toUpperCase();">
-		</p>
-		<p class="float">
-			<input type="text" name="pregunta"  id="pregunta" placeholder="Pregunta" disabled="disabled">
-		</p>
-		<p class="float">
-			<input type="text" name="respuesta"  id="respuesta" placeholder="Respuesta">
-		</p>
-		<p class="clearfix">
-			<!--indicador de progreso de carga del captcha-->
-			<img 
-				id="captchaimg" 
-				src="" 
-				border="1" 
-				/>
-			<br>
-			<input id="captcha" name="captcha" type="text" maxlength="6" placeholder="Captcha" style="width:150px" onKeyUp="this.value=this.value.toUpperCase();">
-			<br>
-		</p>
-		<p class="clearfix"> 
-			<input type="submit" name="grabar" id="grabar" value="Grabar" class="captcha">
-			<input type="submit" name="cancel" id="cancel" value="Cancelar" class="captcha">
-		</p>
-			
-		</form>
-		</div>
-		</div>
-        <!-- jQuery if needed -->
-        
-        <footer class="footer-init">
-        	<hr>
-			<p>&copy; Company 2015</p>
-		</footer>
-        
-    </body>
 
+		<!--inline styles related to this page-->
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+
+		<body >
+		<div class="cont">
+		  <div class="demo">
+		    <div class="login">
+		     <form id="formLogin" name="formLogin" method="post" action="./Action" >
+		     <input type="hidden" id="lang" name="lang" value="es" />
+		     <input type="hidden" id="key1" name="key" value="-5" />
+		     <input type="hidden" id="iscrypt" name="iscrypt" value="true" />		     
+		      <div class="fadeInUp animation-delay8" style="text-align: center;border-bottom: 1px solid rgba(255, 255, 255, 0.2);padding-bottom: 25px;">		      
+		      	<h3 style="color: white;">MovilWay</h3>
+		      </div>
+		     <!--  <div class="loginlabel i18n" id="login.ingreso"></div> -->
+		      <div class="login__form">
+		        <div class="login__row">
+		          <svg class="login__icon name svg-icon" viewBox="0 0 20 20">
+		            <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8" />
+		          </svg>
+		          <input type="text" class="login__input name i18n" name="usuario" id="usuario" placeholder="" onKeyUp="this.value=this.value.toUpperCase();"/>
+		        </div>
+		        <div class="login__row">
+		          <svg class="login__icon pass svg-icon" viewBox="0 0 20 20">
+		            <path d="M0,20 20,20 20,8 0,8z M10,13 10,16z M4,8 a6,8 0 0,1 12,0" />
+		          </svg>
+		          <input type="password" class="login__input pass i18n" name="clave" id="clave" placeholder=""/>
+		        </div>
+		        <!-- <div class="conectado"><span class="i18n" id="login.recuerdame">Mantenme conectado</span> <span class="glyphicon glyphicon-ok-circle pull-right text-success2" style="font-size: 25px;"></span></div> -->
+		        <div class="ac-custom ac-radio ac-checkbox ac-checkmark">
+		        	<ul>
+						<li><input id="remember" name="remember" type="checkbox"><label for="remember" class="i18n" id="login.recuerdame">Mantenme conectado</label></li>
+					</ul>		        
+		        </div>
+		        <button type="button" class="login__submit" id="dologin"><span class="glyphicon glyphicon-log-in pull-center" style="font-size: 25px;"></span> </button>		        		        
+		       </div>
+		       </form>
+		    </div>
+		  </div>
+		</div>
+    	<script src="./script/jquery-2.1.4.min.js"></script>
+    	<script src="./script/security/jquery.jcryption-1.1.min.js"></script>
+    	<script src="./script/jquery.i18n.properties.js"></script>
+    	<script src="./script/core.js"></script>
+    	<!-- Boostrap -->
+		<script src="./script/bootstrap.min.js"></script>
+        <!-- Noty -->
+    	<script src="./script/jquery.noty.packaged.min.js"></script>
+		<script src="./script/userAgentScript.js"></script>
+		<script src="./script/validateDesk.js"></script>
+</body>
 </html>

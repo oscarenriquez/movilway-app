@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -20,16 +21,21 @@ import movilway.dao.domain.Usuario;
 import movilway.service.UsuarioService;
 import movilway.service.impl.UsuarioServiceImpl;
 import net.sf.json.JSONObject;
+import security.dao.ParametroDao;
+import security.dao.domain.Empresa;
 import security.dao.domain.Parametro;
 import security.service.ParametroService;
 import security.service.SecurityService;
 import security.service.impl.ParametroServiceImpl;
 import security.service.impl.SecurityServiceImpl;
 import security.view.bean.SessionBean;
+import sun.misc.BASE64Encoder;
 
 public class SessionHelper implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	public static final String ID_ENTIDAD = "idEntidad";
+	public static final String NOM_ENTIDAD = "nombreEntidad";
 	private final ServletContext servletContext;
 	private final SecurityService securityService;
 	private final UsuarioService usuarioService;
@@ -263,5 +269,222 @@ public class SessionHelper implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	public void setSessionAttrEntidad(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		Long idEntidad = 0L; 		
+		String nombreEntidad = "";				
+				
+		if (session != null) {
+			SessionBean bean = (SessionBean) session.getAttribute("sessionBean");
+			if (bean != null) {
+				security.dao.domain.Usuario usuario = bean.getUsuario();
+				Long idUsuario = usuario.getId();
+				Empresa empresa = getEmpresa(idUsuario);
+				if (empresa != null) {
+					idEntidad = empresa.getId();
+					nombreEntidad = empresa.getNombre();
 
+				}
+			}
+		}				
+		session.setAttribute(ID_ENTIDAD, idEntidad);
+		session.setAttribute(NOM_ENTIDAD, nombreEntidad);					
+	}
+	
+	protected Empresa getEmpresa(Long userId){
+		Empresa emp = null;
+		
+		try {
+			security.dao.util.HibernateUtil.beginTransaction();
+			Empresa empresa = securityService.getEmpresaByUsuario(userId);
+			if(empresa != null){
+				emp = empresa;
+			}
+			security.dao.util.HibernateUtil.commitTransaction();
+		} catch (security.dao.exception.InfraestructureException e) {
+			try {
+				security.dao.util.HibernateUtil.rollbackTransaction();
+			} catch (security.dao.exception.InfraestructureException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				security.dao.util.HibernateUtil.closeSession();
+			} catch (security.dao.exception.InfraestructureException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return emp;
+	}
+	
+	public void getParameters(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		StringBuilder css = new StringBuilder();
+		try {
+			security.dao.util.HibernateUtil.beginTransaction();
+			SessionBean sb = (SessionBean) req.getSession(false).getAttribute("sessionBean");
+			Empresa empresa = null;
+			if(sb != null) {
+				empresa = getSecurityService().getEmpresaByUsuario(sb.getUsuario().getId());
+			} else {
+				empresa = (Empresa) req.getSession(false).getAttribute("empresa");
+			}
+			
+			Long idEmpresa = (empresa != null ? empresa.getId() : 0L);
+			Parametro parambg = getParametroService().getParametroXEmpresa(idEmpresa, "BACKGROUD-SEGURIDAD");
+			Parametro paramcl = getParametroService().getParametroXEmpresa(idEmpresa, "NAVBARCOLOR");
+			Parametro parFocl = getParametroService().getParametroXEmpresa(idEmpresa, "NAVBARFONTCOLOR");
+			Parametro parLkcl = getParametroService().getParametroXEmpresa(idEmpresa, "NAVBARLINKCOLOR");
+			
+			Character tipo1 = parambg != null ? parambg.getTipo() : null;
+			Character tipo2 = paramcl != null ? paramcl.getTipo() : null;
+			Character tipo3 = parFocl != null ? parFocl.getTipo() : null;
+			Character tipo4 = parLkcl != null ? parLkcl.getTipo() : null;
+			
+			if(ParametroDao.TIPO_IMAGEN.equals(tipo1)){
+				String img =new BASE64Encoder().encode(parambg.getImagen());
+				img = img.replaceAll("\\t", "");
+				img = img.replaceAll("\\n", "");
+				img = img.replaceAll("\\s", "");
+				img = img.replaceAll(" ", "");
+				css.append("body { \n");
+				css.append("background-image: url(\"data:image/png;base64,").append(img).append("\"); \n");
+				css.append("background-attachment: fixed !important; \n");				
+				css.append("background-repeat: no-repeat !important; \n");
+				css.append("background-position: bottom center !important; \n");
+				css.append("-webkit-background-size:cover !important; \n");
+				css.append("-moz-background-size: cover !important; \n");
+				css.append("background-size: cover !important; \n");
+				css.append("} \n");
+				
+			} else if(ParametroDao.TIPO_COLOR.equals(tipo1)){
+				
+				String[] valores = parambg.getValor().split(Pattern.quote("|"), 3);
+				String stopColor1 = valores[0];
+				String stopColor2 = valores[1];
+				String angle = valores[2];
+				
+				css.append("body {  \n");
+				css.append("background: -webkit-linear-gradient(").append(angle).append("deg, ").append(stopColor1).append(", ").append(stopColor2).append(") !important;  \n");
+				css.append("background: -o-linear-gradient(").append(angle).append("deg, ").append(stopColor1).append(", ").append(stopColor2).append("); !important;  \n");
+				css.append("background: -moz-linear-gradient(").append(angle).append("deg, ").append(stopColor1).append(", ").append(stopColor2).append("); !important;  \n");
+				css.append("background: linear-gradient(").append(angle).append("deg, ").append(stopColor1).append(", ").append(stopColor2).append("); !important;  \n");
+				css.append("}  \n");
+			}
+			
+			if(ParametroDao.TIPO_COLOR.equals(tipo2) && ParametroDao.TIPO_FONT_COLOR.equals(tipo3) && ParametroDao.TIPO_COLOR.equals(tipo4)){
+				if(!paramcl.getValor().equalsIgnoreCase("null") && paramcl.getValor().contains("|")){
+					String[] valBg = paramcl.getValor().split(Pattern.quote("|"), 3);
+					String stopColorBg1 = valBg[0];
+					String stopColorBg2 = valBg[1];
+					css.append(".navbar-inverse {  \n");
+					css.append("background-color: "+stopColorBg1+" !important;  \n");
+					css.append("border-color: "+stopColorBg2+" !important;  \n");
+					css.append("}  \n");					
+					css.append(".navbar-inverse .navbar-toggle { ");
+					css.append("border-color: "+stopColorBg1+"; ");
+					css.append("} ");
+					css.append(".navbar-inverse .navbar-toggle:hover, ");
+					css.append(".navbar-inverse .navbar-toggle:focus { ");
+					css.append("background-color: "+stopColorBg2+"; ");
+					css.append("} ");
+					css.append(".navbar-inverse .navbar-nav .dropdown-toggle:hover, ");
+					css.append(".navbar-inverse .navbar-nav .dropdown-toggle:focus { ");
+					css.append("background-color: "+stopColorBg2+"; ");
+					css.append("} ");
+					css.append(".navbar-inverse { ");
+					css.append("background-image: -webkit-gradient(linear, left 0%, left 100%, from("+stopColorBg1+"), to("+stopColorBg2+")) !important; ");
+					css.append("background-image: -webkit-linear-gradient(top, "+stopColorBg1+", 0%, "+stopColorBg2+", 100%) !important; ");
+					css.append("background-image: -moz-linear-gradient(top, "+stopColorBg1+" 0%, "+stopColorBg2+" 100%) !important; ");
+					css.append("background-image: linear-gradient(to bottom, "+stopColorBg1+" 0%, "+stopColorBg2+" 100%) !important; ");
+					css.append("background-repeat: repeat-x; ");					
+					css.append("} ");
+				}
+				if(!parLkcl.getValor().equalsIgnoreCase("null") && parLkcl.getValor().contains("|")){
+					String[] valLk = parLkcl.getValor().split(Pattern.quote("|"));
+					String stopColorLk1 = valLk[0];
+					String stopColorLk2 = valLk[1];
+					
+					css.append(".navbar-inverse .navbar-nav > li > a:hover, \n");
+					css.append(".navbar-inverse .navbar-nav > li > a:focus { \n");					
+					css.append("background-color: "+stopColorLk1+" !important; \n");
+					css.append("} \n");					
+					css.append(".navbar-inverse .navbar-nav > .active > a, \n");
+					css.append(".navbar-inverse .navbar-nav > .active > a:hover, \n");
+					css.append(".navbar-inverse .navbar-nav > .active > a:focus { \n");					
+					css.append("background-color: "+stopColorLk2+" !important; \n");
+					css.append("} \n");
+					css.append(".navbar-inverse .navbar-nav > .active > a { \n");
+					css.append("background-image: -webkit-linear-gradient(top, "+stopColorLk1+" 0%, "+stopColorLk2+" 100%) !important; \n");
+					css.append("background-image:         linear-gradient(to bottom, "+stopColorLk1+" 0%, "+stopColorLk2+" 100%) !important; \n");					
+					css.append("background-repeat: repeat-x; ");
+					css.append("-webkit-box-shadow: inset 0 3px 9px "+stopColorLk1+" !important; ");
+					css.append("box-shadow: inset 0 3px 9px "+stopColorLk1+" !important; ");
+					css.append("} ");
+					css.append(".navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus { ");
+					css.append("background-color: "+stopColorLk1+" !important; ");					
+					css.append("} ");
+				}
+				if(!parFocl.getValor().equalsIgnoreCase("null")){										
+					String fontColor = parFocl.getValor();										
+															
+					css.append(".navbar-inverse .navbar-brand { ");
+					css.append("color: "+fontColor+"; ");
+					css.append("} ");
+					css.append(".navbar-inverse .navbar-brand:hover, ");
+					css.append(".navbar-inverse .navbar-brand:focus { ");
+					css.append("color: "+fontColor+"; ");
+					css.append("opacity: 0.8; ");
+					css.append("background-color: transparent; ");
+					css.append("} ");
+					css.append(".navbar-inverse .navbar-text { ");
+					css.append("color: "+fontColor+"; ");
+					css.append("} ");
+					css.append(".navbar-inverse .navbar-nav > li > a { ");
+					css.append("color: "+fontColor+"; ");
+					css.append("} ");
+					css.append(".navbar-inverse .navbar-nav > li > a:hover, ");
+					css.append(".navbar-inverse .navbar-nav > li > a:focus { ");
+					css.append("color: "+fontColor+"; ");					
+					css.append("} ");
+					css.append(".navbar-inverse .navbar-nav > .active > a, ");
+					css.append(".navbar-inverse .navbar-nav > .active > a:hover, ");
+					css.append(".navbar-inverse .navbar-nav > .active > a:focus { ");
+					css.append("color: "+fontColor+"; ");					
+					css.append("} ");
+					css.append(".navbar-inverse .navbar-nav > .disabled > a, ");
+					css.append(".navbar-inverse .navbar-nav > .disabled > a:hover, ");
+					css.append(".navbar-inverse .navbar-nav > .disabled > a:focus { ");
+					css.append("color: "+fontColor+"; ");
+					css.append("background-color: transparent; ");
+					css.append("} ");					
+					css.append(".navbar-inverse .navbar-toggle .icon-bar { ");
+					css.append("background-color: "+fontColor+"; ");
+					css.append("} ");				
+					css.append(".navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus { ");					
+					css.append("color: "+fontColor+" !important; ");
+					css.append("} ");
+				}								
+			}
+						
+			security.dao.util.HibernateUtil.commitTransaction();
+		}  catch(security.dao.exception.InfraestructureException e){
+			try {
+				security.dao.util.HibernateUtil.rollbackTransaction();
+			} catch(security.dao.exception.InfraestructureException e1){
+				e.printStackTrace();
+			}
+			e.printStackTrace();
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		resp.setContentType("text/css)");
+		resp.getWriter().print(css.toString());
+	}
 }

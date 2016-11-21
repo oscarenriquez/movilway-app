@@ -63,6 +63,21 @@ public final class FechaHoraUtil {
 		Calendar now = Calendar.getInstance();
 		return sdf.format(now.getTime());
 	}
+	
+	public static final String getFechaStringLarga(Date fecha) {
+		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
+		Calendar nuevaFecha = Calendar.getInstance();
+
+		try {
+			nuevaFecha.setTime(sdf.parse(sdf.format(fecha)));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		return sdf.format(nuevaFecha.getTime());
+	}
 
 	public static final String getTime(Calendar fecha) {
 		int horas = fecha.get(Calendar.HOUR_OF_DAY);

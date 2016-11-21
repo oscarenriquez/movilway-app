@@ -1,20 +1,33 @@
-<%@page import="security.dao.exception.InfraestructureException"%>
-<%@page import="security.dao.util.HibernateUtil"%>
-<%@page import="security.view.bean.SessionBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="security.dao.exception.InfraestructureException"%>
+<%@ page import="security.dao.util.HibernateUtil"%>
+<%@ page import="security.view.bean.SessionBean"%>
+<%@ page import="security.dao.domain.Usuario"%>
+<%@ page import="java.util.Date"%>
+<%@ page import="movilway.service.util.FechaHoraUtil"%>
 <%@ page import="movilway.view.helper.ConstantsHelper"%>
 <%
 HttpSession sessionRequest = request.getSession(false);
-String urlApp = "http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
+String urlApp = "http://"+request.getServerName();
+Boolean isSuper = false;
+Date dNow = new Date( );
 
 if(sessionRequest == null){
 	response.sendRedirect(urlApp);
 }else{
 	SessionBean sessionBean = (SessionBean) sessionRequest.getAttribute("sessionBean");
 	if(sessionBean != null){
-		System.out.println("SessionID "+sessionRequest.getId()+" | TO "+urlApp+" | USER "+sessionBean.getUsuario().getUser());
-	} else {
-		System.out.println("SessionID "+sessionRequest.getId()+" ERROR IN SESSIONBEAN ");
+		Usuario usuario = sessionBean.getUsuario();
+		if(usuario != null){
+			isSuper = usuario.getSuperUsuario().equals((byte) 1);
+			System.out.println("Fecha "+FechaHoraUtil.getStringDate(dNow)+" | TO "+urlApp+" | USER "+usuario.getUser());
+		} else {
+			System.err.println("Fecha "+FechaHoraUtil.getStringDate(dNow)+" ERROR IN USER - POSIBLE ATAQUE ");
+			response.sendRedirect(urlApp);
+		}			
+	} else {			
+		System.out.println("Fecha "+FechaHoraUtil.getStringDate(dNow)+" ERROR IN SESSIONBEAN ");
+		response.sendRedirect(urlApp);
 	}			  
 }
 %>
@@ -28,7 +41,7 @@ if(sessionRequest == null){
 		    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0" />
 		    <link rel="shortcut icon" href="./img/favicon.ico" />
 		    <link rel="stylesheet" href="./css/bootstrap.min.css" />
-		    <link rel="stylesheet" href="./css/bootstrap-theme-green.css?v1.0" />
+		    <link rel="stylesheet" href="./css/bootstrap-theme-green.css" />
 		    <style type="text/css" media="screen">
 			@import "./css/demo_table_jui.css";
 			@import "./css/demo_table_complete.css";
@@ -49,20 +62,17 @@ if(sessionRequest == null){
 		    <link rel="stylesheet" href="./css/alertify.bootstrap.css"  id="toggleCSS"  />
 		    <link rel="stylesheet" href="./css/highslide.css" />
 		    <link rel="stylesheet" href="./css/chosen.css"/>
-			<link rel="stylesheet" href="./css/page.css?v1.8" />
+			<link rel="stylesheet" href="./css/page.css" />
 			<link rel="stylesheet" href="./css/idleTimeOut.css" />
 			<link rel="stylesheet" href="./css/datepicker.css" />
-	    	<link rel="stylesheet" href="./css/datetimepicker.min.css" />
-	    	<link rel="stylesheet" href="./css/style2.css">
-	    	<link rel="stylesheet" href="./css/demo_style.css">
-	    	<link rel="stylesheet" href="./css/demoGrafic.css?v1.8">
-	    	<link rel="stylesheet" href="./css/bootstrap-switch.css">     
-	    	<link rel="stylesheet" href="./css/plantillaGrupos.css">      
-	    	<link rel="stylesheet" href="./css/etiquetasColor.css">
+	    	<link rel="stylesheet" href="./css/datetimepicker.min.css" />	    	   		   
+	    	<link rel="stylesheet" href="./css/bootstrap-switch.css">     	    	
 	    	<link rel="stylesheet" href="./css/animate.min.css">  
 	    	<link rel="stylesheet" href="./vendors/light-gallery/css/lightGallery.css">   
 	    	
-			<script src="./script/modernizr.custom.js"></script>	 											
+			<script src="./script/modernizr.custom.js"></script>
+			
+			<script src="./script/initializeCSS.js"></script>
 		    <title><%=ConstantsHelper.Title.toUpperCase()%></title>  		   
 	</head>
 	<body role="document">
@@ -121,18 +131,14 @@ if(sessionRequest == null){
 		<!-- Contenido Principal -->
 		<div class="container-fluid"  id="principal">
 			<!-- Contenido -->
-		</div>
-
-		<!-- <div id="minWidth">
-			<p align="center">Este sitio web es sólo visible en modo horizontal!!!</p>
-		</div>	 -->			
+		</div>			
 		
 		<script src="http://maps.google.com/maps/api/js?sensor=false"></script> 
 		<script src="./script/infobubble-compiled.js"></script> 
 		<script src="./script/jquery-1.9.1.js"></script>
 		<script src="./script/jquery-ui-1.9.2.custom.min.js"></script>
 		    
-			<script src="./script/jquery.throttle.min.js"></script>
+		<script src="./script/jquery.throttle.min.js"></script>
 		<script src="./script/jquery.fileDownload.js?v3.9"></script>	    
 	    <script src="./script/bootstrap.min.js"></script>
 	    <script src="./script/jquery.dataTables.min.js"></script>
@@ -166,26 +172,11 @@ if(sessionRequest == null){
 	    <script src="./script/datetimepicker.js"></script>
 	    
 	    <!-- App Own -->
-	    <script src="./script/menu.js?v1.10"></script>
-	    <script src="./script/page.js?v1.9"></script>   
-	     <script src="script/jquery.noty.packaged.min.js?v3.9"></script>
-	    <script src="script/maplace-0.1.3.js?v3.9"></script>	  
-		  <script src="./script/mapaScript.js??v3.9"></script>
-		  
-	    	    
-	    <!-- multiselect -->
-	    <script src="script/jquery.multiselects-0.3.js"></script>	 			 
-	    
-	    <!--DecimalFormat -->
-	    <script src="script/DecimalFormat.js"></script>	   	   
-	    
-		<script src="vendors/light-gallery/js/lightGallery.min.js"></script>
-		
-		  <!--noty -->
-	    <script src="script/jquery.noty.packaged.min.js"></script> 	       	    	
-	    
-	    <!-- switch -->
-	    <script src="./script/bootstrap-switch.js"></script>  
+	    <script src="./script/menu.js"></script>
+	    <script src="./script/page.js"></script>   
+	    <script src="script/jquery.noty.packaged.min.js"></script>
+	    <script src="script/maplace-0.1.3.js"></script>	  
+		<script src="./script/mapaScript.js"></script>		  	    	    	    
 	      
 	</body>
 </html>

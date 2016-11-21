@@ -6,23 +6,27 @@ CACHE:
 ./html/index.html 
 ./script/jquery-1.9.1.js
 ./img/favicon.ico
-./img/iphone_sig.jpg
+./img/bg3.jpg
 ./css/sun.css
 ./script/cache.js
+./script/security/jquery.jcryption-1.1.min.js
+./script/jquery.i18n.properties.js
+./script/core.js
 ./script/homeScreen.js
-./sigeOffline.html
+./movilwayOffline.html
 
 # / is wildcard for all pages  
 # so, for all pages, offline.html will be displayed if the user is offline
 # NB path is relative to this file
 FALLBACK:
-/sigeOffline.html
+/movilwayOffline.html
 
 # Resources that require the user to be online
 NETWORK:
 
 ./css/init.css
 ./css/style.css
+./css/style3.css
 ./css/page.css
 ./css/bootstrap-theme-green.css
 ./script/valiteDesk.js

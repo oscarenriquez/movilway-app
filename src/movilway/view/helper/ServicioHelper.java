@@ -3,7 +3,11 @@ package movilway.view.helper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,10 +23,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import movilway.dao.domain.Usuario;
+import movilway.dao.exception.InfraestructureException;
 import movilway.service.util.Alerta;
 import movilway.view.ServiceLocator;
 import movilway.view.bean.ServiceLocatorBean;
 import net.sf.json.JSONObject;
+import security.dao.domain.Empresa;
 import security.dao.domain.Rol;
 import security.service.SecurityService;
 import security.service.impl.SecurityServiceImpl;
@@ -99,7 +105,7 @@ public class ServicioHelper implements Serializable {
 		return sb.toString();
 	}
 
-	public synchronized void printJson(HttpServletResponse resp, JSONObject result) throws IOException {
+	protected synchronized void printJson(HttpServletResponse resp, JSONObject result) throws IOException {
 		resp.setContentType("application/json");
 		resp.setHeader("Cache-Control", "no-cache");
 		resp.setHeader("charset", "UTF-8");
@@ -111,12 +117,59 @@ public class ServicioHelper implements Serializable {
 			if (result != null) {
 				result.clear();
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			resp.flushBuffer();
 			e.printStackTrace();
+		} catch (IllegalStateException unused) {
+		} catch (Exception unused) {
+			System.out.println(unused.getMessage());
+		} catch (Throwable unused) {
+			System.out.println(unused.getMessage());
 		}
 	}
 
+	protected <T> JSONObject getSerializeJSONObject(T obj) throws Exception {
+		JSONObject jsObj = new JSONObject();		
+		if(obj != null){
+			Class<?> clazz = obj.getClass();		
+			Method[] methods = clazz.getDeclaredMethods();
+			for(Field field : clazz.getDeclaredFields()){				
+				Object genericValue = null;
+				for(Method method : methods){
+					if(method.getName().equalsIgnoreCase("get"+field.getName())){
+						try {
+							genericValue = method.invoke(obj);							
+							if(genericValue != null && genericValue.getClass().getPackage() != null) {
+								Class<?> c = genericValue.getClass();									
+								Package pack = c.getPackage();
+								if(!c.isPrimitive() && pack.getName().contains(".dao.domain")){
+									try {
+										Method m = c.getDeclaredMethod("getId");
+										Long id = (Long) m.invoke(genericValue);
+										jsObj.put(field.getName(), id);
+									} catch (NoSuchMethodException e){
+										jsObj.put(field.getName(), genericValue);
+									}								
+								} else if(!(genericValue instanceof Collection<?>)) {
+									jsObj.put(field.getName(), genericValue);
+								}
+							}						
+						} catch (IllegalAccessException e) {
+							e.printStackTrace();
+						} catch (IllegalArgumentException e) {
+							e.printStackTrace();
+						} catch (InvocationTargetException e) {
+							e.printStackTrace();
+						} catch (SecurityException e) {
+							e.printStackTrace();
+						}
+					}
+				}			 			
+			}				
+		}			
+		return jsObj;
+	}
+	
 	public ServiceLocator getServiceLocator() {
 		return serviceLocator;
 	}
@@ -168,23 +221,71 @@ public class ServicioHelper implements Serializable {
 	public SecurityService getSecurityService() {
 		return securityService;
 	}
+	
+	protected Long getUsuarioId() {
+		Long user = null;
+		if (getSession() != null) {
+			SessionBean bean = (SessionBean) getSession().getAttribute("sessionBean");
+			if (bean != null) {
+				user = bean.getUsuario().getId();
+			}
+		}
 
-	public void dispacherMenuLoginLog(HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {
-		dispacherController(req, resp, key, "/jsp/loginLog.jsp");
+		return user;
 	}
 
-	public void dispacherMenuTipoGrupo(HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {
-		dispacherController(req, resp, key, "/jsp/tipoGrupo.jsp");
+	protected Usuario getUsuario() throws InfraestructureException {
+		Usuario user = null;
+		if (getSession() != null) {
+			SessionBean bean = (SessionBean) getSession().getAttribute("sessionBean");
+			if (bean != null) {
+				user = getServiceLocator().getUsuarioService().getUsuario(bean.getUsuario().getId());
+			}
+		}
+
+		return user;
 	}
 
-	public void dispacherMenuUsuariosGrupo(HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {
-		dispacherController(req, resp, key, "/jsp/usuarioGrupos.jsp");
+	protected Long getEmpresaId() throws InfraestructureException {
+		Long idEmpresa = 0L;
+		if (getSession() != null) {
+			idEmpresa = (Long) getSession().getAttribute(SessionHelper.ID_ENTIDAD);
+		}
+		return idEmpresa;
 	}
+	
+	protected Long getEmpresaId(Long userId) {
+		Long idEmpresa = 0L;
 
-	public void dispacherMenuNotificacionGrupo(HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {
-		dispacherController(req, resp, key, "/jsp/notificacion.jsp");
+		try {
+			security.dao.util.HibernateUtil.beginTransaction();
+			Empresa empresa = securityService.getEmpresaByUsuario(userId);
+			if (empresa != null) {
+				idEmpresa = empresa.getId();
+			}
+			security.dao.util.HibernateUtil.commitTransaction();
+		} catch (security.dao.exception.InfraestructureException e) {
+			try {
+				security.dao.util.HibernateUtil.rollbackTransaction();
+			} catch (security.dao.exception.InfraestructureException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				security.dao.util.HibernateUtil.closeSession();
+			} catch (security.dao.exception.InfraestructureException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return idEmpresa;
 	}
-
+	
 	protected List<Usuario> getListagUsuariosAplicacionRol(String context, Long idRol) throws Exception, IOException {
 		List<Usuario> list = new ArrayList<Usuario>();
 
@@ -226,7 +327,7 @@ public class ServicioHelper implements Serializable {
 		return list;
 	}
 
-	protected List<Usuario> getListagUsuariosAplicacion(String context) throws Exception, IOException {
+	protected List<Usuario> getListaUsuariosAplicacion(String context) throws Exception, IOException {
 		List<Usuario> list = new ArrayList<Usuario>();
 
 		try {

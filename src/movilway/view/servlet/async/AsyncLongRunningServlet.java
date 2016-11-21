@@ -115,6 +115,12 @@ public class AsyncLongRunningServlet extends HttpServlet {
 									session_action.invalidate();
 									asyncContext.getRequest().getServletContext().getRequestDispatcher("/html/init.html").forward(request, response);
 								} else {
+									
+									Long idEntidad = (Long) session_action.getAttribute(SessionHelper.ID_ENTIDAD);
+									if (idEntidad == null || idEntidad == 0) {
+										action.setSessionAttrEntidad(request,response);
+									}
+									
 									String keys = request.getParameter("key") != null ? request.getParameter("key") : "0";
 									int key = Integer.parseInt(keys);
 
@@ -129,7 +135,9 @@ public class AsyncLongRunningServlet extends HttpServlet {
 											break;
 										case -3:
 											action.userPhoto(request, response);
-											break;										
+											break;			
+										case -4:										
+											action.getParameters(request, response);
 										default:
 											action.action(request, response, key);
 									}
