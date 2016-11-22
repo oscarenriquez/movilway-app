@@ -25,12 +25,6 @@
         </property>
         <property name="generaLlamada" type="java.lang.Boolean">
             <column name="genera_llamada" not-null="true" />
-        </property>
-        <set name="llamadas" table="llamada" inverse="true" lazy="true" fetch="join">
-            <key>
-                <column name="respuesta_id" />
-            </key>
-            <one-to-many class="movilway.dao.domain.Llamada" />
-        </set>
+        </property>        
     </class>
 </hibernate-mapping>

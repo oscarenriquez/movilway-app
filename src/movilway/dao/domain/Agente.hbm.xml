@@ -16,12 +16,6 @@
         </property>
         <property name="estatus" type="java.lang.Boolean">
             <column name="estatus" not-null="true" />
-        </property>
-        <set name="campanaDetalles" table="campana_detalle" inverse="true" lazy="true" fetch="join">
-            <key>
-                <column name="agente_id" />
-            </key>
-            <one-to-many class="movilway.dao.domain.CampanaDetalle" />
-        </set>
+        </property>        
     </class>
 </hibernate-mapping>

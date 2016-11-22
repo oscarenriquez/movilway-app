@@ -8,31 +8,34 @@
             <column name="pais_id" />
             <generator class="increment" />
         </id>
+        <property name="empresaId" type="java.lang.Long">
+            <column name="empresa_id" />
+        </property>
         <property name="descripcion" type="java.lang.String">
             <column name="descripcion" length="4000" />
         </property>
         <property name="abrev" type="java.lang.String">
             <column name="abrev" length="100" />
         </property>
-        <set name="estados" table="estado" inverse="true" lazy="true" fetch="select">
+        <set name="estados" table="estado" inverse="false" lazy="true" fetch="join" cascade="save-update">
             <key>
                 <column name="pais_id" not-null="true" />
             </key>
             <one-to-many class="movilway.dao.domain.Estado" />
         </set>
-        <set name="provincias" table="provincia" inverse="true" lazy="true" fetch="select">
+        <set name="provincias" table="provincia" inverse="true" lazy="true" fetch="join">
             <key>
                 <column name="pais_id" not-null="true" />
             </key>
             <one-to-many class="movilway.dao.domain.Provincia" />
         </set>
-        <set name="regionProvincias" table="region_provincia" inverse="true" lazy="true" fetch="select">
+        <set name="regionProvincias" table="region_provincia" inverse="true" lazy="true" fetch="join">
             <key>
                 <column name="pais_id" not-null="true" />
             </key>
             <one-to-many class="movilway.dao.domain.RegionProvincia" />
         </set>
-        <set name="puntoVentas" table="punto_venta" inverse="true" lazy="true" fetch="select">
+        <set name="puntoVentas" table="punto_venta" inverse="true" lazy="true" fetch="join">
             <key>
                 <column name="pais_id" />
             </key>

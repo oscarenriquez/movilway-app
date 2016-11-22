@@ -4,9 +4,9 @@
 <!-- Generated 17/11/2016 03:43:34 PM by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="movilway.dao.domain.PuntoVenta" table="punto_venta" optimistic-lock="version">
-        <id name="puntoventaId" type="java.lang.Long">
+        <id name="puntoventaId" type="java.lang.String">
             <column name="puntoventa_id" />
-            <generator class="increment" />
+            <generator class="assigned" />
         </id>
         <many-to-one name="estado" class="movilway.dao.domain.Estado" fetch="select">
             <column name="estado_id" />

@@ -17,19 +17,19 @@
         <property name="abrev" type="java.lang.String">
             <column name="abrev" length="100" />
         </property>
-        <set name="puntoVentas" table="punto_venta" inverse="true" lazy="true" fetch="select">
+        <set name="puntoVentas" table="punto_venta" inverse="true" lazy="true" fetch="join">
             <key>
                 <column name="estado_id" />
             </key>
             <one-to-many class="movilway.dao.domain.PuntoVenta" />
         </set>
-        <set name="provincias" table="provincia" inverse="true" lazy="true" fetch="select">
+        <set name="provincias" table="provincia" inverse="false" lazy="true" fetch="join" cascade="save-update">
             <key>
                 <column name="estado_id" not-null="true" />
             </key>
             <one-to-many class="movilway.dao.domain.Provincia" />
         </set>
-        <set name="regionProvincias" table="region_provincia" inverse="true" lazy="true" fetch="select">
+        <set name="regionProvincias" table="region_provincia" inverse="true" lazy="true" fetch="join">
             <key>
                 <column name="estado_id" not-null="true" />
             </key>
