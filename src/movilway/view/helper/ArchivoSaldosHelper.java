@@ -7,16 +7,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import movilway.dao.domain.ArchivoTraspasos;
+import movilway.dao.domain.ArchivoSaldos;
 import movilway.dao.exception.InfraestructureException;
 import movilway.dao.util.HibernateUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @SuppressWarnings("serial")
-public class ArchivoTraspasosHelper extends ServicioHelper {
+public class ArchivoSaldosHelper extends ServicioHelper {
 
-	public void listaArchivoTraspasos (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+	public void listaArchivoSaldos (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
 		try{
 			setDefaultValues(req, key);
 			JSONObject result = new JSONObject();
@@ -28,9 +28,9 @@ public class ArchivoTraspasosHelper extends ServicioHelper {
 				permiso = pageAcceso(req, getServicesid(), getContext());
 				if(permiso){						
 					try{
-						List<ArchivoTraspasos> listaArchivoTraspasos = getServiceLocator().getArchivosTraspasosService().getAllEntities(ArchivoTraspasos.class);
+						List<ArchivoSaldos> listaArchivosSaldos = getServiceLocator().getArchivoSaldosService().getAllEntities(ArchivoSaldos.class);
 						JSONArray lista = new JSONArray();
-						for(ArchivoTraspasos agente : listaArchivoTraspasos) {
+						for(ArchivoSaldos agente : listaArchivosSaldos) {
 							lista.add(getSerializeJSONObject(agente));
 						}
 						result.put("lista", lista);
@@ -40,12 +40,12 @@ public class ArchivoTraspasosHelper extends ServicioHelper {
 						} catch (InfraestructureException e) {
 							e.printStackTrace();
 						}
-						getAlerta().enviarAlerta("listaArchivoTraspasos", ie, getUsuarioBean(),  EMAIL);
+						getAlerta().enviarAlerta("listaArchivoSaldos", ie, getUsuarioBean(),  EMAIL);
 						ie.printStackTrace();
 						msg = DISABLED_BD;
 						isSuccess = false;
 					} catch (Exception e){
-						getAlerta().enviarAlerta("listaArchivoTraspasos", e, getUsuarioBean(),  EMAIL);
+						getAlerta().enviarAlerta("listaArchivoSaldos", e, getUsuarioBean(),  EMAIL);
 						e.printStackTrace();
 						msg = DISABLED_BD;
 						isSuccess = false;
@@ -66,7 +66,7 @@ public class ArchivoTraspasosHelper extends ServicioHelper {
 			printJson(resp, result);
 		} catch(Exception e){
 			e.printStackTrace();
-			getAlerta().enviarAlerta("listaArchivoTraspasos", e, getUsuarioBean(), ServicioHelper.EMAIL);
+			getAlerta().enviarAlerta("listaArchivoSaldos", e, getUsuarioBean(), ServicioHelper.EMAIL);
 		}
 	}
 }

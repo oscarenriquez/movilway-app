@@ -1,12 +1,14 @@
 package movilway.dao.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @SuppressWarnings("serial")
 public class Pais implements Serializable {
 
 	private Long paisId;
+	private Long empresaId;
 	private String descripcion;
 	private String abrev;
 	private Set<Estado> estados;
@@ -20,6 +22,14 @@ public class Pais implements Serializable {
 
 	public void setPaisId(Long paisId) {
 		this.paisId = paisId;
+	}
+
+	public Long getEmpresaId() {
+		return empresaId;
+	}
+
+	public void setEmpresaId(Long empresaId) {
+		this.empresaId = empresaId;
 	}
 
 	public String getDescripcion() {
@@ -68,6 +78,19 @@ public class Pais implements Serializable {
 
 	public void setPuntoVentas(Set<PuntoVenta> puntoVentas) {
 		this.puntoVentas = puntoVentas;
+	}
+
+	public boolean addEstado(Estado e) {
+		if(estados == null){
+			estados = new HashSet<>();
+		}
+		e.setPais(this);
+		return estados.add(e);
+	}
+
+	public boolean removeEstado(Estado e) {
+		e.setPais(null);
+		return estados.remove(e);
 	}
 
 }

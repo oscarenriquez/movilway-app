@@ -1,17 +1,19 @@
 package movilway.view.helper;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import movilway.dao.domain.TipoPuntoVenta;
 import movilway.dao.exception.InfraestructureException;
 import movilway.dao.util.HibernateUtil;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @SuppressWarnings("serial")
@@ -260,7 +262,8 @@ public class TipoPuntoVentaHelper extends ServicioHelper {
 				permiso = pageAcceso(req, getServicesid(), getContext());
 				if(permiso){						
 					try{
-						List<TipoPuntoVenta> listaTipoPuntoVenta = getServiceLocator().getTipoPuntoVenta().getAllEntities(TipoPuntoVenta.class);
+						Map<String, Serializable> parameters = new HashMap<>();
+						List<TipoPuntoVenta> listaTipoPuntoVenta = getServiceLocator().getTipoPuntoVenta().getAllEntitiesFiltered(TipoPuntoVenta.class, parameters);
 						JSONArray lista = new JSONArray();
 						for(TipoPuntoVenta tipoPuntoVenta : listaTipoPuntoVenta) {
 							lista.add(getSerializeJSONObject(tipoPuntoVenta));

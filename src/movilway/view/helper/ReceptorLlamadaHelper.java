@@ -1,8 +1,8 @@
 package movilway.view.helper;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.HashMap;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -10,16 +10,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import movilway.dao.domain.RespuestaLlamada;
+import movilway.dao.domain.ReceptorLlamada;
 import movilway.dao.exception.InfraestructureException;
 import movilway.dao.util.HibernateUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @SuppressWarnings("serial")
-public class RespuestaLlamadaHelper extends ServicioHelper {
+public class ReceptorLlamadaHelper extends ServicioHelper {
 
-	public void crearRespuestaLlamada (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+	public void crearReceptorLlamada (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
 		try{
 			setDefaultValues(req, key);
 			JSONObject result = new JSONObject();
@@ -30,32 +30,28 @@ public class RespuestaLlamadaHelper extends ServicioHelper {
 			if(getSession() != null){				
 				String descripcion = getStringValue(req.getParameter("descripcion"));
 				String abrev = getStringValue(req.getParameter("abrev"));
-				String efectiva = getBooleanValue(req.getParameter("efectiva"));
-				String generaLlamada = getBooleanValue(req.getParameter("generaLlamada"));
-				if(vParam(descripcion) && vParam(abrev) && vParam(efectiva) && vParam(generaLlamada)){
+				if(vParam(descripcion) && vParam(abrev)){
 					permiso = pageAcceso(req, getServicesid(), getContext());
 					if(permiso){						
 						try{
-							RespuestaLlamada respuestaLlamada = new RespuestaLlamada();
-							respuestaLlamada.setEmpresaId(getEmpresaId());
-							respuestaLlamada.setDescripcion(descripcion);
-							respuestaLlamada.setAbrev(abrev);
-							respuestaLlamada.setEstatus(Boolean.TRUE);
-							respuestaLlamada.setEfectiva(Boolean.valueOf(efectiva));
-							respuestaLlamada.setGeneraLlamada(Boolean.valueOf(generaLlamada));
-							getServiceLocator().getRespuestaLlamadaService().saveEntity(respuestaLlamada);
+							ReceptorLlamada receptorLlamada = new ReceptorLlamada();
+							receptorLlamada.setEmpresaId(getEmpresaId());
+							receptorLlamada.setDescripcion(descripcion);
+							receptorLlamada.setAbrev(abrev);
+							receptorLlamada.setEstatus(Boolean.TRUE);
+							getServiceLocator().getReceptorLlamadaService().saveEntity(receptorLlamada);
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
 							} catch (InfraestructureException e) {
 								e.printStackTrace();
 							}
-							getAlerta().enviarAlerta("crearRespuestaLlamada", ie, getUsuarioBean(),  EMAIL);
+							getAlerta().enviarAlerta("crearReceptorLlamada", ie, getUsuarioBean(),  EMAIL);
 							ie.printStackTrace();
 							msg = DISABLED_BD;
 							isSuccess = false;
 						} catch (Exception e){
-							getAlerta().enviarAlerta("crearRespuestaLlamada", e, getUsuarioBean(),  EMAIL);
+							getAlerta().enviarAlerta("crearReceptorLlamada", e, getUsuarioBean(),  EMAIL);
 							e.printStackTrace();
 							msg = DISABLED_BD;
 							isSuccess = false;
@@ -80,11 +76,11 @@ public class RespuestaLlamadaHelper extends ServicioHelper {
 			printJson(resp, result);
 		} catch(Exception e){
 			e.printStackTrace();
-			getAlerta().enviarAlerta("crearRespuestaLlamada", e, getUsuarioBean(), ServicioHelper.EMAIL);
+			getAlerta().enviarAlerta("crearReceptorLlamada", e, getUsuarioBean(), ServicioHelper.EMAIL);
 		}
 	}
 	
-	public void modificarRespuestaLlamada (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+	public void modificarReceptorLlamada (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
 		try{
 			setDefaultValues(req, key);
 			JSONObject result = new JSONObject();
@@ -93,35 +89,31 @@ public class RespuestaLlamadaHelper extends ServicioHelper {
 			String msg = "";
 			
 			if(getSession() != null){
-				String respuestaId = getNumberValue(req.getParameter("respuestaId"));				
+				String receptorId = getNumberValue(req.getParameter("receptorId"));				
 				String descripcion = getStringValue(req.getParameter("descripcion"));
 				String abrev = getStringValue(req.getParameter("abrev"));
-				String efectiva = getBooleanValue(req.getParameter("efectiva"));
-				String generaLlamada = getBooleanValue(req.getParameter("generaLlamada"));
 				String estatus = getBooleanValue(req.getParameter("estatus"));				
-				if(vParam(respuestaId) && vParam(abrev) && vParam(descripcion) && vParam(estatus) && vParam(efectiva) && vParam(generaLlamada)){
+				if(vParam(receptorId) && vParam(abrev) && vParam(descripcion) && vParam(estatus)){
 					permiso = pageAcceso(req, getServicesid(), getContext());
 					if(permiso){						
 						try{
-							RespuestaLlamada respuestaLlamada = getServiceLocator().getRespuestaLlamadaService().loadEntity(RespuestaLlamada.class, Long.parseLong(respuestaId));
-							respuestaLlamada.setDescripcion(descripcion);
-							respuestaLlamada.setAbrev(abrev);
-							respuestaLlamada.setEstatus(Boolean.valueOf(estatus));
-							respuestaLlamada.setEfectiva(Boolean.valueOf(efectiva));
-							respuestaLlamada.setGeneraLlamada(Boolean.valueOf(generaLlamada));
-							getServiceLocator().getRespuestaLlamadaService().updateEntity(respuestaLlamada);
+							ReceptorLlamada receptorLlamada = getServiceLocator().getReceptorLlamadaService().loadEntity(ReceptorLlamada.class, Long.parseLong(receptorId));
+							receptorLlamada.setDescripcion(descripcion);
+							receptorLlamada.setAbrev(abrev);
+							receptorLlamada.setEstatus(Boolean.valueOf(estatus));
+							getServiceLocator().getReceptorLlamadaService().updateEntity(receptorLlamada);
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
 							} catch (InfraestructureException e) {
 								e.printStackTrace();
 							}
-							getAlerta().enviarAlerta("modificarRespuestaLlamada", ie, getUsuarioBean(),  EMAIL);
+							getAlerta().enviarAlerta("modificarReceptorLlamada", ie, getUsuarioBean(),  EMAIL);
 							ie.printStackTrace();
 							msg = DISABLED_BD;
 							isSuccess = false;
 						} catch (Exception e){
-							getAlerta().enviarAlerta("modificarRespuestaLlamada", e, getUsuarioBean(),  EMAIL);
+							getAlerta().enviarAlerta("modificarReceptorLlamada", e, getUsuarioBean(),  EMAIL);
 							e.printStackTrace();
 							msg = DISABLED_BD;
 							isSuccess = false;
@@ -146,11 +138,11 @@ public class RespuestaLlamadaHelper extends ServicioHelper {
 			printJson(resp, result);
 		} catch(Exception e){
 			e.printStackTrace();
-			getAlerta().enviarAlerta("modificarRespuestaLlamada", e, getUsuarioBean(), ServicioHelper.EMAIL);
+			getAlerta().enviarAlerta("modificarReceptorLlamada", e, getUsuarioBean(), ServicioHelper.EMAIL);
 		}
 	}
 	
-	public void consultarRespuestaLlamada (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+	public void consultarReceptorLlamada (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
 		try{
 			setDefaultValues(req, key);
 			JSONObject result = new JSONObject();
@@ -159,25 +151,25 @@ public class RespuestaLlamadaHelper extends ServicioHelper {
 			String msg = "";
 			
 			if(getSession() != null){				
-				String respuestaId = getNumberValue(req.getParameter("respuestaId"));
-				if(vParam(respuestaId)){
+				String receptorId = getNumberValue(req.getParameter("receptorId"));
+				if(vParam(receptorId)){
 					permiso = pageAcceso(req, getServicesid(), getContext());
 					if(permiso){						
 						try{
-							RespuestaLlamada respuestaLlamada = getServiceLocator().getRespuestaLlamadaService().loadEntity(RespuestaLlamada.class, Long.parseLong(respuestaId));
-							result.put("model", getSerializeJSONObject(respuestaLlamada));							
+							ReceptorLlamada receptorLlamada = getServiceLocator().getReceptorLlamadaService().loadEntity(ReceptorLlamada.class, Long.parseLong(receptorId));
+							result.put("model", getSerializeJSONObject(receptorLlamada));							
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
 							} catch (InfraestructureException e) {
 								e.printStackTrace();
 							}
-							getAlerta().enviarAlerta("consultarRespuestaLlamada", ie, getUsuarioBean(),  EMAIL);
+							getAlerta().enviarAlerta("consultarReceptorLlamada", ie, getUsuarioBean(),  EMAIL);
 							ie.printStackTrace();
 							msg = DISABLED_BD;
 							isSuccess = false;
 						} catch (Exception e){
-							getAlerta().enviarAlerta("consultarRespuestaLlamada", e, getUsuarioBean(),  EMAIL);
+							getAlerta().enviarAlerta("consultarReceptorLlamada", e, getUsuarioBean(),  EMAIL);
 							e.printStackTrace();
 							msg = DISABLED_BD;
 							isSuccess = false;
@@ -202,11 +194,11 @@ public class RespuestaLlamadaHelper extends ServicioHelper {
 			printJson(resp, result);
 		} catch(Exception e){
 			e.printStackTrace();
-			getAlerta().enviarAlerta("consultarRespuestaLlamada", e, getUsuarioBean(), ServicioHelper.EMAIL);
+			getAlerta().enviarAlerta("consultarReceptorLlamada", e, getUsuarioBean(), ServicioHelper.EMAIL);
 		}
 	}
 	
-	public void eliminarRespuestaLlamada (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+	public void eliminarReceptorLlamada (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
 		try{
 			setDefaultValues(req, key);
 			JSONObject result = new JSONObject();
@@ -215,25 +207,25 @@ public class RespuestaLlamadaHelper extends ServicioHelper {
 			String msg = "";
 			
 			if(getSession() != null){				
-				String respuestaId = getNumberValue(req.getParameter("respuestaId"));
-				if(vParam(respuestaId)){
+				String receptorId = getNumberValue(req.getParameter("receptorId"));
+				if(vParam(receptorId)){
 					permiso = pageAcceso(req, getServicesid(), getContext());
 					if(permiso){						
 						try{
-							RespuestaLlamada respuestaLlamada = getServiceLocator().getRespuestaLlamadaService().loadEntity(RespuestaLlamada.class, Long.parseLong(respuestaId));
-							getServiceLocator().getRespuestaLlamadaService().deleteEntity(respuestaLlamada);							
+							ReceptorLlamada receptorLlamada = getServiceLocator().getReceptorLlamadaService().loadEntity(ReceptorLlamada.class, Long.parseLong(receptorId));
+							getServiceLocator().getReceptorLlamadaService().deleteEntity(receptorLlamada);							
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
 							} catch (InfraestructureException e) {
 								e.printStackTrace();
 							}
-							getAlerta().enviarAlerta("eliminarRespuestaLlamada", ie, getUsuarioBean(),  EMAIL);
+							getAlerta().enviarAlerta("eliminarReceptorLlamada", ie, getUsuarioBean(),  EMAIL);
 							ie.printStackTrace();
 							msg = DISABLED_BD;
 							isSuccess = false;
 						} catch (Exception e){
-							getAlerta().enviarAlerta("eliminarRespuestaLlamada", e, getUsuarioBean(),  EMAIL);
+							getAlerta().enviarAlerta("eliminarReceptorLlamada", e, getUsuarioBean(),  EMAIL);
 							e.printStackTrace();
 							msg = DISABLED_BD;
 							isSuccess = false;
@@ -258,11 +250,11 @@ public class RespuestaLlamadaHelper extends ServicioHelper {
 			printJson(resp, result);
 		} catch(Exception e){
 			e.printStackTrace();
-			getAlerta().enviarAlerta("eliminarRespuestaLlamada", e, getUsuarioBean(), ServicioHelper.EMAIL);
+			getAlerta().enviarAlerta("eliminarReceptorLlamada", e, getUsuarioBean(), ServicioHelper.EMAIL);
 		}
 	}
 	
-	public void listaRespuestaLlamada (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+	public void listaReceptorLlamada (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
 		try{
 			setDefaultValues(req, key);
 			JSONObject result = new JSONObject();
@@ -276,10 +268,10 @@ public class RespuestaLlamadaHelper extends ServicioHelper {
 					try{
 						Map<String, Serializable> parameters = new HashMap<>();
 						parameters.put("empresaId", getEmpresaId());
-						List<RespuestaLlamada> listaRespuestaLlamada = getServiceLocator().getRespuestaLlamadaService().getAllEntitiesFiltered(RespuestaLlamada.class, parameters);
+						List<ReceptorLlamada> listaReceptorLlamada = getServiceLocator().getReceptorLlamadaService().getAllEntitiesFiltered(ReceptorLlamada.class, parameters);
 						JSONArray lista = new JSONArray();
-						for(RespuestaLlamada respuestaLlamada : listaRespuestaLlamada) {
-							lista.add(getSerializeJSONObject(respuestaLlamada));
+						for(ReceptorLlamada receptorLlamada : listaReceptorLlamada) {
+							lista.add(getSerializeJSONObject(receptorLlamada));
 						}
 						result.put("lista", lista);
 					} catch (InfraestructureException ie) {
@@ -288,12 +280,12 @@ public class RespuestaLlamadaHelper extends ServicioHelper {
 						} catch (InfraestructureException e) {
 							e.printStackTrace();
 						}
-						getAlerta().enviarAlerta("listaRespuestaLlamada", ie, getUsuarioBean(),  EMAIL);
+						getAlerta().enviarAlerta("listaReceptorLlamada", ie, getUsuarioBean(),  EMAIL);
 						ie.printStackTrace();
 						msg = DISABLED_BD;
 						isSuccess = false;
 					} catch (Exception e){
-						getAlerta().enviarAlerta("listaRespuestaLlamada", e, getUsuarioBean(),  EMAIL);
+						getAlerta().enviarAlerta("listaReceptorLlamada", e, getUsuarioBean(),  EMAIL);
 						e.printStackTrace();
 						msg = DISABLED_BD;
 						isSuccess = false;
@@ -314,7 +306,7 @@ public class RespuestaLlamadaHelper extends ServicioHelper {
 			printJson(resp, result);
 		} catch(Exception e){
 			e.printStackTrace();
-			getAlerta().enviarAlerta("listaRespuestaLlamada", e, getUsuarioBean(), ServicioHelper.EMAIL);
+			getAlerta().enviarAlerta("listaReceptorLlamada", e, getUsuarioBean(), ServicioHelper.EMAIL);
 		}
 	}
 }

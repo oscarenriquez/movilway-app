@@ -46,6 +46,9 @@ public class ServicioHelper implements Serializable {
 	protected static final String PARAM_NECESARIOS = "No es posible realizar esta solicitud, no cuenta con los parametros necesarios!!";
 	protected static final String DISABLED_BD = "Este servicio no se encuentra disponible en este momento, intente mas tarde!!";
 	protected static final String SIN_INFO = "No existe informacion para esta consulta!!";
+	protected static final String CREATE = "¡Registro creado!";
+	protected static final String UPDATE = "¡Registro actualizado!";
+	protected static final String DELETE = "¡Registro eliminado!";
 
 	protected static final String ICON_VER = "glyphicon glyphicon-eye-open";
 	protected static final String ICON_INACTIVO = "glyphicon glyphicon-eye-close";

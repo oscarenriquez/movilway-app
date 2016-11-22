@@ -1,6 +1,7 @@
 package movilway.dao.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @SuppressWarnings("serial")
@@ -68,6 +69,21 @@ public class Estado implements Serializable {
 
 	public void setRegionProvincias(Set<RegionProvincia> regionProvincias) {
 		this.regionProvincias = regionProvincias;
+	}
+
+	public boolean addProvincia(Provincia e) {
+		if(provincias == null) {
+			provincias = new HashSet<>();
+		}
+		e.setEstado(this);
+		e.setPais(this.getPais());
+		return provincias.add(e);
+	}
+
+	public boolean removeProvincia(Provincia e) {
+		e.setEstado(null);
+		e.setPais(null);
+		return provincias.remove(e);
 	}
 
 }

@@ -1,7 +1,6 @@
 package movilway.dao.domain;
 
 import java.io.Serializable;
-import java.util.Set;
 
 @SuppressWarnings("serial")
 public class RespuestaLlamada implements Serializable {
@@ -13,7 +12,6 @@ public class RespuestaLlamada implements Serializable {
 	private Boolean estatus;
 	private Boolean efectiva;
 	private Boolean generaLlamada;
-	private Set<Llamada> llamadas;
 
 	public Long getRespuestaId() {
 		return this.respuestaId;
@@ -69,14 +67,6 @@ public class RespuestaLlamada implements Serializable {
 
 	public void setGeneraLlamada(Boolean generaLlamada) {
 		this.generaLlamada = generaLlamada;
-	}
-
-	public Set<Llamada> getLlamadas() {
-		return this.llamadas;
-	}
-
-	public void setLlamadas(Set<Llamada> llamadas) {
-		this.llamadas = llamadas;
 	}
 
 }
