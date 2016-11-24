@@ -18,14 +18,10 @@ public class PuntoVentaServiceImpl<T> extends GenericServiceImpl<T> implements P
 		genericDao =  (GenericDao<T>) dao;
 	}
 	
-	public static final PuntoVentaService<PuntoVenta> getInstance(){		
+	public static final PuntoVentaService<PuntoVenta> getInstance(){				
 		if(service == null) {
-			synchronized (service) {
-				if(service == null) {
-					service = new PuntoVentaServiceImpl<>();
-				}
-			}
-		}		
+			service = new PuntoVentaServiceImpl<>();
+		}			
 		return service;
 	}
 }

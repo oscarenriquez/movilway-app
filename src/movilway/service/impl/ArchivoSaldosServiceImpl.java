@@ -18,14 +18,10 @@ public class ArchivoSaldosServiceImpl<T> extends GenericServiceImpl<T> implement
 		genericDao =  (GenericDao<T>) dao;
 	}
 	
-	public static final ArchivoSaldosService<ArchivoSaldos> getInstance(){		
+	public static final ArchivoSaldosService<ArchivoSaldos> getInstance(){				
 		if(service == null) {
-			synchronized (service) {
-				if(service == null) {
-					service = new ArchivoSaldosServiceImpl<>();
-				}
-			}
-		}		
+			service = new ArchivoSaldosServiceImpl<>();
+		}			
 		return service;
 	}
 }

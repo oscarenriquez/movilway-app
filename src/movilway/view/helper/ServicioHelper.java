@@ -171,7 +171,7 @@ public class ServicioHelper implements Serializable {
 			}				
 		}			
 		return jsObj;
-	}
+	}			
 	
 	public ServiceLocator getServiceLocator() {
 		return serviceLocator;
@@ -486,6 +486,14 @@ public class ServicioHelper implements Serializable {
 	
 	protected String getNumberValue(String value) {
 		return value == null ? "0" : value;
+	}
+	
+	protected String getEstatus(Boolean value) {
+		return value ? "ACTIVO" : "INACTIVO";
+	}
+	
+	protected String getLabelValue(Boolean value) {
+		return value ? "SI" : "NO";
 	}
 	
 	protected boolean vParam(String param) {

@@ -6,8 +6,7 @@
   <property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
   <property name="hibernate.connection.password">octubre23</property>
   <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/movilway</property>
-  <property name="hibernate.connection.username">ojenriquez</property>
-  <property name="hibernate.default_catalog">movilway</property>
+  <property name="hibernate.connection.username">ojenriquez</property>  
   <property name="hibernate.default_schema">movilway</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
   <property name="hibernate.current_session_context_class">thread</property>
@@ -34,10 +33,11 @@
   <mapping resource="movilway/dao/domain/PuntoVenta.hbm.xml"/>
   <mapping resource="movilway/dao/domain/ReceptorLlamada.hbm.xml"/>
   <mapping resource="movilway/dao/domain/RegionProvincia.hbm.xml"/>
-  <mapping resource="movilway/dao/domain/RespuestaLLamada.hbm.xml"/>
+  <mapping resource="movilway/dao/domain/RespuestaLlamada.hbm.xml"/>
   <mapping resource="movilway/dao/domain/TipoAgente.hbm.xml"/>
   <mapping resource="movilway/dao/domain/TipoCampana.hbm.xml"/>
   <mapping resource="movilway/dao/domain/TipoPuntoVenta.hbm.xml"/>
   <mapping resource="movilway/dao/domain/Traslado.hbm.xml"/>
+  <mapping resource="movilway/dao/domain/Usuario.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>

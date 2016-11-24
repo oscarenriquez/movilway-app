@@ -10,14 +10,10 @@ public class TipoCampanaDaoHibernateImpl<T> extends GenericDaoHibernateApplicati
 
 	private TipoCampanaDaoHibernateImpl(){}
 	
-	public static final TipoCampanaDao<TipoCampana> getInstance(){		
+	public static final TipoCampanaDao<TipoCampana> getInstance(){			
 		if(dao == null) {
-			synchronized (dao) {
-				if(dao == null) {
-					dao = new TipoCampanaDaoHibernateImpl<TipoCampana>();
-				}
-			}
-		}		
+			dao = new TipoCampanaDaoHibernateImpl<TipoCampana>();
+		}				
 		return dao;
 	}
 }

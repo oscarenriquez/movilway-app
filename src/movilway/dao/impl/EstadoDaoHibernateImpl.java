@@ -10,14 +10,10 @@ public class EstadoDaoHibernateImpl<T> extends GenericDaoHibernateApplication<T>
 
 	private EstadoDaoHibernateImpl(){}
 	
-	public static final EstadoDao<Estado> getInstance(){		
+	public static final EstadoDao<Estado> getInstance(){				
 		if(dao == null) {
-			synchronized (dao) {
-				if(dao == null) {
-					dao = new EstadoDaoHibernateImpl<>();
-				}
-			}
-		}		
+			dao = new EstadoDaoHibernateImpl<>();
+		}				
 		return dao;
 	}
 }

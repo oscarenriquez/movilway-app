@@ -18,14 +18,10 @@ public class RespuestaLlamadaServiceImpl<T> extends GenericServiceImpl<T> implem
 		genericDao =  (GenericDao<T>) dao;
 	}
 	
-	public static final RespuestaLlamadaService<RespuestaLlamada> getInstance(){		
+	public static final RespuestaLlamadaService<RespuestaLlamada> getInstance(){				
 		if(service == null) {
-			synchronized (service) {
-				if(service == null) {
-					service = new RespuestaLlamadaServiceImpl<>();
-				}
-			}
-		}		
+			service = new RespuestaLlamadaServiceImpl<>();
+		}			
 		return service;
 	}
 }

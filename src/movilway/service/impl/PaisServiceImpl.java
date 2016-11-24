@@ -18,14 +18,10 @@ public class PaisServiceImpl<T> extends GenericServiceImpl<T> implements PaisSer
 		genericDao =  (GenericDao<T>) dao;
 	}
 	
-	public static final PaisService<Pais> getInstance(){		
+	public static final PaisService<Pais> getInstance(){				
 		if(service == null) {
-			synchronized (service) {
-				if(service == null) {
-					service = new PaisServiceImpl<>();
-				}
-			}
-		}		
+			service = new PaisServiceImpl<>();
+		}				
 		return service;
 	}
 }

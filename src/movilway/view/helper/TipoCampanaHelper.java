@@ -2,6 +2,7 @@ package movilway.view.helper;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,10 @@ import net.sf.json.JSONObject;
 
 @SuppressWarnings("serial")
 public class TipoCampanaHelper extends ServicioHelper {
+	
+	public void dispacherMenuTipoCampana (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {
+		dispacherController(req, resp, key, "/jsp/tipoCampana.jsp");
+	}
 	
 	public void crearTipoCampana (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
 		try{
@@ -267,7 +272,25 @@ public class TipoCampanaHelper extends ServicioHelper {
 						List<TipoCampana> listaTipoCampana = getServiceLocator().getTipoCampanaService().getAllEntitiesFiltered(TipoCampana.class, parameters);
 						JSONArray lista = new JSONArray();
 						for(TipoCampana tipoCampana : listaTipoCampana) {
-							lista.add(getSerializeJSONObject(tipoCampana));
+							List<Map<String, Object>> options = new ArrayList<>();
+							Map<String, Object> option = new HashMap<>();
+							option.put("icon", ICON_EDITAR);
+							option.put("params", "TipoCampanaCtrl.fnConsultarTipoCampana("+tipoCampana.getTipocampanaId()+")");
+							option.put("label", "Editar");
+							options.add(option);
+							
+							option = new HashMap<>();
+							option.put("icon", ICON_ELIMINAR);
+							option.put("params", "TipoCampanaCtrl.fnEliminarTipoCampana("+tipoCampana.getTipocampanaId()+")");
+							option.put("label", "Eliminar");
+							options.add(option);														
+							
+							JSONArray array = new JSONArray();														
+							
+							array.add(getHtmlLink(options));
+							array.add(tipoCampana.getDescripcion());
+							array.add(getEstatus(tipoCampana.getEstatus()));							
+							lista.add(array);
 						}
 						result.put("lista", lista);
 					} catch (InfraestructureException ie) {

@@ -10,14 +10,10 @@ public class LlamadaDaoHibernateImpl<T> extends GenericDaoHibernateApplication<T
 
 	private LlamadaDaoHibernateImpl(){}
 	
-	public static final LlamadaDao<Llamada> getInstance(){		
+	public static final LlamadaDao<Llamada> getInstance(){				
 		if(dao == null) {
-			synchronized (dao) {
-				if(dao == null) {
-					dao = new LlamadaDaoHibernateImpl<>();
-				}
-			}
-		}		
+			dao = new LlamadaDaoHibernateImpl<>();
+		}			
 		return dao;
 	}
 }

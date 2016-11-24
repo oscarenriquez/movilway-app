@@ -3,7 +3,7 @@
 <head>
 <%
 	String uri = request.getContextPath();
-    String user=(String)request.getParameter("usuario");
+    String user=(String)request.getAttribute("usuario");
 %>
 <title>MOVILWAY</title>
 <meta charset="UTF-8">

@@ -18,14 +18,10 @@ public class LlamadaServiceImpl<T> extends GenericServiceImpl<T> implements Llam
 		genericDao =  (GenericDao<T>) dao;
 	}
 	
-	public static final LlamadaService<Llamada> getInstance(){		
+	public static final LlamadaService<Llamada> getInstance(){				
 		if(service == null) {
-			synchronized (service) {
-				if(service == null) {
-					service = new LlamadaServiceImpl<>();
-				}
-			}
-		}		
+			service = new LlamadaServiceImpl<>();
+		}				
 		return service;
 	}
 }

@@ -18,14 +18,10 @@ public class TrasladoServiceImpl<T> extends GenericServiceImpl<T> implements Tra
 		genericDao =  (GenericDao<T>) dao;
 	}
 	
-	public static final TrasladoService<Traslado> getInstance(){		
+	public static final TrasladoService<Traslado> getInstance(){				
 		if(service == null) {
-			synchronized (service) {
-				if(service == null) {
-					service = new TrasladoServiceImpl<>();
-				}
-			}
-		}		
+			service = new TrasladoServiceImpl<>();
+		}				
 		return service;
 	}
 }

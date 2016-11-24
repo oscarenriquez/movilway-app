@@ -10,14 +10,10 @@ public class ArchivoSaldosDaoHibernateImpl<T> extends GenericDaoHibernateApplica
 	
 	private ArchivoSaldosDaoHibernateImpl(){}
 	
-	public static final ArchivoSaldosDao<ArchivoSaldos> getInstance(){		
+	public static final ArchivoSaldosDao<ArchivoSaldos> getInstance(){				
 		if(dao == null) {
-			synchronized (dao) {
-				if(dao == null) {
-					dao = new ArchivoSaldosDaoHibernateImpl<>();
-				}
-			}
-		}		
+			dao = new ArchivoSaldosDaoHibernateImpl<>();
+		}			
 		return dao;
 	}
 }

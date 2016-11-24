@@ -10,14 +10,10 @@ public class CampanaDetalleDaoHibernateImpl<T> extends GenericDaoHibernateApplic
 
 	private CampanaDetalleDaoHibernateImpl(){}
 	
-	public static final CampanaDetalleDao<CampanaDetalle> getInstance(){		
+	public static final CampanaDetalleDao<CampanaDetalle> getInstance(){				
 		if(dao == null) {
-			synchronized (dao) {
-				if(dao == null) {
-					dao = new CampanaDetalleDaoHibernateImpl<>();
-				}
-			}
-		}		
+			dao = new CampanaDetalleDaoHibernateImpl<>();
+		}			
 		return dao;
 	}
 }

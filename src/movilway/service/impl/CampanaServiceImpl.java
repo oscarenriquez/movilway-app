@@ -18,14 +18,10 @@ public class CampanaServiceImpl<T> extends GenericServiceImpl<T> implements Camp
 		genericDao =  (GenericDao<T>) dao;
 	}
 	
-	public static final CampanaService<Campana> getInstance(){		
+	public static final CampanaService<Campana> getInstance(){				
 		if(service == null) {
-			synchronized (service) {
-				if(service == null) {
-					service = new CampanaServiceImpl<>();
-				}
-			}
-		}		
+			service = new CampanaServiceImpl<>();
+		}			
 		return service;
 	}
 }

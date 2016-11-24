@@ -1,6 +1,7 @@
 package movilway.view.helper;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.Serializable;
 import java.util.List;
@@ -19,6 +20,10 @@ import net.sf.json.JSONObject;
 @SuppressWarnings("serial")
 public class ReceptorLlamadaHelper extends ServicioHelper {
 
+	public void dispacherMenuReceptorLlamada (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {
+		dispacherController(req, resp, key, "/jsp/receptorLlamada.jsp");
+	}
+	
 	public void crearReceptorLlamada (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
 		try{
 			setDefaultValues(req, key);
@@ -271,7 +276,26 @@ public class ReceptorLlamadaHelper extends ServicioHelper {
 						List<ReceptorLlamada> listaReceptorLlamada = getServiceLocator().getReceptorLlamadaService().getAllEntitiesFiltered(ReceptorLlamada.class, parameters);
 						JSONArray lista = new JSONArray();
 						for(ReceptorLlamada receptorLlamada : listaReceptorLlamada) {
-							lista.add(getSerializeJSONObject(receptorLlamada));
+							List<Map<String, Object>> options = new ArrayList<>();
+							Map<String, Object> option = new HashMap<>();
+							option.put("icon", ICON_EDITAR);
+							option.put("params", "ReceptorCtrl.fnConsultarReceptor("+receptorLlamada.getReceptorId()+")");
+							option.put("label", "Editar");
+							options.add(option);
+							
+							option = new HashMap<>();
+							option.put("icon", ICON_ELIMINAR);
+							option.put("params", "ReceptorCtrl.fnEliminarReceptor("+receptorLlamada.getReceptorId()+")");
+							option.put("label", "Eliminar");
+							options.add(option);														
+							
+							JSONArray array = new JSONArray();														
+							
+							array.add(getHtmlLink(options));
+							array.add(receptorLlamada.getDescripcion());
+							array.add(receptorLlamada.getAbrev());
+							array.add(getEstatus(receptorLlamada.getEstatus()));
+							lista.add(array);
 						}
 						result.put("lista", lista);
 					} catch (InfraestructureException ie) {

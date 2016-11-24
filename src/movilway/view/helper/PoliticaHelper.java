@@ -2,6 +2,7 @@ package movilway.view.helper;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,10 @@ import net.sf.json.JSONObject;
 @SuppressWarnings("serial")
 public class PoliticaHelper extends ServicioHelper {
 
+	public void dispacherMenuPolitica (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {
+		dispacherController(req, resp, key, "/jsp/politica.jsp");
+	}
+	
 	public void crearPolitica (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
 		try{
 			setDefaultValues(req, key);
@@ -275,7 +280,27 @@ public class PoliticaHelper extends ServicioHelper {
 						List<Politica> listaPolitica = getServiceLocator().getPoliticaService().getAllEntities(Politica.class);
 						JSONArray lista = new JSONArray();
 						for(Politica politica : listaPolitica) {
-							lista.add(getSerializeJSONObject(politica));
+							List<Map<String, Object>> options = new ArrayList<>();
+							Map<String, Object> option = new HashMap<>();
+							option.put("icon", ICON_EDITAR);
+							option.put("params", "PoliticaCtrl.fnConsultarPolitica("+politica.getPoliticaId()+")");
+							option.put("label", "Editar");
+							options.add(option);
+							
+							option = new HashMap<>();
+							option.put("icon", ICON_ELIMINAR);
+							option.put("params", "PoliticaCtrl.fnEliminarPolitica("+politica.getPoliticaId()+")");
+							option.put("label", "Eliminar");
+							options.add(option);														
+							
+							JSONArray array = new JSONArray();														
+							
+							array.add(getHtmlLink(options));
+							array.add(politica.getTipoCampana().getDescripcion());
+							array.add(politica.getNumLinea());
+							array.add(politica.getTexto());
+							array.add(getEstatus(politica.getEstatus()));
+							lista.add(array);
 						}
 						result.put("lista", lista);
 					} catch (InfraestructureException ie) {

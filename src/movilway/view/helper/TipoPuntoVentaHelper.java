@@ -2,6 +2,7 @@ package movilway.view.helper;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,10 @@ import net.sf.json.JSONObject;
 @SuppressWarnings("serial")
 public class TipoPuntoVentaHelper extends ServicioHelper {
 
+	public void dispacherMenuTipoPuntoVenta (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {
+		dispacherController(req, resp, key, "/jsp/tipoPuntoVenta.jsp");
+	}
+	
 	public void crearTipoPuntoVenta (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
 		try{
 			setDefaultValues(req, key);
@@ -266,7 +271,25 @@ public class TipoPuntoVentaHelper extends ServicioHelper {
 						List<TipoPuntoVenta> listaTipoPuntoVenta = getServiceLocator().getTipoPuntoVenta().getAllEntitiesFiltered(TipoPuntoVenta.class, parameters);
 						JSONArray lista = new JSONArray();
 						for(TipoPuntoVenta tipoPuntoVenta : listaTipoPuntoVenta) {
-							lista.add(getSerializeJSONObject(tipoPuntoVenta));
+							List<Map<String, Object>> options = new ArrayList<>();
+							Map<String, Object> option = new HashMap<>();
+							option.put("icon", ICON_EDITAR);
+							option.put("params", "TipoPuntoVentaCtrl.fnConsultarTipoAgente("+tipoPuntoVenta.getTipopuntoventaId()+")");
+							option.put("label", "Editar");
+							options.add(option);
+							
+							option = new HashMap<>();
+							option.put("icon", ICON_ELIMINAR);
+							option.put("params", "TipoPuntoVentaCtrl.fnEliminarTipoAgente("+tipoPuntoVenta.getTipopuntoventaId()+")");
+							option.put("label", "Eliminar");
+							options.add(option);														
+							
+							JSONArray array = new JSONArray();														
+							
+							array.add(getHtmlLink(options));
+							array.add(tipoPuntoVenta.getDescripcion());
+							array.add(getEstatus(tipoPuntoVenta.getEstatus()));							
+							lista.add(array);
 						}
 						result.put("lista", lista);
 					} catch (InfraestructureException ie) {

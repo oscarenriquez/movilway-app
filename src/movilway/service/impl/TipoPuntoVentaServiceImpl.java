@@ -18,14 +18,10 @@ public class TipoPuntoVentaServiceImpl<T> extends GenericServiceImpl<T> implemen
 		genericDao =  (GenericDao<T>) dao;
 	}
 	
-	public static final TipoPuntoVentaService<TipoPuntoVenta> getInstance(){		
+	public static final TipoPuntoVentaService<TipoPuntoVenta> getInstance(){				
 		if(service == null) {
-			synchronized (service) {
-				if(service == null) {
-					service = new TipoPuntoVentaServiceImpl<TipoPuntoVenta>();
-				}
-			}
-		}		
+			service = new TipoPuntoVentaServiceImpl<TipoPuntoVenta>();
+		}				
 		return service;
 	}
 }

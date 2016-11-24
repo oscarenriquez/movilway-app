@@ -2,6 +2,7 @@ package movilway.view.helper;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -294,7 +295,25 @@ public class EstadoHelper extends ServicioHelper {
 							List<Estado> listaEstado = getServiceLocator().getEstadoService().getAllEntitiesFiltered(Estado.class, parameters);
 							JSONArray lista = new JSONArray();
 							for(Estado estado : listaEstado) {
-								lista.add(getSerializeJSONObject(estado));
+								List<Map<String, Object>> options = new ArrayList<>();
+								Map<String, Object> option = new HashMap<>();
+								option.put("icon", ICON_EDITAR);
+								option.put("params", "EstadoCtrl.fnConsultarEstado("+estado.getEstadoId()+")");
+								option.put("label", "Editar");
+								options.add(option);
+								
+								option = new HashMap<>();
+								option.put("icon", ICON_ELIMINAR);
+								option.put("params", "EstadoCtrl.fnEliminarEstado("+estado.getEstadoId()+")");
+								option.put("label", "Eliminar");
+								options.add(option);														
+								
+								JSONArray array = new JSONArray();														
+								
+								array.add(getHtmlLink(options));								
+								array.add(estado.getDescripcion());
+								array.add(estado.getAbrev());								
+								lista.add(array);
 							}
 							result.put("lista", lista);
 						} catch (InfraestructureException ie) {
@@ -594,7 +613,25 @@ public class EstadoHelper extends ServicioHelper {
 							List<Provincia> listaProvincia = getServiceLocator().getProvinciaService().getAllEntitiesFiltered(Provincia.class, parameters);
 							JSONArray lista = new JSONArray();
 							for(Provincia provincia : listaProvincia) {
-								lista.add(getSerializeJSONObject(provincia));
+								List<Map<String, Object>> options = new ArrayList<>();
+								Map<String, Object> option = new HashMap<>();
+								option.put("icon", ICON_EDITAR);
+								option.put("params", "EstadoCtrl.fnConsultarProvincia("+provincia.getProvinciaId()+")");
+								option.put("label", "Editar");
+								options.add(option);
+								
+								option = new HashMap<>();
+								option.put("icon", ICON_ELIMINAR);
+								option.put("params", "EstadoCtrl.fnEliminarProvincia("+provincia.getProvinciaId()+")");
+								option.put("label", "Eliminar");
+								options.add(option);														
+								
+								JSONArray array = new JSONArray();														
+								
+								array.add(getHtmlLink(options));
+								array.add(provincia.getDescripcion());
+								array.add(provincia.getAbrev());								
+								lista.add(array);
 							}
 							result.put("lista", lista);
 						} catch (InfraestructureException ie) {

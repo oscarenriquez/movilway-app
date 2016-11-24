@@ -1,7 +1,10 @@
 package movilway.view.helper;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +20,10 @@ import net.sf.json.JSONObject;
 @SuppressWarnings("serial")
 public class AgenteHelper extends ServicioHelper {
 
+	public void dispacherMenuAgente (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {
+		dispacherController(req, resp, key, "/jsp/agente.jsp");
+	}
+	
 	public void crearAgente (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
 		try{
 			setDefaultValues(req, key);
@@ -266,7 +273,26 @@ public class AgenteHelper extends ServicioHelper {
 						List<Agente> listaAgente = getServiceLocator().getAgenteService().getAllEntities(Agente.class);
 						JSONArray lista = new JSONArray();
 						for(Agente agente : listaAgente) {
-							lista.add(getSerializeJSONObject(agente));
+							List<Map<String, Object>> options = new ArrayList<>();
+							Map<String, Object> option = new HashMap<>();
+							option.put("icon", ICON_EDITAR);
+							option.put("params", "fnConsultarAgente("+agente.getAgenteId()+")");
+							option.put("label", "Editar");
+							options.add(option);
+							
+							option = new HashMap<>();
+							option.put("icon", ICON_ELIMINAR);
+							option.put("params", "fnEliminarAgente("+agente.getAgenteId()+")");
+							option.put("label", "Eliminar");
+							options.add(option);														
+							
+							JSONArray array = new JSONArray();														
+							
+							array.add(getHtmlLink(options));
+							array.add(agente.getTipoAgente().getDescripcion());
+							array.add(agente.getNombre());
+							array.add(getEstatus(agente.getEstatus()));
+							lista.add(array);
 						}
 						result.put("lista", lista);
 					} catch (InfraestructureException ie) {

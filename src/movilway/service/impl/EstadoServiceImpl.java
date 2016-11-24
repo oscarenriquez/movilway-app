@@ -19,14 +19,10 @@ public class EstadoServiceImpl<T> extends GenericServiceImpl<T> implements Estad
 		genericDao =  (GenericDao<T>) dao;
 	}
 	
-	public static final EstadoService<Estado> getInstance(){		
+	public static final EstadoService<Estado> getInstance(){				
 		if(service == null) {
-			synchronized (service) {
-				if(service == null) {
-					service = new EstadoServiceImpl<>();
-				}
-			}
-		}		
+			service = new EstadoServiceImpl<>();
+		}			
 		return service;
 	}
 }

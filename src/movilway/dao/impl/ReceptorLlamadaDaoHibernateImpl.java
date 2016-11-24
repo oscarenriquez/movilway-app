@@ -10,14 +10,10 @@ public class ReceptorLlamadaDaoHibernateImpl<T> extends GenericDaoHibernateAppli
 
 	private ReceptorLlamadaDaoHibernateImpl(){}
 	
-	public static final ReceptorLlamadaDao<ReceptorLlamada> getInstance(){		
+	public static final ReceptorLlamadaDao<ReceptorLlamada> getInstance(){				
 		if(dao == null) {
-			synchronized (dao) {
-				if(dao == null) {
-					dao = new ReceptorLlamadaDaoHibernateImpl<>();
-				}
-			}
-		}		
+			dao = new ReceptorLlamadaDaoHibernateImpl<>();
+		}				
 		return dao;
 	}
 }

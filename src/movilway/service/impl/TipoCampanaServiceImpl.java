@@ -18,13 +18,9 @@ public class TipoCampanaServiceImpl<T> extends GenericServiceImpl<T> implements 
 		genericDao =  (GenericDao<T>) dao;
 	}
 	
-	public static final TipoCampanaService<TipoCampana> getInstance(){		
+	public static final TipoCampanaService<TipoCampana> getInstance(){				
 		if(service == null) {
-			synchronized (service) {
-				if(service == null) {
-					service = new TipoCampanaServiceImpl<TipoCampana>();
-				}
-			}
+			service = new TipoCampanaServiceImpl<TipoCampana>();
 		}		
 		return service;
 	}

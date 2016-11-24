@@ -18,14 +18,10 @@ public class ProvinciaServiceImpl<T> extends GenericServiceImpl<T> implements Pr
 		genericDao =  (GenericDao<T>) dao;
 	}
 	
-	public static final ProvinciaService<Provincia> getInstance(){		
+	public static final ProvinciaService<Provincia> getInstance(){				
 		if(service == null) {
-			synchronized (service) {
-				if(service == null) {
-					service = new ProvinciaServiceImpl<>();
-				}
-			}
-		}		
+			service = new ProvinciaServiceImpl<>();
+		}			
 		return service;
 	}
 }

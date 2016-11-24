@@ -10,14 +10,10 @@ public class PoliticaDaoHibernateImpl<T> extends GenericDaoHibernateApplication<
 
 	private PoliticaDaoHibernateImpl(){}
 	
-	public static final PoliticaDao<Politica> getInstance(){		
+	public static final PoliticaDao<Politica> getInstance(){				
 		if(dao == null) {
-			synchronized (dao) {
-				if(dao == null) {
-					dao = new PoliticaDaoHibernateImpl<>();
-				}
-			}
-		}		
+			dao = new PoliticaDaoHibernateImpl<>();
+		}			
 		return dao;
 	}
 }

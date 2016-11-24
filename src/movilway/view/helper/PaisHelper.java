@@ -1,7 +1,10 @@
 package movilway.view.helper;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +18,10 @@ import net.sf.json.JSONObject;
 
 @SuppressWarnings("serial")
 public class PaisHelper extends ServicioHelper {
+	
+	public void dispacherMenuPais (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {
+		dispacherController(req, resp, key, "/jsp/pais.jsp");
+	}
 
 	public void crearPais (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
 		try{
@@ -269,7 +276,25 @@ public class PaisHelper extends ServicioHelper {
 						List<Pais> listaPais = getServiceLocator().getPaisService().getAllEntities(Pais.class);
 						JSONArray lista = new JSONArray();
 						for(Pais pais : listaPais) {
-							lista.add(getSerializeJSONObject(pais));
+							List<Map<String, Object>> options = new ArrayList<>();
+							Map<String, Object> option = new HashMap<>();
+							option.put("icon", ICON_EDITAR);
+							option.put("params", "PaisCtrl.fnConsultarPais("+pais.getPaisId()+")");
+							option.put("label", "Editar");
+							options.add(option);
+							
+							option = new HashMap<>();
+							option.put("icon", ICON_ELIMINAR);
+							option.put("params", "PaisCtrl.fnEliminarTipoPais("+pais.getPaisId()+")");
+							option.put("label", "Eliminar");
+							options.add(option);														
+							
+							JSONArray array = new JSONArray();														
+							
+							array.add(getHtmlLink(options));
+							array.add(pais.getDescripcion());
+							array.add(pais.getAbrev());							
+							lista.add(array);
 						}
 						result.put("lista", lista);
 					} catch (InfraestructureException ie) {

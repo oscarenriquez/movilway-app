@@ -10,14 +10,10 @@ public class ProvinciaDaoHibernateImpl<T> extends GenericDaoHibernateApplication
 
 	private ProvinciaDaoHibernateImpl(){}
 	
-	public static final ProvinciaDao<Provincia> getInstance(){		
+	public static final ProvinciaDao<Provincia> getInstance(){				
 		if(dao == null) {
-			synchronized (dao) {
-				if(dao == null) {
-					dao = new ProvinciaDaoHibernateImpl<>();
-				}
-			}
-		}		
+			dao = new ProvinciaDaoHibernateImpl<>();
+		}			
 		return dao;
 	}
 }

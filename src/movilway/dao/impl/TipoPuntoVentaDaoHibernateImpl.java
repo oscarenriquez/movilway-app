@@ -10,14 +10,10 @@ public class TipoPuntoVentaDaoHibernateImpl<T> extends GenericDaoHibernateApplic
 
 	private TipoPuntoVentaDaoHibernateImpl(){}
 	
-	public static final TipoPuntoVentaDao<TipoPuntoVenta> getInstance(){		
+	public static final TipoPuntoVentaDao<TipoPuntoVenta> getInstance(){				
 		if(dao == null) {
-			synchronized (dao) {
-				if(dao == null) {
-					dao = new TipoPuntoVentaDaoHibernateImpl<TipoPuntoVenta>();
-				}
-			}
-		}		
+			dao = new TipoPuntoVentaDaoHibernateImpl<TipoPuntoVenta>();
+		}			
 		return dao;
 	}
 }

@@ -138,6 +138,7 @@ public class AsyncLongRunningServlet extends HttpServlet {
 											break;			
 										case -4:										
 											action.getParameters(request, response);
+											break;
 										default:
 											action.action(request, response, key);
 									}

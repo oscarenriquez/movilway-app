@@ -61,14 +61,13 @@ if(sessionRequest == null){
 			<link rel="stylesheet" href="./css/alertify.default.css"/>
 		    <link rel="stylesheet" href="./css/alertify.bootstrap.css"  id="toggleCSS"  />
 		    <link rel="stylesheet" href="./css/highslide.css" />
-		    <link rel="stylesheet" href="./css/chosen.css"/>
+		    <link rel="stylesheet" href="./css/chosen-black.css"/>
 			<link rel="stylesheet" href="./css/page.css" />
 			<link rel="stylesheet" href="./css/idleTimeOut.css" />
 			<link rel="stylesheet" href="./css/datepicker.css" />
 	    	<link rel="stylesheet" href="./css/datetimepicker.min.css" />	    	   		   
 	    	<link rel="stylesheet" href="./css/bootstrap-switch.css">     	    	
-	    	<link rel="stylesheet" href="./css/animate.min.css">  
-	    	<link rel="stylesheet" href="./vendors/light-gallery/css/lightGallery.css">   
+	    	<link rel="stylesheet" href="./css/animate.min.css">  	    	
 	    	
 			<script src="./script/modernizr.custom.js"></script>
 			

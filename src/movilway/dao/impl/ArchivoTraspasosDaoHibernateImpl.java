@@ -10,14 +10,10 @@ public class ArchivoTraspasosDaoHibernateImpl<T> extends GenericDaoHibernateAppl
 
 	private ArchivoTraspasosDaoHibernateImpl(){}
 	
-	public static final ArchivoTraspasosDao<ArchivoTraspasos> getInstance(){		
+	public static final ArchivoTraspasosDao<ArchivoTraspasos> getInstance(){				
 		if(dao == null) {
-			synchronized (dao) {
-				if(dao == null) {
-					dao = new ArchivoTraspasosDaoHibernateImpl<>();
-				}
-			}
-		}		
+			dao = new ArchivoTraspasosDaoHibernateImpl<>();
+		}			
 		return dao;
 	}
 }

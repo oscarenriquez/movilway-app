@@ -18,13 +18,9 @@ public class AgenteServiceImpl<T> extends GenericServiceImpl<T> implements Agent
 		genericDao =  (GenericDao<T>) dao;
 	}
 	
-	public static final AgenteService<Agente> getInstance(){		
+	public static final AgenteService<Agente> getInstance(){				
 		if(Service == null) {
-			synchronized (Service) {
-				if(Service == null) {
-					Service = new AgenteServiceImpl<>();
-				}
-			}
+			Service = new AgenteServiceImpl<>();
 		}		
 		return Service;
 	}

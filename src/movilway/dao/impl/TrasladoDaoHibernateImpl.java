@@ -10,14 +10,10 @@ public class TrasladoDaoHibernateImpl<T> extends GenericDaoHibernateApplication<
 
 	private TrasladoDaoHibernateImpl(){}
 	
-	public static final TrasladoDao<Traslado> getInstance(){		
+	public static final TrasladoDao<Traslado> getInstance(){				
 		if(dao == null) {
-			synchronized (dao) {
-				if(dao == null) {
-					dao = new TrasladoDaoHibernateImpl<>();
-				}
-			}
-		}		
+			dao = new TrasladoDaoHibernateImpl<>();
+		}			
 		return dao;
 	}
 }

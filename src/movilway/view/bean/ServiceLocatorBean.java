@@ -13,12 +13,8 @@ public class ServiceLocatorBean implements ServiceLocator {
 	private ServiceLocatorBean() {}
 	
 	public static final ServiceLocator getInstance(){
-		if(serviceLocator != null){
-			synchronized (serviceLocator) {
-				if(serviceLocator != null){
-					serviceLocator = new ServiceLocatorBean();
-				}
-			}
+		if(serviceLocator == null){			
+			serviceLocator = new ServiceLocatorBean();				
 		}
 		return serviceLocator;
 	}

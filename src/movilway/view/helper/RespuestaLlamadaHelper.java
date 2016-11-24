@@ -2,6 +2,7 @@ package movilway.view.helper;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,10 @@ import net.sf.json.JSONObject;
 @SuppressWarnings("serial")
 public class RespuestaLlamadaHelper extends ServicioHelper {
 
+	public void dispacherMenuRespuestaLlamada (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {
+		dispacherController(req, resp, key, "/jsp/respuestaLlamada.jsp");
+	}
+	
 	public void crearRespuestaLlamada (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
 		try{
 			setDefaultValues(req, key);
@@ -279,7 +284,28 @@ public class RespuestaLlamadaHelper extends ServicioHelper {
 						List<RespuestaLlamada> listaRespuestaLlamada = getServiceLocator().getRespuestaLlamadaService().getAllEntitiesFiltered(RespuestaLlamada.class, parameters);
 						JSONArray lista = new JSONArray();
 						for(RespuestaLlamada respuestaLlamada : listaRespuestaLlamada) {
-							lista.add(getSerializeJSONObject(respuestaLlamada));
+							List<Map<String, Object>> options = new ArrayList<>();
+							Map<String, Object> option = new HashMap<>();
+							option.put("icon", ICON_EDITAR);
+							option.put("params", "RespuestaCtrl.fnConsultarRespuesta("+respuestaLlamada.getRespuestaId()+")");
+							option.put("label", "Editar");
+							options.add(option);
+							
+							option = new HashMap<>();
+							option.put("icon", ICON_ELIMINAR);
+							option.put("params", "RespuestaCtrl.fnEliminarRespuesta("+respuestaLlamada.getRespuestaId()+")");
+							option.put("label", "Eliminar");
+							options.add(option);														
+							
+							JSONArray array = new JSONArray();														
+							
+							array.add(getHtmlLink(options));
+							array.add(respuestaLlamada.getDescripcion());
+							array.add(respuestaLlamada.getAbrev());
+							array.add(getLabelValue(respuestaLlamada.getEfectiva()));
+							array.add(getLabelValue(respuestaLlamada.getGeneraLlamada()));
+							array.add(getEstatus(respuestaLlamada.getEstatus()));
+							lista.add(array);
 						}
 						result.put("lista", lista);
 					} catch (InfraestructureException ie) {

@@ -2,6 +2,7 @@ package movilway.view.helper;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,10 @@ import net.sf.json.JSONObject;
 @SuppressWarnings("serial")
 public class TipoAgenteHelper extends ServicioHelper {
 
+	public void dispacherMenuTipoAgente (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {
+		dispacherController(req, resp, key, "/jsp/tipoAgente.jsp");
+	}
+	
 	public void crearTipoAgente (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
 		try{
 			setDefaultValues(req, key);
@@ -271,7 +276,26 @@ public class TipoAgenteHelper extends ServicioHelper {
 						List<TipoAgente> listaTipoAgente = getServiceLocator().getTipoAgenteService().getAllEntitiesFiltered(TipoAgente.class, parameters);
 						JSONArray lista = new JSONArray();
 						for(TipoAgente tipoAgente : listaTipoAgente) {
-							lista.add(getSerializeJSONObject(tipoAgente));
+							List<Map<String, Object>> options = new ArrayList<>();
+							Map<String, Object> option = new HashMap<>();
+							option.put("icon", ICON_EDITAR);
+							option.put("params", "TipoAgenteCtrl.fnConsultarTipoAgente("+tipoAgente.getTipoagenteId()+")");
+							option.put("label", "Editar");
+							options.add(option);
+							
+							option = new HashMap<>();
+							option.put("icon", ICON_ELIMINAR);
+							option.put("params", "TipoAgenteCtrl.fnEliminarTipoAgente("+tipoAgente.getTipoagenteId()+")");
+							option.put("label", "Eliminar");
+							options.add(option);														
+							
+							JSONArray array = new JSONArray();														
+							
+							array.add(getHtmlLink(options));
+							array.add(tipoAgente.getDescripcion());
+							array.add(getEstatus(tipoAgente.getEstatus()));
+							array.add(getLabelValue(tipoAgente.getEsAdmin()));
+							lista.add(array);
 						}
 						result.put("lista", lista);
 					} catch (InfraestructureException ie) {

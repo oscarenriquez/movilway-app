@@ -10,14 +10,10 @@ public class TipoAgenteDaoHibernateImpl<T> extends GenericDaoHibernateApplicatio
 
 	private TipoAgenteDaoHibernateImpl(){}
 	
-	public static final TipoAgenteDao<TipoAgente> getInstance(){		
+	public static final TipoAgenteDao<TipoAgente> getInstance(){				
 		if(dao == null) {
-			synchronized (dao) {
-				if(dao == null) {
-					dao = new TipoAgenteDaoHibernateImpl<>();
-				}
-			}
-		}		
+			dao = new TipoAgenteDaoHibernateImpl<>();
+		}			
 		return dao;
 	}
 }

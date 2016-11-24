@@ -10,14 +10,10 @@ public class PuntoVentaDaoHibernateImpl<T> extends GenericDaoHibernateApplicatio
 
 	private PuntoVentaDaoHibernateImpl(){}
 	
-	public static final PuntoVentaDao<PuntoVenta> getInstance(){		
+	public static final PuntoVentaDao<PuntoVenta> getInstance(){				
 		if(dao == null) {
-			synchronized (dao) {
-				if(dao == null) {
-					dao = new PuntoVentaDaoHibernateImpl<>();
-				}
-			}
-		}		
+			dao = new PuntoVentaDaoHibernateImpl<>();
+		}			
 		return dao;
 	}
 }

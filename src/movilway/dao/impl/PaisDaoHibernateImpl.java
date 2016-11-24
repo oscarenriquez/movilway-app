@@ -10,14 +10,10 @@ public class PaisDaoHibernateImpl<T> extends GenericDaoHibernateApplication<T> i
 
 	private PaisDaoHibernateImpl(){}
 	
-	public static final PaisDao<Pais> getInstance(){		
+	public static final PaisDao<Pais> getInstance(){				
 		if(dao == null) {
-			synchronized (dao) {
-				if(dao == null) {
-					dao = new PaisDaoHibernateImpl<>();
-				}
-			}
-		}		
+			dao = new PaisDaoHibernateImpl<>();
+		}			
 		return dao;
 	}
 }

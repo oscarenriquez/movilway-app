@@ -18,14 +18,10 @@ public class TipoAgenteServiceImpl<T> extends GenericServiceImpl<T> implements T
 		genericDao =  (GenericDao<T>) dao;
 	}
 	
-	public static final TipoAgenteService<TipoAgente> getInstance(){		
+	public static final TipoAgenteService<TipoAgente> getInstance(){				
 		if(service == null) {
-			synchronized (service) {
-				if(service == null) {
-					service = new TipoAgenteServiceImpl<>();
-				}
-			}
-		}		
+			service = new TipoAgenteServiceImpl<>();
+		}				
 		return service;
 	}
 }

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import movilway.dao.domain.ArchivoSaldos;
 import movilway.dao.exception.InfraestructureException;
 import movilway.dao.util.HibernateUtil;
+import movilway.service.util.FechaHoraUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -30,8 +31,13 @@ public class ArchivoSaldosHelper extends ServicioHelper {
 					try{
 						List<ArchivoSaldos> listaArchivosSaldos = getServiceLocator().getArchivoSaldosService().getAllEntities(ArchivoSaldos.class);
 						JSONArray lista = new JSONArray();
-						for(ArchivoSaldos agente : listaArchivosSaldos) {
-							lista.add(getSerializeJSONObject(agente));
+						for(ArchivoSaldos archivo : listaArchivosSaldos) {							
+							JSONArray array = new JSONArray();							
+							array.add(archivo.getNumLinea());
+							array.add(archivo.getTexto());
+							array.add(archivo.getUsuarioCarga());
+							array.add(FechaHoraUtil.getFechaStringLarga(archivo.getFechahoraCarga()));
+							lista.add(array);
 						}
 						result.put("lista", lista);
 					} catch (InfraestructureException ie) {

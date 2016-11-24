@@ -18,14 +18,10 @@ public class PoliticaServiceImpl<T> extends GenericServiceImpl<T> implements Pol
 		genericDao =  (GenericDao<T>) dao;
 	}
 	
-	public static final PoliticaService<Politica> getInstance(){		
+	public static final PoliticaService<Politica> getInstance(){				
 		if(service == null) {
-			synchronized (service) {
-				if(service == null) {
-					service = new PoliticaServiceImpl<>();
-				}
-			}
-		}		
+			service = new PoliticaServiceImpl<>();
+		}			
 		return service;
 	}
 }
