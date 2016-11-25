@@ -18,6 +18,10 @@ public class TipoCampana implements Serializable, Comparable<TipoCampana> {
 		}
 	};
 	
+	public Long getId() {
+		return this.tipocampanaId;
+	}
+	
 	public Long getTipocampanaId() {
 		return this.tipocampanaId;
 	}

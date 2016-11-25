@@ -18,6 +18,10 @@ public class TipoPuntoVenta implements Serializable, Comparable<TipoPuntoVenta> 
 		}
 	};
 	
+	public Long getId() {
+		return this.tipopuntoventaId;
+	}
+	
 	public Long getTipopuntoventaId() {
 		return this.tipopuntoventaId;
 	}

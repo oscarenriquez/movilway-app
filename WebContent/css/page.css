@@ -2266,3 +2266,29 @@ table.tableOne td {
 .display tbody {
     color: black !important;
 }
+
+.activo-class {
+    background-image: -webkit-linear-gradient(rgb(127, 192, 76) 0%, rgb(114, 179, 63) 100%);
+    background-image: -o-linear-gradient(rgb(127, 192, 76) 0%, rgb(114, 179, 63) 100%);
+    background-image: linear-gradient(rgb(127, 192, 76) 0%, rgb(114, 179, 63) 100%);
+    border-color: rgb(97, 153, 54);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    display: block;
+    height: 100% !important;
+    text-shadow: rgb(0, 0, 0) 0px 1px 1px;
+    width: 100% !important;
+}
+
+.inactivo-class {
+    background-image: -webkit-linear-gradient(rgb(238, 64, 54) 0%, rgb(236, 42, 30) 100%);
+    background-image: -o-linear-gradient(rgb(238, 64, 54) 0%, rgb(236, 42, 30) 100%);
+    background-image: linear-gradient(rgb(238, 64, 54) 0%, rgb(236, 42, 30) 100%);
+    border-color: rgb(213, 29, 18);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    display: block;
+    height: 100% !important;
+    text-shadow: rgb(0, 0, 0) 0px 1px 1px;
+    width: 100% !important;
+}

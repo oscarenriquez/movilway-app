@@ -14,6 +14,10 @@ public class ArchivoTraspasos implements Serializable {
 	private Date fechahoraCarga;
 	private String usuarioCarga;
 
+	public Long getId() {
+		return this.archivotraspasosId;
+	}
+	
 	public Long getArchivotraspasosId() {
 		return this.archivotraspasosId;
 	}

@@ -145,7 +145,7 @@ public class ServicioHelper implements Serializable {
 							if(genericValue != null && genericValue.getClass().getPackage() != null) {
 								Class<?> c = genericValue.getClass();									
 								Package pack = c.getPackage();
-								if(!c.isPrimitive() && pack.getName().contains(".dao.domain")){
+								if(!c.isPrimitive() && pack.getName().contains(".dao.domain")){									
 									try {
 										Method m = c.getDeclaredMethod("getId");
 										Long id = (Long) m.invoke(genericValue);
@@ -489,7 +489,7 @@ public class ServicioHelper implements Serializable {
 	}
 	
 	protected String getEstatus(Boolean value) {
-		return value ? "ACTIVO" : "INACTIVO";
+		return value ? "<span class='activo-class'> ACTIVO </span>" : "<span class='inactivo-class'> INACTIVO </span>";
 	}
 	
 	protected String getLabelValue(Boolean value) {

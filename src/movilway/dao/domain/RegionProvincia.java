@@ -12,6 +12,10 @@ public class RegionProvincia implements Serializable {
 	private String descripcion;
 	private String abrev;
 
+	public Long getId() {
+		return regionprovinciaId;
+	}
+	
 	public Long getRegionprovinciaId() {
 		return this.regionprovinciaId;
 	}

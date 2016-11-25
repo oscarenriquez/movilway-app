@@ -32,6 +32,8 @@ $(document).ready(function() {
                     fnListaTipoAgente();
                     $("#newTipoAgente").modal("hide");
                 }, true);
+            } else {
+                noty({ text: "¡ Complete los campos requeridos !", type: 'warning', timeout: 3000 });
             }
         }
 
@@ -62,6 +64,8 @@ $(document).ready(function() {
                     fnListaTipoAgente();
                     $("#editTipoAgente").modal("hide");
                 }, true);
+            } else {
+                noty({ text: "¡ Complete los campos requeridos !", type: 'warning', timeout: 3000 });
             }
         }
 

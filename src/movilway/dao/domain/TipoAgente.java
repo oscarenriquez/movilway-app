@@ -19,6 +19,10 @@ public class TipoAgente implements Serializable, Comparable<TipoAgente> {
 		}
 	};
 	
+	public Long getId() {
+		return this.tipoagenteId;
+	}
+	
 	public Long getTipoagenteId() {
 		return this.tipoagenteId;
 	}

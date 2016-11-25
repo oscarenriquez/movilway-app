@@ -11,6 +11,10 @@ public class CampanaDetalle implements Serializable {
 	private PuntoVenta puntoVenta;
 	private String estatus;
 	
+	public Long getId() {
+		return this.detalleId;
+	}
+	
 	public Long getDetalleId() {
 		return this.detalleId;
 	}

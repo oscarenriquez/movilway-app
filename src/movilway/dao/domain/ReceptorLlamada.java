@@ -13,6 +13,10 @@ public class ReceptorLlamada implements Serializable {
 	private Boolean estatus;
 	private Set<Llamada> llamadas;
 
+	public Long getId() {
+		return this.receptorId;
+	}
+	
 	public Long getReceptorId() {
 		return this.receptorId;
 	}

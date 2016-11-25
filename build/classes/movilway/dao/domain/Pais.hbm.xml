@@ -22,24 +22,6 @@
                 <column name="pais_id" not-null="true" />
             </key>
             <one-to-many class="movilway.dao.domain.Estado" />
-        </set>
-        <set name="provincias" table="provincia" inverse="true" lazy="true" fetch="join">
-            <key>
-                <column name="pais_id" not-null="true" />
-            </key>
-            <one-to-many class="movilway.dao.domain.Provincia" />
-        </set>
-        <set name="regionProvincias" table="region_provincia" inverse="true" lazy="true" fetch="join">
-            <key>
-                <column name="pais_id" not-null="true" />
-            </key>
-            <one-to-many class="movilway.dao.domain.RegionProvincia" />
-        </set>
-        <set name="puntoVentas" table="punto_venta" inverse="true" lazy="true" fetch="join">
-            <key>
-                <column name="pais_id" />
-            </key>
-            <one-to-many class="movilway.dao.domain.PuntoVenta" />
-        </set>
+        </set>        
     </class>
 </hibernate-mapping>

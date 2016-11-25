@@ -632,8 +632,6 @@ function isMovil() {
     } else {
         return false;
     }
-
-    return false;
 }
 
 function fillTable($obj, data, total) {
@@ -753,7 +751,7 @@ var FormValidate;
                 digitsPattern = /^\d+$/,
                 isValid = true;
 
-            if (/safari/.test(nav) && !/chrome/.test(nav)) {
+            if (/safari/.test(nav) || /chrome/.test(nav)) {
                 for (var i = 0; i < this.inputElement.length; i++) {
                     if (this.inputElement[i].required && this.inputElement[i].value === '') {
                         this.inputElement[i].style.border = '1px solid red';

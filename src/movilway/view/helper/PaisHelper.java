@@ -1,6 +1,7 @@
 package movilway.view.helper;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,8 +33,7 @@ public class PaisHelper extends ServicioHelper {
 			String msg = "";
 			
 			if(getSession() != null){
-				String descripcion = getStringValue(req.getParameter("descripcion"));
-				String empresaId = getNumberValue(req.getParameter("empresaId"));
+				String descripcion = getStringValue(req.getParameter("descripcion"));				
 				String abrev = getStringValue(req.getParameter("abrev"));
 				if(vParam(descripcion) && vParam(abrev)){
 					permiso = pageAcceso(req, getServicesid(), getContext());
@@ -41,14 +41,9 @@ public class PaisHelper extends ServicioHelper {
 						try{
 							Pais pais = new Pais();
 							pais.setDescripcion(descripcion);
-							pais.setAbrev(abrev);
-							if((empresaId == null || empresaId.isEmpty()) && getEmpresaId() != 0){
-								pais.setEmpresaId(getEmpresaId());
-							} else if(vParam(empresaId)) {
-								pais.setEmpresaId(Long.valueOf(empresaId));
-							}
-							if(pais.getEmpresaId() != null && pais.getEmpresaId() > 0 )
-								getServiceLocator().getPaisService().saveEntity(pais);
+							pais.setAbrev(abrev);							
+							pais.setEmpresaId(getEmpresaId());							
+							getServiceLocator().getPaisService().saveEntity(pais);
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -273,7 +268,9 @@ public class PaisHelper extends ServicioHelper {
 				permiso = pageAcceso(req, getServicesid(), getContext());
 				if(permiso){						
 					try{
-						List<Pais> listaPais = getServiceLocator().getPaisService().getAllEntities(Pais.class);
+						Map<String, Serializable> parameters = new HashMap<>();
+						parameters.put("empresaId", getEmpresaId());
+						List<Pais> listaPais = getServiceLocator().getPaisService().getAllEntitiesFiltered(Pais.class, parameters);
 						JSONArray lista = new JSONArray();
 						for(Pais pais : listaPais) {
 							List<Map<String, Object>> options = new ArrayList<>();
@@ -285,9 +282,15 @@ public class PaisHelper extends ServicioHelper {
 							
 							option = new HashMap<>();
 							option.put("icon", ICON_ELIMINAR);
-							option.put("params", "PaisCtrl.fnEliminarTipoPais("+pais.getPaisId()+")");
+							option.put("params", "PaisCtrl.fnEliminarPais("+pais.getPaisId()+")");
 							option.put("label", "Eliminar");
-							options.add(option);														
+							options.add(option);
+							
+							option = new HashMap<>();
+							option.put("icon", ICON_DETALLE);
+							option.put("params", "PaisCtrl.fnMostrarEstados("+pais.getPaisId()+", '"+pais.getDescripcion()+"')");
+							option.put("label", "Eliminar");
+							options.add(option);		
 							
 							JSONArray array = new JSONArray();														
 							

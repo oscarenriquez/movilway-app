@@ -1,7 +1,6 @@
 package movilway.view.helper;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,9 +39,9 @@ public class EstadoHelper extends ServicioHelper {
 			String msg = "";
 			
 			if(getSession() != null){
-				String paisId = getNumberValue(req.getParameter("paisId"));
+				String paisId = getNumberValue(req.getParameter("pais"));
 				String abrev = getStringValue(req.getParameter("abrev"));
-				String descripcion = getStringValue("descripcion");
+				String descripcion = getStringValue(req.getParameter("descripcion"));
 				if(vParam(descripcion) && vParam(abrev) && vParam(paisId)){
 					permiso = pageAcceso(req, getServicesid(), getContext());
 					if(permiso){						
@@ -113,7 +112,7 @@ public class EstadoHelper extends ServicioHelper {
 			if(getSession() != null){
 				String estadoId = getNumberValue(req.getParameter("estadoId"));				
 				String abrev = getStringValue(req.getParameter("abrev"));
-				String descripcion = getStringValue("descripcion");		
+				String descripcion = getStringValue(req.getParameter("descripcion"));
 				if(vParam(estadoId) && vParam(abrev) && vParam(descripcion)){
 					permiso = pageAcceso(req, getServicesid(), getContext());
 					if(permiso){						
@@ -285,14 +284,12 @@ public class EstadoHelper extends ServicioHelper {
 			String msg = "";
 			
 			if(getSession() != null){
-				String paisId = getNumberValue(req.getParameter("paisId"));
+				String paisId = getNumberValue(req.getParameter("pais"));
 				if(vParam(paisId)){
 					permiso = pageAcceso(req, getServicesid(), getContext());
 					if(permiso){						
-						try{
-							Map<String, Serializable> parameters = new HashMap<>();
-							parameters.put("pais", getServiceLocator().getPaisService().loadEntity(Pais.class, Long.valueOf(paisId)));
-							List<Estado> listaEstado = getServiceLocator().getEstadoService().getAllEntitiesFiltered(Estado.class, parameters);
+						try{							
+							List<Estado> listaEstado = getServiceLocator().getEstadoService().getListaEstadosByPais(Long.valueOf(paisId));
 							JSONArray lista = new JSONArray();
 							for(Estado estado : listaEstado) {
 								List<Map<String, Object>> options = new ArrayList<>();
@@ -306,7 +303,13 @@ public class EstadoHelper extends ServicioHelper {
 								option.put("icon", ICON_ELIMINAR);
 								option.put("params", "EstadoCtrl.fnEliminarEstado("+estado.getEstadoId()+")");
 								option.put("label", "Eliminar");
-								options.add(option);														
+								options.add(option);
+								
+								option = new HashMap<>();
+								option.put("icon", ICON_DETALLE);
+								option.put("params", "EstadoCtrl.fnMostrarProvincias("+estado.getEstadoId()+", '"+estado.getDescripcion()+"')");
+								option.put("label", "Eliminar");
+								options.add(option);			
 								
 								JSONArray array = new JSONArray();														
 								
@@ -366,9 +369,9 @@ public class EstadoHelper extends ServicioHelper {
 			String msg = "";
 			
 			if(getSession() != null){
-				String estadoId = getNumberValue(req.getParameter("estadoId"));
+				String estadoId = getNumberValue(req.getParameter("estado"));
 				String abrev = getStringValue(req.getParameter("abrev"));
-				String descripcion = getStringValue("descripcion");
+				String descripcion = getStringValue(req.getParameter("descripcion"));
 				if(vParam(descripcion) && vParam(abrev) && vParam(estadoId)){
 					permiso = pageAcceso(req, getServicesid(), getContext());
 					if(permiso){						
@@ -431,7 +434,7 @@ public class EstadoHelper extends ServicioHelper {
 			if(getSession() != null){
 				String provinciaId = getNumberValue(req.getParameter("provinciaId"));				
 				String abrev = getStringValue(req.getParameter("abrev"));
-				String descripcion = getStringValue("descripcion");		
+				String descripcion = getStringValue(req.getParameter("descripcion"));
 				if(vParam(provinciaId) && vParam(abrev) && vParam(descripcion)){
 					permiso = pageAcceso(req, getServicesid(), getContext());
 					if(permiso){						
@@ -603,14 +606,12 @@ public class EstadoHelper extends ServicioHelper {
 			String msg = "";
 			
 			if(getSession() != null){
-				String estadoId = getNumberValue(req.getParameter("estadoId"));
+				String estadoId = getNumberValue(req.getParameter("estado"));
 				if(vParam(estadoId)){
 					permiso = pageAcceso(req, getServicesid(), getContext());
 					if(permiso){						
-						try{
-							Map<String, Serializable> parameters = new HashMap<>();
-							parameters.put("estado", getServiceLocator().getEstadoService().loadEntity(Estado.class, Long.valueOf(estadoId)));
-							List<Provincia> listaProvincia = getServiceLocator().getProvinciaService().getAllEntitiesFiltered(Provincia.class, parameters);
+						try{							
+							List<Provincia> listaProvincia = getServiceLocator().getProvinciaService().getListaProvinciasByEstado(Long.valueOf(estadoId));
 							JSONArray lista = new JSONArray();
 							for(Provincia provincia : listaProvincia) {
 								List<Map<String, Object>> options = new ArrayList<>();

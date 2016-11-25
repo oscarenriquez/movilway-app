@@ -274,13 +274,13 @@ public class TipoPuntoVentaHelper extends ServicioHelper {
 							List<Map<String, Object>> options = new ArrayList<>();
 							Map<String, Object> option = new HashMap<>();
 							option.put("icon", ICON_EDITAR);
-							option.put("params", "TipoPuntoVentaCtrl.fnConsultarTipoAgente("+tipoPuntoVenta.getTipopuntoventaId()+")");
+							option.put("params", "TipoPuntoVentaCtrl.fnConsultarTipoPuntoVenta("+tipoPuntoVenta.getTipopuntoventaId()+")");
 							option.put("label", "Editar");
 							options.add(option);
 							
 							option = new HashMap<>();
 							option.put("icon", ICON_ELIMINAR);
-							option.put("params", "TipoPuntoVentaCtrl.fnEliminarTipoAgente("+tipoPuntoVenta.getTipopuntoventaId()+")");
+							option.put("params", "TipoPuntoVentaCtrl.fnEliminarTipoPuntoVenta("+tipoPuntoVenta.getTipopuntoventaId()+")");
 							option.put("label", "Eliminar");
 							options.add(option);														
 							
@@ -325,6 +325,70 @@ public class TipoPuntoVentaHelper extends ServicioHelper {
 		} catch(Exception e){
 			e.printStackTrace();
 			getAlerta().enviarAlerta("listaTipoPuntoVenta", e, getUsuarioBean(), ServicioHelper.EMAIL);
+		}
+	}
+	
+	public void comboBoxTipoPuntoVenta (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+		try{
+			setDefaultValues(req, key);
+			JSONObject result = new JSONObject();
+			JSONObject formulario = new JSONObject();
+			Boolean isSuccess = true;
+			Boolean permiso = false;
+			String msg = "";
+			
+			if(getSession() != null){												
+				permiso = pageAcceso(req, getServicesid(), getContext());
+				if(permiso){						
+					try{
+						Map<String, Serializable> parameters = new HashMap<>();
+						List<TipoPuntoVenta> listaTipoPuntoVenta = getServiceLocator().getTipoPuntoVenta().getAllEntitiesFiltered(TipoPuntoVenta.class, parameters);
+						JSONArray lista = new JSONArray();
+						JSONObject seleccione = new JSONObject();
+						seleccione.put("ID", "");
+						seleccione.put("DESCRIPCION", "-- seleccione --");
+						lista.add(seleccione);
+						for(TipoPuntoVenta tipoPuntoVenta : listaTipoPuntoVenta) {
+							JSONObject jsObj = new JSONObject();
+							jsObj.put("ID", tipoPuntoVenta.getTipopuntoventaId());
+							jsObj.put("DESCRIPCION", tipoPuntoVenta.getDescripcion().toUpperCase());
+							lista.add(jsObj);
+						}
+						formulario.put("comboBox", lista);
+					} catch (InfraestructureException ie) {
+						try {
+							HibernateUtil.rollbackTransaction();
+						} catch (InfraestructureException e) {
+							e.printStackTrace();
+						}
+						getAlerta().enviarAlerta("comboBoxTipoPuntoVenta", ie, getUsuarioBean(),  EMAIL);
+						ie.printStackTrace();
+						msg = DISABLED_BD;
+						isSuccess = false;
+					} catch (Exception e){
+						getAlerta().enviarAlerta("comboBoxTipoPuntoVenta", e, getUsuarioBean(),  EMAIL);
+						e.printStackTrace();
+						msg = DISABLED_BD;
+						isSuccess = false;
+					}						
+				} else {
+					isSuccess = false;
+					msg = FALTA_PERMISOS;
+				}				
+			} else {
+				isSuccess = false;
+				msg = SESION_EXPIRADA;
+			}
+			
+			result.put("isSuccess", isSuccess);
+			result.put("permiso", permiso);
+			result.put("msg", msg);
+			result.put("formulario", formulario);
+			
+			printJson(resp, result);
+		} catch(Exception e){
+			e.printStackTrace();
+			getAlerta().enviarAlerta("comboBoxTipoPuntoVenta", e, getUsuarioBean(), ServicioHelper.EMAIL);
 		}
 	}
 }

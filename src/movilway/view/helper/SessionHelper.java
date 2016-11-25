@@ -1,7 +1,7 @@
 package movilway.view.helper;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -226,49 +226,60 @@ public class SessionHelper implements Serializable {
 		Long idUsuario = Long.parseLong((sId == null ? "0" : sId));
 
 		try {
-
-			byte[] photoData = null;
+			byte[] photoData = null ;
 
 			Usuario usuario = getUsuarioService().getUsuario(idUsuario);
-			if (usuario.getUserPhoto() != null) {
+			if(usuario.getUserPhoto() != null){
 				photoData = usuario.getUserPhoto();
-			} else {
+			}else{
 				try {
 					security.dao.util.HibernateUtil.beginTransaction();
-					Parametro paramAux = getParametroService().getParametro("USUARIOPHOTO");
+					SessionBean sb = (SessionBean) req.getSession(false).getAttribute("sessionBean");					
+					Empresa empresa = getSecurityService().getEmpresaByUsuario(sb.getUsuario().getId());										
+					Long idEmpresa = (empresa != null ? empresa.getId() : 0L);
+					Parametro paramAux = getParametroService().getParametroXEmpresa(idEmpresa, "PHOTO-SEGURIDAD");
 					if (paramAux != null) {
-						FileInputStream fileInput = new FileInputStream(servletContext.getRealPath(paramAux.getValor()));
-						photoData = IOUtils.toByteArray(fileInput);
+						if(paramAux.getTipo().equals(ParametroDao.TIPO_IMAGEN)){
+							if(paramAux.getImagen() != null) {
+								photoData = paramAux.getImagen();
+							} else {
+								InputStream is = servletContext.getResourceAsStream("/img/anonymous.jpg");
+								photoData = IOUtils.toByteArray(is);
+							}
+						} else {
+							InputStream is = servletContext.getResourceAsStream("/img/anonymous.jpg");
+							photoData = IOUtils.toByteArray(is);
+						}
+					} else {
+						InputStream is = servletContext.getResourceAsStream("/img/anonymous.jpg");
+						photoData = IOUtils.toByteArray(is);
 					}
-
+					
 					security.dao.util.HibernateUtil.commitTransaction();
-				} catch (security.dao.exception.InfraestructureException e) {
+				}  catch(security.dao.exception.InfraestructureException e){
 					try {
 						security.dao.util.HibernateUtil.rollbackTransaction();
-					} catch (security.dao.exception.InfraestructureException e1) {
-						e1.printStackTrace();
-					}
-					e.printStackTrace();
-				} finally {
-					try {
-						security.dao.util.HibernateUtil.closeSession();
-					} catch (security.dao.exception.InfraestructureException e) {
+					} catch(security.dao.exception.InfraestructureException e1){
 						e.printStackTrace();
 					}
-				}
+					e.printStackTrace();
+				} catch(Exception e){
+					e.printStackTrace();
+				}				
 			}
-
-			resp.setContentType("image/gif");
-			ServletOutputStream servletOutputStream = resp.getOutputStream();
-			if (photoData != null) {
+			
+			resp.setContentType("image/gif"); 
+			ServletOutputStream servletOutputStream = resp.getOutputStream(); 
+			if(photoData != null){
 				servletOutputStream.write(photoData, 0, photoData.length);
 			}
-			servletOutputStream.flush();
-			servletOutputStream.close();
+			servletOutputStream.flush(); 
+	        servletOutputStream.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}	
+	
 	public void setSessionAttrEntidad(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		Long idEntidad = 0L; 		

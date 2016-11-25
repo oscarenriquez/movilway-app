@@ -19,6 +19,10 @@ public class Traslado implements Serializable {
 	private BigDecimal montoDespuesOrigen;
 	private Long empresaId;	
 
+	public Long getId() {
+		return this.trasladoId;
+	}
+	
 	public Long getTrasladoId() {
 		return this.trasladoId;
 	}

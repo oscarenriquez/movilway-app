@@ -14,6 +14,10 @@ public class Provincia implements Serializable {
 	private Set<PuntoVenta> puntoVentas;
 	private Set<RegionProvincia> regionProvincias;
 
+	public Long getId() {
+		return this.provinciaId;
+	}
+	
 	public Long getProvinciaId() {
 		return this.provinciaId;
 	}

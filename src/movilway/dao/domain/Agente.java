@@ -10,6 +10,10 @@ public class Agente implements Serializable {
 	private String nombre;
 	private Boolean estatus;	
 
+	public Long getId() {
+		return this.agenteId;
+	}
+	
 	public Long getAgenteId() {
 		return this.agenteId;
 	}

@@ -13,6 +13,10 @@ public class RespuestaLlamada implements Serializable {
 	private Boolean efectiva;
 	private Boolean generaLlamada;
 
+	public Long getId() {
+		return this.respuestaId;
+	}
+	
 	public Long getRespuestaId() {
 		return this.respuestaId;
 	}

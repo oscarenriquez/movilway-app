@@ -1,7 +1,10 @@
 package movilway.service.impl;
 
+import java.util.List;
+
 import movilway.dao.ProvinciaDao;
 import movilway.dao.domain.Provincia;
+import movilway.dao.exception.InfraestructureException;
 import movilway.dao.impl.ProvinciaDaoHibernateImpl;
 import movilway.dao.util.GenericDao;
 import movilway.service.ProvinciaService;
@@ -23,5 +26,10 @@ public class ProvinciaServiceImpl<T> extends GenericServiceImpl<T> implements Pr
 			service = new ProvinciaServiceImpl<>();
 		}			
 		return service;
+	}
+
+	@Override
+	public List<Provincia> getListaProvinciasByEstado(Long estadoId) throws InfraestructureException {		
+		return dao.getListaProvinciasByEstado(estadoId);
 	}
 }

@@ -34,11 +34,11 @@ public class Alerta {
    }
 
 	public void enviarAlerta(String proceso, String error, String email) {
-		try {
+		/*try {
 			Transport.send(generaMensaje(proceso, error, email, MENSAJE_ALERTA));
 		} catch (MessagingException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	public void enviarAlerta(String proceso, Throwable e, String usuario, String email) {
@@ -51,11 +51,11 @@ public class Alerta {
 		for (int i = 0; i < stack.length; i++) {
 			sb.append(stack[i]).append("\n");
 		}
-		try {
+		/*try {
 			Transport.send(generaMensaje(proceso, sb.toString(), email, MENSAJE_ALERTA));
 		} catch (MessagingException me) {
 			me.printStackTrace();
-		}
+		}*/
 	}
 	
 	public void enviarAlerta(String proceso, Throwable e, String usuario, String email,String urlApp) {

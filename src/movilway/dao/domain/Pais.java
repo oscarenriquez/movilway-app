@@ -12,10 +12,11 @@ public class Pais implements Serializable {
 	private String descripcion;
 	private String abrev;
 	private Set<Estado> estados;
-	private Set<Provincia> provincias;
-	private Set<RegionProvincia> regionProvincias;
-	private Set<PuntoVenta> puntoVentas;
 
+	public Long getId() {
+		return this.paisId;
+	}
+	
 	public Long getPaisId() {
 		return this.paisId;
 	}
@@ -55,31 +56,7 @@ public class Pais implements Serializable {
 	public void setEstados(Set<Estado> estados) {
 		this.estados = estados;
 	}
-
-	public Set<Provincia> getProvincias() {
-		return this.provincias;
-	}
-
-	public void setProvincias(Set<Provincia> provincias) {
-		this.provincias = provincias;
-	}
-
-	public Set<RegionProvincia> getRegionProvincias() {
-		return this.regionProvincias;
-	}
-
-	public void setRegionProvincias(Set<RegionProvincia> regionProvincias) {
-		this.regionProvincias = regionProvincias;
-	}
-
-	public Set<PuntoVenta> getPuntoVentas() {
-		return this.puntoVentas;
-	}
-
-	public void setPuntoVentas(Set<PuntoVenta> puntoVentas) {
-		this.puntoVentas = puntoVentas;
-	}
-
+	
 	public boolean addEstado(Estado e) {
 		if(estados == null){
 			estados = new HashSet<>();

@@ -21,7 +21,7 @@ public class ServiceLocatorBean implements ServiceLocator {
 
 	@Override
 	public AgenteService<Agente> getAgenteService() throws InfraestructureException {		
-		return null;
+		return AgenteServiceImpl.getInstance();
 	}
 
 	@Override

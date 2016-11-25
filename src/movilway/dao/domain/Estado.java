@@ -15,6 +15,10 @@ public class Estado implements Serializable {
 	private Set<Provincia> provincias;
 	private Set<RegionProvincia> regionProvincias;	
 
+	public Long getId() {
+		return this.estadoId;
+	}
+	
 	public Long getEstadoId() {
 		return this.estadoId;
 	}

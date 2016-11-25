@@ -11,6 +11,10 @@ public class Politica implements Serializable {
 	private String texto;
 	private Boolean estatus;
 	
+	public Long getId() {
+		return this.politicaId;
+	}
+	
 	public Long getPoliticaId() {
 		return this.politicaId;
 	}

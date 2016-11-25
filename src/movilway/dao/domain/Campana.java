@@ -16,6 +16,10 @@ public class Campana implements Serializable {
 	private Date fechahoraFin;
 	private Set<CampanaDetalle> campanaDetalles;
 	
+	public Long getId() {
+		return this.campanaId;
+	}
+	
 	public Long getCampanaId() {
 		return this.campanaId;
 	}

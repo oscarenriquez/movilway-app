@@ -33,7 +33,7 @@ public class AgenteHelper extends ServicioHelper {
 			String msg = "";
 			
 			if(getSession() != null){
-				String tipoagenteId = getNumberValue(req.getParameter("tipoagenteId"));
+				String tipoagenteId = getNumberValue(req.getParameter("tipoAgente"));
 				String nombre = getStringValue(req.getParameter("nombre"));
 				if(vParam(tipoagenteId) && vParam(nombre)){
 					permiso = pageAcceso(req, getServicesid(), getContext());
@@ -94,7 +94,7 @@ public class AgenteHelper extends ServicioHelper {
 			
 			if(getSession() != null){
 				String agenteId = getNumberValue(req.getParameter("agenteId"));
-				String tipoagenteId = getNumberValue(req.getParameter("tipoagenteId"));
+				String tipoagenteId = getNumberValue(req.getParameter("tipoAgente"));
 				String nombre = getStringValue(req.getParameter("nombre"));
 				String estatus = getBooleanValue(req.getParameter("estatus"));				
 				if(vParam(agenteId) && vParam(tipoagenteId) && vParam(nombre) && vParam(estatus)){
@@ -276,13 +276,13 @@ public class AgenteHelper extends ServicioHelper {
 							List<Map<String, Object>> options = new ArrayList<>();
 							Map<String, Object> option = new HashMap<>();
 							option.put("icon", ICON_EDITAR);
-							option.put("params", "fnConsultarAgente("+agente.getAgenteId()+")");
+							option.put("params", "AgenteCtrl.fnConsultarAgente("+agente.getAgenteId()+")");
 							option.put("label", "Editar");
 							options.add(option);
 							
 							option = new HashMap<>();
 							option.put("icon", ICON_ELIMINAR);
-							option.put("params", "fnEliminarAgente("+agente.getAgenteId()+")");
+							option.put("params", "AgenteCtrl.fnEliminarAgente("+agente.getAgenteId()+")");
 							option.put("label", "Eliminar");
 							options.add(option);														
 							

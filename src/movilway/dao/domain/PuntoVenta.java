@@ -26,6 +26,10 @@ public class PuntoVenta implements Serializable {
 	private BigDecimal puntoAbastecimiento;
 	private String conctacto;	
 
+	public Long getId() {
+		return this.puntoventaId;
+	}
+	
 	public Long getPuntoventaId() {
 		return this.puntoventaId;
 	}

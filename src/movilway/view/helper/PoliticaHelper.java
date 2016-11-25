@@ -34,7 +34,7 @@ public class PoliticaHelper extends ServicioHelper {
 			String msg = "";
 			
 			if(getSession() != null){
-				String tipocampanaId = getNumberValue(req.getParameter("tipocampanaId"));
+				String tipocampanaId = getNumberValue(req.getParameter("tipoCampana"));
 				String numLinea = getNumberValue(req.getParameter("numLinea"));
 				String texto = getStringValue(req.getParameter("texto"));
 				if(validateParam(tipocampanaId) && vParam(numLinea) && vParam(texto)){
@@ -96,7 +96,7 @@ public class PoliticaHelper extends ServicioHelper {
 			String msg = "";
 			
 			if(getSession() != null){
-				String tipocampanaId = getNumberValue(req.getParameter("tipocampanaId"));
+				String tipocampanaId = getNumberValue(req.getParameter("tipoCampana"));
 				String numLinea = getNumberValue(req.getParameter("numLinea"));
 				String texto = getStringValue(req.getParameter("texto"));
 				String estatus = getStringValue(req.getParameter("estatus"));
