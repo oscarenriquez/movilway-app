@@ -2292,3 +2292,12 @@ table.tableOne td {
     text-shadow: rgb(0, 0, 0) 0px 1px 1px;
     width: 100% !important;
 }
+
+.alert-slim {
+    padding: 0 !important;
+}
+
+input.to-upper,
+textarea.to-upper {
+    text-transform: uppercase;
+}

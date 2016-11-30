@@ -39,6 +39,7 @@ $(document).ready(function() {
             var frmValidate = new FormValidate(e.target);
             if (frmValidate.validate()) {
                 buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
                     fnListaPolitica();
                     $("#newPolitica").modal("hide");
                 }, true);
@@ -72,6 +73,7 @@ $(document).ready(function() {
             var frmValidate = new FormValidate(e.target);
             if (frmValidate.validate()) {
                 buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
                     fnListaPolitica();
                     $("#editPolitica").modal("hide");
                 }, true);

@@ -46,7 +46,7 @@
                         <div class="form-group">
                             <label for="numLinea" class="control-label col-md-4 col-lg-4">Numero Linea: </label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="tel" name="numLinea" id="numLinea" autocomplete="off" value="" placeholder="Descripcion" class="form-control" required>
+                                <input type="tel" name="numLinea" id="numLinea" autocomplete="off" value="" placeholder="Descripcion" class="form-control to-upper" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -87,7 +87,7 @@
                         <div class="form-group">
                             <label for="edit_numLinea" class="control-label col-md-4 col-lg-4">Numero Linea: </label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="tel" name="numLinea" id="edit_numLinea" autocomplete="off" value="" placeholder="Descripcion" class="form-control" required>
+                                <input type="tel" name="numLinea" id="edit_numLinea" autocomplete="off" value="" placeholder="Descripcion" class="form-control to-upper" required>
                             </div>
                         </div>
                         <div class="form-group">

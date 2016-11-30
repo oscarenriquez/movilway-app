@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Context >  
+  <Resource name="jdbc/movilway"
+            factory="security.view.util.LounchFactory"  
+            auth="Container"
+            type="javax.sql.DataSource" 
+            driverClassName="02064d2b230c0ba5886670635f3cb67d1bdc39c93c55046436fb0074acc8006f"
+            url="c327a5a09d0767c7879cf5a26e7b931510a0b557dcda1fb08179d1372efedec84f91a3b852c09b75ebabaec4dccc5d643e4ff6e2a9aaa8fd749595625a554d0e"
+            username="3ae89b19751e9753c68d961081f9214a" 
+            password="817bc78589223724588f1faa1a3f33fab719017a28c46deeb0443bf0200250cc" 
+            maxActive="-1" 
+            maxIdle="-1"
+            maxWait="-1"
+            timeBetweenEvictionRunsMillis="34000"
+	 		minEvictableIdleTimeMillis="55000"
+	        validationQuery="SELECT 1"
+	        validationInterval="34"
+	        testOnBorrow="true"
+	        removeAbandoned="true"
+	        removeAbandonedTimeout="233"
+  /> 
+  
+    <Resource name="jdbc/security"
+            factory="security.view.util.LounchFactory"  
+            auth="Container"
+            type="javax.sql.DataSource" 
+            driverClassName="02064d2b230c0ba5886670635f3cb67d1bdc39c93c55046436fb0074acc8006f"
+            url="c327a5a09d0767c7879cf5a26e7b931510a0b557dcda1fb08179d1372efedec8bb6e0d4e78d68766d5f00e5954a12c0c40891dc35e86c3313a20d96ed77978f3"
+            username="3ae89b19751e9753c68d961081f9214a" 
+            password="817bc78589223724588f1faa1a3f33fab719017a28c46deeb0443bf0200250cc" 
+            maxActive="-1" 
+            maxIdle="-1"
+            maxWait="-1"
+            timeBetweenEvictionRunsMillis="34000"
+	 		minEvictableIdleTimeMillis="55000"
+	        validationQuery="SELECT 1"
+	        validationInterval="34"
+	        testOnBorrow="true"
+	        removeAbandoned="true"
+	        removeAbandonedTimeout="233"
+  /> 
+  
+</Context>
+
+

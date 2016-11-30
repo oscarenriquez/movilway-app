@@ -114,4 +114,9 @@ public class ServiceLocatorBean implements ServiceLocator {
 		return UsuarioServiceImpl.build();
 	}
 
+	@Override
+	public RegionProvinciaService<RegionProvincia> getRegionProvinciaService() throws InfraestructureException {		
+		return RegionProvinciaServiceImpl.getInstance();
+	}
+
 }

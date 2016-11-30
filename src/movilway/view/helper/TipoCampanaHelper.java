@@ -39,10 +39,11 @@ public class TipoCampanaHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							TipoCampana tipoCampana = new TipoCampana();
-							tipoCampana.setDescripcion(descripcion);
+							tipoCampana.setDescripcion(descripcion.toUpperCase());
 							tipoCampana.setEmpresaId(getEmpresaId());
 							tipoCampana.setEstatus(Boolean.TRUE);
 							getServiceLocator().getTipoCampanaService().saveEntity(tipoCampana);
+							msg = CREATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -100,9 +101,10 @@ public class TipoCampanaHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							TipoCampana tipoCampana = getServiceLocator().getTipoCampanaService().loadEntity(TipoCampana.class, Long.parseLong(tipocampanaId));
-							tipoCampana.setDescripcion(descripcion);							
+							tipoCampana.setDescripcion(descripcion.toUpperCase());							
 							tipoCampana.setEstatus(Boolean.valueOf(estatus));
 							getServiceLocator().getTipoCampanaService().updateEntity(tipoCampana);
+							msg = UPDATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -214,7 +216,8 @@ public class TipoCampanaHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							TipoCampana tipoCampana = getServiceLocator().getTipoCampanaService().loadEntity(TipoCampana.class, Long.parseLong(tipocampanaId));
-							getServiceLocator().getTipoCampanaService().deleteEntity(tipoCampana);							
+							getServiceLocator().getTipoCampanaService().deleteEntity(tipoCampana);
+							msg = DELETE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();

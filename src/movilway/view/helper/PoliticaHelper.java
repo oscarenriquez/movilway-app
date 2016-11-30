@@ -47,6 +47,7 @@ public class PoliticaHelper extends ServicioHelper {
 							politica.setTexto(texto);
 							politica.setEstatus(Boolean.TRUE);
 							getServiceLocator().getPoliticaService().saveEntity(politica);
+							msg = CREATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -111,6 +112,7 @@ public class PoliticaHelper extends ServicioHelper {
 							politica.setTexto(texto);							
 							politica.setEstatus(Boolean.valueOf(estatus));							
 							getServiceLocator().getPoliticaService().updateEntity(politica);
+							msg = UPDATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -222,7 +224,8 @@ public class PoliticaHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							Politica politica = getServiceLocator().getPoliticaService().loadEntity(Politica.class, Long.parseLong(politicaId));
-							getServiceLocator().getPoliticaService().deleteEntity(politica);							
+							getServiceLocator().getPoliticaService().deleteEntity(politica);
+							msg = DELETE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();

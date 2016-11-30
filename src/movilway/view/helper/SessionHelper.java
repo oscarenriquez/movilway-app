@@ -54,6 +54,13 @@ public class SessionHelper implements Serializable {
 
 	}
 
+	public String getContext(HttpServletRequest req){
+		String context = req.getContextPath();
+		context = context.substring(1, context.length()).trim();		
+		//String context = req.getServerName().substring(0,req.getServerName().indexOf("."));
+		return context;		
+	}
+	
 	public synchronized String getUrlApp(HttpServletRequest request) {
 
 		HttpSession sessionRequest = request.getSession(false);
@@ -100,8 +107,7 @@ public class SessionHelper implements Serializable {
 
 	public void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession(false);
-		String context = req.getContextPath();
-		context = context.substring(1, context.length()).trim();
+		String context = getContext(req);
 		if (session != null) {
 			SessionBean bean = (SessionBean) session.getAttribute("sessionBean");
 			if (bean != null) {
@@ -134,8 +140,7 @@ public class SessionHelper implements Serializable {
 	}
 	
 	public void action(HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {
-		String context = req.getContextPath();
-		context = context.substring(1, context.length()).trim();
+		String context = getContext(req);
 		Long posicion = (long) key;
 		String[] claseMetodo = new String[2];
 		String sClase = null;

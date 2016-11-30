@@ -1,5 +1,6 @@
 package movilway.dao.domain;
 
+import com.vividsolutions.jts.geom.Point;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -21,6 +22,7 @@ public class PuntoVenta implements Serializable {
 	private Long DPuntoventasuperior;
 	private BigDecimal saldo;
 	private Date saldoFechahora;
+	private Point cordenada;
 	private Float latitud;
 	private Float longitud;
 	private BigDecimal puntoAbastecimiento;
@@ -140,6 +142,14 @@ public class PuntoVenta implements Serializable {
 
 	public void setSaldoFechahora(Date saldoFechahora) {
 		this.saldoFechahora = saldoFechahora;
+	}	
+
+	public Point getCordenada() {
+		return cordenada;
+	}
+
+	public void setCordenada(Point cordenada) {
+		this.cordenada = cordenada;
 	}
 
 	public Float getLatitud() {

@@ -36,4 +36,5 @@ public class ProvinciaDaoHibernateImpl<T> extends GenericDaoHibernateApplication
 			throw new InfraestructureException(he);
 		}
 	}
+	
 }

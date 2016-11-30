@@ -10,10 +10,8 @@ public class Estado implements Serializable {
 	private Long estadoId;
 	private Pais pais;
 	private String descripcion;
-	private String abrev;
-	private Set<PuntoVenta> puntoVentas;
-	private Set<Provincia> provincias;
-	private Set<RegionProvincia> regionProvincias;	
+	private String abrev;	
+	private Set<Provincia> provincias;	
 
 	public Long getId() {
 		return this.estadoId;
@@ -50,29 +48,13 @@ public class Estado implements Serializable {
 	public void setAbrev(String abrev) {
 		this.abrev = abrev;
 	}
-
-	public Set<PuntoVenta> getPuntoVentas() {
-		return this.puntoVentas;
-	}
-
-	public void setPuntoVentas(Set<PuntoVenta> puntoVentas) {
-		this.puntoVentas = puntoVentas;
-	}
-
+	
 	public Set<Provincia> getProvincias() {
 		return this.provincias;
 	}
 
 	public void setProvincias(Set<Provincia> provincias) {
 		this.provincias = provincias;
-	}
-
-	public Set<RegionProvincia> getRegionProvincias() {
-		return this.regionProvincias;
-	}
-
-	public void setRegionProvincias(Set<RegionProvincia> regionProvincias) {
-		this.regionProvincias = regionProvincias;
 	}
 
 	public boolean addProvincia(Provincia e) {

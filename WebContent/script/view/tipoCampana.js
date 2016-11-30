@@ -27,6 +27,7 @@ $(document).ready(function() {
             var frmValidate = new FormValidate(e.target);
             if (frmValidate.validate()) {
                 buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
                     fnListaTipoCampana();
                     $("#newTipoCampana").modal("hide");
                 }, true);
@@ -58,6 +59,7 @@ $(document).ready(function() {
             var frmValidate = new FormValidate(e.target);
             if (frmValidate.validate()) {
                 buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
                     fnListaTipoCampana();
                     $("#editTipoCampana").modal("hide");
                 }, true);

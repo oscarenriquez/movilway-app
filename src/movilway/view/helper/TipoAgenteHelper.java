@@ -40,11 +40,12 @@ public class TipoAgenteHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							TipoAgente tipoAgente = new TipoAgente();
-							tipoAgente.setDescripcion(descripcion);
+							tipoAgente.setDescripcion(descripcion.toUpperCase());
 							tipoAgente.setEsAdmin(Boolean.valueOf(esAdmin));
 							tipoAgente.setEmpresaId(getEmpresaId());
 							tipoAgente.setEstatus(Boolean.TRUE);
 							getServiceLocator().getTipoAgenteService().saveEntity(tipoAgente);
+							msg = CREATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -103,10 +104,11 @@ public class TipoAgenteHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							TipoAgente tipoAgente = getServiceLocator().getTipoAgenteService().loadEntity(TipoAgente.class, Long.parseLong(tipoagenteId));
-							tipoAgente.setDescripcion(descripcion);							
+							tipoAgente.setDescripcion(descripcion.toUpperCase());							
 							tipoAgente.setEstatus(Boolean.valueOf(estatus));
 							tipoAgente.setEsAdmin(Boolean.valueOf(esAdmin));
 							getServiceLocator().getTipoAgenteService().updateEntity(tipoAgente);
+							msg = UPDATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -218,7 +220,8 @@ public class TipoAgenteHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							TipoAgente tipoAgente = getServiceLocator().getTipoAgenteService().loadEntity(TipoAgente.class, Long.parseLong(tipoagenteId));
-							getServiceLocator().getTipoAgenteService().deleteEntity(tipoAgente);							
+							getServiceLocator().getTipoAgenteService().deleteEntity(tipoAgente);
+							msg = DELETE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();

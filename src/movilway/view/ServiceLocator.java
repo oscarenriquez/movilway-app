@@ -43,4 +43,6 @@ public interface ServiceLocator {
 	public TrasladoService<Traslado> getTrasladoService() throws InfraestructureException;
 	
 	public UsuarioService getUsuarioService() throws InfraestructureException;
+	
+	public RegionProvinciaService<RegionProvincia> getRegionProvinciaService() throws InfraestructureException;
 }

@@ -28,6 +28,7 @@ $(document).ready(function() {
             var frmValidate = new FormValidate(e.target);
             if (frmValidate.validate()) {
                 buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
                     fnListaReceptor();
                     $("#newReceptor").modal("hide");
                 }, true);
@@ -59,6 +60,7 @@ $(document).ready(function() {
             var frmValidate = new FormValidate(e.target);
             if (frmValidate.validate()) {
                 buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
                     fnListaReceptor();
                     $("#editReceptor").modal("hide");
                 }, true);

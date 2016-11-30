@@ -39,10 +39,11 @@ public class TipoPuntoVentaHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							TipoPuntoVenta tipoPuntoVenta = new TipoPuntoVenta();
-							tipoPuntoVenta.setDescripcion(descripcion);
+							tipoPuntoVenta.setDescripcion(descripcion.toUpperCase());
 							tipoPuntoVenta.setEmpresaId(getEmpresaId());
 							tipoPuntoVenta.setEstatus(Boolean.TRUE);
 							getServiceLocator().getTipoPuntoVenta().saveEntity(tipoPuntoVenta);
+							msg = CREATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -100,9 +101,10 @@ public class TipoPuntoVentaHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							TipoPuntoVenta tipoPuntoVenta = getServiceLocator().getTipoPuntoVenta().loadEntity(TipoPuntoVenta.class, Long.parseLong(tipopuntoventaId));
-							tipoPuntoVenta.setDescripcion(descripcion);							
+							tipoPuntoVenta.setDescripcion(descripcion.toUpperCase());							
 							tipoPuntoVenta.setEstatus(Boolean.valueOf(estatus));
 							getServiceLocator().getTipoPuntoVenta().updateEntity(tipoPuntoVenta);
+							msg = UPDATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -214,7 +216,8 @@ public class TipoPuntoVentaHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							TipoPuntoVenta tipoPuntoVenta = getServiceLocator().getTipoPuntoVenta().loadEntity(TipoPuntoVenta.class, Long.parseLong(tipopuntoventaId));
-							getServiceLocator().getTipoPuntoVenta().deleteEntity(tipoPuntoVenta);							
+							getServiceLocator().getTipoPuntoVenta().deleteEntity(tipoPuntoVenta);
+							msg = DELETE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();

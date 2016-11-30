@@ -29,6 +29,7 @@ $(document).ready(function() {
             var frmValidate = new FormValidate(e.target);
             if (frmValidate.validate()) {
                 buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
                     fnListaTipoAgente();
                     $("#newTipoAgente").modal("hide");
                 }, true);
@@ -61,6 +62,7 @@ $(document).ready(function() {
             var frmValidate = new FormValidate(e.target);
             if (frmValidate.validate()) {
                 buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
                     fnListaTipoAgente();
                     $("#editTipoAgente").modal("hide");
                 }, true);

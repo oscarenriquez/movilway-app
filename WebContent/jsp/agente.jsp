@@ -45,7 +45,7 @@
                         <div class="form-group">
                             <label for="nombre" class="control-label col-md-4 col-lg-4">Nombre: </label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="text" name="nombre" id="nombre" autocomplete="off" value="" placeholder="Nombre" class="form-control" required>
+                                <input type="text" name="nombre" id="nombre" autocomplete="off" value="" placeholder="Nombre" class="form-control to-upper" required>
                             </div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                         <div class="form-group">
                             <label for="edit_nombre" class="control-label col-md-4 col-lg-4">Nombre: </label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="text" name="nombre" id="edit_nombre" autocomplete="off" value="" placeholder="Nombre" class="form-control" required>
+                                <input type="text" name="nombre" id="edit_nombre" autocomplete="off" value="" placeholder="Nombre" class="form-control to-upper" required>
                             </div>
                         </div>
                         <div class="form-group">

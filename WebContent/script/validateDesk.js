@@ -163,7 +163,7 @@ $(document).ready(function(){
 			if(data.IsSuccess){							
 				$("#formLogin").find("h1").append("<img src='./img/Icon.png' id='icono2' class='icono1 hidden-xs'/ width='48'>");							
 				$('#formLogin').find("h1").append("<span class='log-in'>Login </span><span class='sign-up'>"+data.App+" </span> "+data.ver);
-				$("#formLogin").find("h1").append("<img src='./img/pasalo.png' id='icono1' class='icono2 hidden-xs' width='48'/>");																				
+				$("#formLogin").find("h1").append("<img src='./img/movilway_white.png' id='icono1' class='icono2 hidden-xs' width='48'/>");																				
 				$('head').append("<title>"+data.title+"</title>");
 				$('#cabecera').append("<strong>"+data.App2+"</strong>");
 				$('.footer-init').find("p").html("<strong>"+data.footer+"</strong>");						

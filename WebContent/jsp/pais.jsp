@@ -30,10 +30,11 @@
         <div class="panel-title">Administraci&oacute;n Pais</div>
     </div>
     <div class="panel-body">
-        <div class="alert alert-info text-center">
+        <div class=" alert alert-slim alert-info text-center">
             <h3 id="title-pais"></h3>
         </div>
         <div class="well well-sm text-right">
+            <button class="btn btn-danger" type="button" onclick="$('#panel-pais').show();$('#panel-estado').hide();">Cancelar</button>
             <button class="btn btn-success" data-toggle="modal" data-target="#newEstado">
 				<i class="glyphicon glyphicon-plus"></i> Nuevo
 			</button>
@@ -52,17 +53,15 @@
         </div>
         <div class="row">
             <br />
-            <div class="col-lg-12 text-center">
-                <button class="btn btn-danger" type="button" onclick="$('#panel-pais').show();$('#panel-estado').hide();">Cancelar</button>
-            </div>
         </div>
         <div id="panel-provincia" style="display:none;">
             <br />
             <br />
-            <div class="alert alert-info text-center">
+            <div class="alert alert-slim alert-info text-center">
                 <h3 id="title-estado"></h3>
             </div>
             <div class="well well-sm text-right">
+                <button class="btn btn-danger" type="button" onclick="$('#panel-pais').show();$('#panel-estado').hide();">Cancelar</button>
                 <button class="btn btn-success" data-toggle="modal" data-target="#newProvincia">
 				<i class="glyphicon glyphicon-plus"></i> Nuevo
 			</button>
@@ -77,6 +76,34 @@
                         </tr>
                     </thead>
                     <tbody id="table-provincia"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <br />
+        </div>
+        <div id="panel-region" style="display:none;">
+            <br />
+            <br />
+            <div class="alert alert-slim alert-info text-center">
+                <h3 id="title-provincia"></h3>
+            </div>
+            <div class="well well-sm text-right">
+                <button class="btn btn-danger" type="button" onclick="$('#panel-pais').show();$('#panel-estado').hide();">Cancelar</button>
+                <button class="btn btn-success" data-toggle="modal" data-target="#newRegion">
+				<i class="glyphicon glyphicon-plus"></i> Nuevo
+			</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-condensed table-bordered table-striped display" style="width: 100% !important;">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="text-center">Descripcion</th>
+                            <th class="text-center">Abreviatura</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-region"></tbody>
                 </table>
             </div>
         </div>
@@ -98,13 +125,13 @@
                         <div class="form-group">
                             <label for="descripcion" class="control-label col-md-4 col-lg-4">Descripcion: </label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="text" name="descripcion" id="descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control" required>
+                                <input type="text" name="descripcion" id="descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control to-upper" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="abrev" class="control-label col-md-4 col-lg-4">Abreviatura: </label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="text" name="abrev" id="abrev" autocomplete="off" value="" placeholder="Abreviatura" class="form-control" required>
+                                <input type="text" name="abrev" id="abrev" autocomplete="off" value="" placeholder="Abreviatura" class="form-control to-upper" required>
                             </div>
                         </div>
                     </div>
@@ -132,13 +159,13 @@
                         <div class="form-group">
                             <label for="edit_descripcion" class="control-label col-md-4 col-lg-4">Descripcion: </label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="text" name="descripcion" id="edit_descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control" required>
+                                <input type="text" name="descripcion" id="edit_descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control to-upper" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="edit_abrev" class="control-label col-md-4 col-lg-4">Abreviatura: </label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="text" name="abrev" id="edit_abrev" autocomplete="off" value="" placeholder="Abreviatura" class="form-control" required>
+                                <input type="text" name="abrev" id="edit_abrev" autocomplete="off" value="" placeholder="Abreviatura" class="form-control to-upper" required>
                             </div>
                         </div>
                     </div>
@@ -168,13 +195,13 @@
                         <div class="form-group">
                             <label for="descripcion" class="control-label col-md-4 col-lg-4">Descripcion: </label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="text" name="descripcion" id="descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control" required>
+                                <input type="text" name="descripcion" id="estado_descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control to-upper" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="abrev" class="control-label col-md-4 col-lg-4">Abreviatura: </label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="text" name="abrev" id="abrev" autocomplete="off" value="" placeholder="Abreviatura" class="form-control" required>
+                                <input type="text" name="abrev" id="estado_abrev" autocomplete="off" value="" placeholder="Abreviatura" class="form-control to-upper" required>
                             </div>
                         </div>
                     </div>
@@ -202,13 +229,13 @@
                         <div class="form-group">
                             <label for="edit_descripcion" class="control-label col-md-4 col-lg-4">Descripcion: </label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="text" name="descripcion" id="edit_descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control" required>
+                                <input type="text" name="descripcion" id="edit_estado_descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control to-upper" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="edit_abrev" class="control-label col-md-4 col-lg-4">Abreviatura: </label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="text" name="abrev" id="edit_abrev" autocomplete="off" value="" placeholder="Abreviatura" class="form-control" required>
+                                <input type="text" name="abrev" id="edit_estado_abrev" autocomplete="off" value="" placeholder="Abreviatura" class="form-control to-upper" required>
                             </div>
                         </div>
                     </div>
@@ -238,13 +265,13 @@
                         <div class="form-group">
                             <label for="descripcion" class="control-label col-md-4 col-lg-4">Descripcion: </label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="text" name="descripcion" id="descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control" required>
+                                <input type="text" name="descripcion" id="prov_descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control to-upper" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="abrev" class="control-label col-md-4 col-lg-4">Abreviatura: </label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="text" name="abrev" id="abrev" autocomplete="off" value="" placeholder="Abreviatura" class="form-control" required>
+                                <input type="text" name="abrev" id="prov_abrev" autocomplete="off" value="" placeholder="Abreviatura" class="form-control to-upper" required>
                             </div>
                         </div>
                     </div>
@@ -272,13 +299,83 @@
                         <div class="form-group">
                             <label for="edit_descripcion" class="control-label col-md-4 col-lg-4">Descripcion: </label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="text" name="descripcion" id="edit_descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control" required>
+                                <input type="text" name="descripcion" id="edit_prov_descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control to-upper" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="edit_abrev" class="control-label col-md-4 col-lg-4">Abreviatura: </label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="text" name="abrev" id="edit_abrev" autocomplete="off" value="" placeholder="Abreviatura" class="form-control" required>
+                                <input type="text" name="abrev" id="edit_prov_abrev" autocomplete="off" value="" placeholder="Abreviatura" class="form-control to-upper" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-default" data-dismiss="modal">Cerrar</a>
+                    <button class="btn btn-primary" type="submit">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODALS DE REGION -->
+<div class="modal fade" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" aria-hidden="true" data-keyboard="false" id="newRegion">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" id="form-new-region">
+                <div class="modal-header">
+                    <button class="close" aria-hidden="true" type="button" data-dismiss="modal">X</button>
+                    <h4 class="modal-title">Nueva Region</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <input type="hidden" name="provincia" id="provincia" value="0" />
+                        <input type="hidden" name="key" id="key" value="64" />
+                        <div class="form-group">
+                            <label for="descripcion" class="control-label col-md-4 col-lg-4">Descripcion: </label>
+                            <div class="col-md-8 col-lg-8">
+                                <input type="text" name="descripcion" id="region_descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control to-upper" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="abrev" class="control-label col-md-4 col-lg-4">Abreviatura: </label>
+                            <div class="col-md-8 col-lg-8">
+                                <input type="text" name="abrev" id="region_abrev" autocomplete="off" value="" placeholder="Abreviatura" class="form-control to-upper" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-default" data-dismiss="modal">Cerrar</a>
+                    <button class="btn btn-primary" type="submit">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" aria-hidden="true" data-keyboard="false" id="editRegion">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" id="form-edit-region">
+                <div class="modal-header">
+                    <button class="close" aria-hidden="true" type="button" data-dismiss="modal">X</button>
+                    <h4 class="modal-title">Editar Provincia</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <input type="hidden" name="regionId" id="edit_regionId" value="0" />
+                        <input type="hidden" name="key" id="edit_region_key" value="65" />
+                        <div class="form-group">
+                            <label for="edit_descripcion" class="control-label col-md-4 col-lg-4">Descripcion: </label>
+                            <div class="col-md-8 col-lg-8">
+                                <input type="text" name="descripcion" id="edit_region_descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control to-upper" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_abrev" class="control-label col-md-4 col-lg-4">Abreviatura: </label>
+                            <div class="col-md-8 col-lg-8">
+                                <input type="text" name="abrev" id="edit_region_abrev" autocomplete="off" value="" placeholder="Abreviatura" class="form-control to-upper" required>
                             </div>
                         </div>
                     </div>

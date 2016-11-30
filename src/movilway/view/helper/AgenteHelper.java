@@ -41,9 +41,10 @@ public class AgenteHelper extends ServicioHelper {
 						try{
 							Agente agente = new Agente();
 							agente.setTipoAgente(getServiceLocator().getTipoAgenteService().loadEntity(TipoAgente.class, Long.valueOf(tipoagenteId)));
-							agente.setNombre(nombre);
+							agente.setNombre(nombre.toUpperCase());
 							agente.setEstatus(Boolean.TRUE);
 							getServiceLocator().getAgenteService().saveEntity(agente);
+							msg = CREATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -102,10 +103,11 @@ public class AgenteHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							Agente agente = getServiceLocator().getAgenteService().loadEntity(Agente.class, Long.parseLong(agenteId));
-							agente.setNombre(nombre);
+							agente.setNombre(nombre.toUpperCase());
 							agente.setTipoAgente(getServiceLocator().getTipoAgenteService().loadEntity(TipoAgente.class, Long.valueOf(tipoagenteId)));
 							agente.setEstatus(Boolean.valueOf(estatus));
 							getServiceLocator().getAgenteService().updateEntity(agente);
+							msg = UPDATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -217,7 +219,8 @@ public class AgenteHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							Agente agente = getServiceLocator().getAgenteService().loadEntity(Agente.class, Long.parseLong(agenteId));
-							getServiceLocator().getAgenteService().deleteEntity(agente);							
+							getServiceLocator().getAgenteService().deleteEntity(agente);
+							msg = DELETE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();

@@ -32,4 +32,5 @@ public class ProvinciaServiceImpl<T> extends GenericServiceImpl<T> implements Pr
 	public List<Provincia> getListaProvinciasByEstado(Long estadoId) throws InfraestructureException {		
 		return dao.getListaProvinciasByEstado(estadoId);
 	}
+
 }

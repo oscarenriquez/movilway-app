@@ -19,14 +19,8 @@
         </property>
         <property name="abrev" type="java.lang.String">
             <column name="abrev" length="100" />
-        </property>
-        <set name="puntoVentas" table="punto_venta" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="provincia_id" />
-            </key>
-            <one-to-many class="movilway.dao.domain.PuntoVenta" />
-        </set>
-        <set name="regionProvincias" table="region_provincia" inverse="true" lazy="true" fetch="select">
+        </property>        
+        <set name="regionProvincias" table="region_provincia" inverse="true" lazy="true" fetch="join">
             <key>
                 <column name="provincia_id" not-null="true" />
             </key>

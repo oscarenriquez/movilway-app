@@ -787,6 +787,26 @@ var FormValidate;
             }
             return isValid;
         };
+
+        this.clean = function() {
+            for (var i = 0; i < this.inputElement.length; i++) {
+                if (this.inputElement[i].type != 'hidden') {
+                    if (this.inputElement[i].type == 'checkbox') {
+                        this.inputElement[i].checked = false;
+                    } else {
+                        this.inputElement[i].value = '';
+                    }
+                }
+            }
+
+            for (var i = 0; i < this.textAreaElement.length; i++) {
+                this.textAreaElement[i].value = '';
+            }
+
+            for (var i = 0; i < this.selectElement.length; i++) {
+                this.selectElement[i].value = '';
+            }
+        };
     };
 })();
 

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import movilway.dao.domain.Estado;
 import movilway.dao.domain.Pais;
 import movilway.dao.domain.Provincia;
+import movilway.dao.domain.RegionProvincia;
 import movilway.dao.exception.InfraestructureException;
 import movilway.dao.util.HibernateUtil;
 import net.sf.json.JSONArray;
@@ -48,11 +49,12 @@ public class EstadoHelper extends ServicioHelper {
 						try{
 							Pais pais = getServiceLocator().getPaisService().loadEntity(Pais.class, Long.valueOf(paisId));
 							Estado estado = new Estado();
-							estado.setDescripcion(descripcion);
-							estado.setAbrev(abrev);
+							estado.setDescripcion(descripcion.toUpperCase());
+							estado.setAbrev(abrev.toUpperCase());
 							
 							pais.addEstado(estado);
 							getServiceLocator().getPaisService().updateEntity(pais);
+							msg = CREATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -118,9 +120,10 @@ public class EstadoHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							Estado estado = getServiceLocator().getEstadoService().loadEntity(Estado.class, Long.parseLong(estadoId));
-							estado.setDescripcion(descripcion);
-							estado.setAbrev(abrev);
+							estado.setDescripcion(descripcion.toUpperCase());
+							estado.setAbrev(abrev.toUpperCase());
 							getServiceLocator().getEstadoService().updateEntity(estado);
+							msg = UPDATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -234,7 +237,8 @@ public class EstadoHelper extends ServicioHelper {
 							Estado estado = getServiceLocator().getEstadoService().loadEntity(Estado.class, Long.parseLong(estadoId));
 							Pais pais = estado.getPais();
 							pais.removeEstado(estado);
-							getServiceLocator().getPaisService().updateEntity(pais);							
+							getServiceLocator().getPaisService().updateEntity(pais);
+							msg = DELETE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -308,7 +312,7 @@ public class EstadoHelper extends ServicioHelper {
 								option = new HashMap<>();
 								option.put("icon", ICON_DETALLE);
 								option.put("params", "EstadoCtrl.fnMostrarProvincias("+estado.getEstadoId()+", '"+estado.getDescripcion()+"')");
-								option.put("label", "Eliminar");
+								option.put("label", " Ver Provincias");
 								options.add(option);			
 								
 								JSONArray array = new JSONArray();														
@@ -378,11 +382,12 @@ public class EstadoHelper extends ServicioHelper {
 						try{
 							Estado estado = getServiceLocator().getEstadoService().loadEntity(Estado.class, Long.valueOf(estadoId));
 							Provincia provincia = new Provincia();
-							provincia.setDescripcion(descripcion);
-							provincia.setAbrev(abrev);
+							provincia.setDescripcion(descripcion.toUpperCase());
+							provincia.setAbrev(abrev.toUpperCase());
 							
 							estado.addProvincia(provincia);
 							getServiceLocator().getEstadoService().updateEntity(estado);
+							msg = CREATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -440,9 +445,10 @@ public class EstadoHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							Provincia provincia = getServiceLocator().getProvinciaService().loadEntity(Provincia.class, Long.parseLong(provinciaId));
-							provincia.setDescripcion(descripcion);
-							provincia.setAbrev(abrev);
+							provincia.setDescripcion(descripcion.toUpperCase());
+							provincia.setAbrev(abrev.toUpperCase());
 							getServiceLocator().getProvinciaService().updateEntity(provincia);
+							msg = UPDATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -556,7 +562,8 @@ public class EstadoHelper extends ServicioHelper {
 							Provincia provincia = getServiceLocator().getProvinciaService().loadEntity(Provincia.class, Long.parseLong(provinciaId));
 							Estado estado = provincia.getEstado();
 							estado.removeProvincia(provincia);
-							getServiceLocator().getEstadoService().updateEntity(estado);						
+							getServiceLocator().getEstadoService().updateEntity(estado);
+							msg = DELETE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -625,7 +632,13 @@ public class EstadoHelper extends ServicioHelper {
 								option.put("icon", ICON_ELIMINAR);
 								option.put("params", "EstadoCtrl.fnEliminarProvincia("+provincia.getProvinciaId()+")");
 								option.put("label", "Eliminar");
-								options.add(option);														
+								options.add(option);
+								
+								option = new HashMap<>();
+								option.put("icon", ICON_ELIMINAR);
+								option.put("params", "EstadoCtrl.fnMostrarRegiones("+provincia.getProvinciaId()+", '"+provincia.getDescripcion()+"')");
+								option.put("label", "Ver Regiones");
+								options.add(option);	
 								
 								JSONArray array = new JSONArray();														
 								
@@ -674,4 +687,319 @@ public class EstadoHelper extends ServicioHelper {
 			getAlerta().enviarAlerta("listaProvincia", e, getUsuarioBean(), ServicioHelper.EMAIL);
 		}
 	}
+
+	public void crearRegion (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+		try{
+			setDefaultValues(req, key);
+			JSONObject result = new JSONObject();
+			Boolean isSuccess = true;
+			Boolean permiso = false;
+			String msg = "";
+			
+			if(getSession() != null){
+				String provinciaId = getNumberValue(req.getParameter("provincia"));
+				String abrev = getStringValue(req.getParameter("abrev"));
+				String descripcion = getStringValue(req.getParameter("descripcion"));
+				if(vParam(descripcion) && vParam(abrev) && vParam(provinciaId)){
+					permiso = pageAcceso(req, getServicesid(), getContext());
+					if(permiso){						
+						try{
+							Provincia provincia = getServiceLocator().getProvinciaService().loadEntity(Provincia.class, Long.valueOf(provinciaId));
+							RegionProvincia regionProvincia = new RegionProvincia();
+							regionProvincia.setDescripcion(descripcion.toUpperCase());
+							regionProvincia.setAbrev(abrev.toUpperCase());
+							
+							provincia.addRegionProvincia(regionProvincia);
+							getServiceLocator().getProvinciaService().updateEntity(provincia);
+						} catch (InfraestructureException ie) {
+							try {
+								HibernateUtil.rollbackTransaction();
+							} catch (InfraestructureException e) {
+								e.printStackTrace();
+							}
+							getAlerta().enviarAlerta("crearRegion", ie, getUsuarioBean(),  EMAIL);
+							ie.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						} catch (Exception e){
+							getAlerta().enviarAlerta("crearRegion", e, getUsuarioBean(),  EMAIL);
+							e.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						}						
+					} else {
+						isSuccess = false;
+						msg = FALTA_PERMISOS;
+					}
+				} else {
+					isSuccess = false;
+					msg = PARAM_NECESARIOS;
+				}
+			} else {
+				isSuccess = false;
+				msg = SESION_EXPIRADA;
+			}
+			
+			result.put("isSuccess", isSuccess);
+			result.put("permiso", permiso);
+			result.put("msg", msg);
+			
+			printJson(resp, result);
+		} catch(Exception e){
+			e.printStackTrace();
+			getAlerta().enviarAlerta("crearRegion", e, getUsuarioBean(), ServicioHelper.EMAIL);
+		}
+	}
+		
+	public void modificarRegion (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+		try{
+			setDefaultValues(req, key);
+			JSONObject result = new JSONObject();
+			Boolean isSuccess = true;
+			Boolean permiso = false;
+			String msg = "";
+			
+			if(getSession() != null){
+				String regionId = getNumberValue(req.getParameter("regionId"));				
+				String abrev = getStringValue(req.getParameter("abrev"));
+				String descripcion = getStringValue(req.getParameter("descripcion"));
+				if(vParam(regionId) && vParam(abrev) && vParam(descripcion)){
+					permiso = pageAcceso(req, getServicesid(), getContext());
+					if(permiso){						
+						try{
+							RegionProvincia regionProvincia = getServiceLocator().getRegionProvinciaService().loadEntity(RegionProvincia.class, Long.valueOf(regionId));
+							regionProvincia.setDescripcion(descripcion.toUpperCase());
+							regionProvincia.setAbrev(abrev.toUpperCase());
+							getServiceLocator().getRegionProvinciaService().updateEntity(regionProvincia);
+						} catch (InfraestructureException ie) {
+							try {
+								HibernateUtil.rollbackTransaction();
+							} catch (InfraestructureException e) {
+								e.printStackTrace();
+							}
+							getAlerta().enviarAlerta("modificarRegion", ie, getUsuarioBean(),  EMAIL);
+							ie.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						} catch (Exception e){
+							getAlerta().enviarAlerta("modificarRegion", e, getUsuarioBean(),  EMAIL);
+							e.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						}						
+					} else {
+						isSuccess = false;
+						msg = FALTA_PERMISOS;
+					}
+				} else {
+					isSuccess = false;
+					msg = PARAM_NECESARIOS;
+				}
+			} else {
+				isSuccess = false;
+				msg = SESION_EXPIRADA;
+			}
+			
+			result.put("isSuccess", isSuccess);
+			result.put("permiso", permiso);
+			result.put("msg", msg);
+			
+			printJson(resp, result);
+		} catch(Exception e){
+			e.printStackTrace();
+			getAlerta().enviarAlerta("modificarRegion", e, getUsuarioBean(), ServicioHelper.EMAIL);
+		}
+	}
+	
+	public void consultarRegion (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+		try{
+			setDefaultValues(req, key);
+			JSONObject result = new JSONObject();
+			Boolean isSuccess = true;
+			Boolean permiso = false;
+			String msg = "";
+			
+			if(getSession() != null){				
+				String regionId = getNumberValue(req.getParameter("regionId"));
+				if(vParam(regionId)){
+					permiso = pageAcceso(req, getServicesid(), getContext());
+					if(permiso){						
+						try{
+							RegionProvincia region = getServiceLocator().getRegionProvinciaService().loadEntity(RegionProvincia.class, Long.valueOf(regionId));
+							result.put("model", getSerializeJSONObject(region));							
+						} catch (InfraestructureException ie) {
+							try {
+								HibernateUtil.rollbackTransaction();
+							} catch (InfraestructureException e) {
+								e.printStackTrace();
+							}
+							getAlerta().enviarAlerta("consultarRegion", ie, getUsuarioBean(),  EMAIL);
+							ie.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						} catch (Exception e){
+							getAlerta().enviarAlerta("consultarRegion", e, getUsuarioBean(),  EMAIL);
+							e.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						}						
+					} else {
+						isSuccess = false;
+						msg = FALTA_PERMISOS;
+					}
+				} else {
+					isSuccess = false;
+					msg = PARAM_NECESARIOS;
+				}
+			} else {
+				isSuccess = false;
+				msg = SESION_EXPIRADA;
+			}
+			
+			result.put("isSuccess", isSuccess);
+			result.put("permiso", permiso);
+			result.put("msg", msg);
+			
+			printJson(resp, result);
+		} catch(Exception e){
+			e.printStackTrace();
+			getAlerta().enviarAlerta("consultarRegion", e, getUsuarioBean(), ServicioHelper.EMAIL);
+		}
+	}
+	
+	public void eliminarRegion (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+		try{
+			setDefaultValues(req, key);
+			JSONObject result = new JSONObject();
+			Boolean isSuccess = true;
+			Boolean permiso = false;
+			String msg = "";
+			
+			if(getSession() != null){				
+				String regionId = getNumberValue(req.getParameter("regionId"));
+				if(vParam(regionId)){
+					permiso = pageAcceso(req, getServicesid(), getContext());
+					if(permiso){						
+						try{
+							RegionProvincia region = getServiceLocator().getRegionProvinciaService().loadEntity(RegionProvincia.class, Long.valueOf(regionId));
+							Provincia provincia = region.getProvincia();
+							provincia.removeRegionProvincia(region);
+							getServiceLocator().getProvinciaService().updateEntity(provincia);					
+						} catch (InfraestructureException ie) {
+							try {
+								HibernateUtil.rollbackTransaction();
+							} catch (InfraestructureException e) {
+								e.printStackTrace();
+							}
+							getAlerta().enviarAlerta("eliminarRegion", ie, getUsuarioBean(),  EMAIL);
+							ie.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						} catch (Exception e){
+							getAlerta().enviarAlerta("eliminarRegion", e, getUsuarioBean(),  EMAIL);
+							e.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						}						
+					} else {
+						isSuccess = false;
+						msg = FALTA_PERMISOS;
+					}
+				} else {
+					isSuccess = false;
+					msg = PARAM_NECESARIOS;
+				}
+			} else {
+				isSuccess = false;
+				msg = SESION_EXPIRADA;
+			}
+			
+			result.put("isSuccess", isSuccess);
+			result.put("permiso", permiso);
+			result.put("msg", msg);
+			
+			printJson(resp, result);
+		} catch(Exception e){
+			e.printStackTrace();
+			getAlerta().enviarAlerta("eliminarRegion", e, getUsuarioBean(), ServicioHelper.EMAIL);
+		}
+	}
+	
+	public void listaRegion (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+		try{
+			setDefaultValues(req, key);
+			JSONObject result = new JSONObject();
+			Boolean isSuccess = true;
+			Boolean permiso = false;
+			String msg = "";
+			
+			if(getSession() != null){
+				String provinciaId = getNumberValue(req.getParameter("provincia"));
+				if(vParam(provinciaId)){
+					permiso = pageAcceso(req, getServicesid(), getContext());
+					if(permiso){						
+						try{							
+							List<RegionProvincia> listaRegionProvincia = getServiceLocator().getRegionProvinciaService().getListaRegionProvincia(Long.valueOf(provinciaId));
+							JSONArray lista = new JSONArray();
+							for(RegionProvincia region : listaRegionProvincia) {
+								List<Map<String, Object>> options = new ArrayList<>();
+								Map<String, Object> option = new HashMap<>();
+								option.put("icon", ICON_EDITAR);
+								option.put("params", "EstadoCtrl.fnConsultarRegion("+region.getRegionprovinciaId()+")");
+								option.put("label", "Editar");
+								options.add(option);
+								
+								option = new HashMap<>();
+								option.put("icon", ICON_ELIMINAR);
+								option.put("params", "EstadoCtrl.fnEliminarRegion("+region.getRegionprovinciaId()+")");
+								option.put("label", "Eliminar");
+								options.add(option);														
+								
+								JSONArray array = new JSONArray();														
+								
+								array.add(getHtmlLink(options));
+								array.add(region.getDescripcion());
+								array.add(region.getAbrev());								
+								lista.add(array);
+							}
+							result.put("lista", lista);
+						} catch (InfraestructureException ie) {
+							try {
+								HibernateUtil.rollbackTransaction();
+							} catch (InfraestructureException e) {
+								e.printStackTrace();
+							}
+							getAlerta().enviarAlerta("listaRegion", ie, getUsuarioBean(),  EMAIL);
+							ie.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						} catch (Exception e){
+							getAlerta().enviarAlerta("listaRegion", e, getUsuarioBean(),  EMAIL);
+							e.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						}
+					} else {
+						isSuccess = false;
+						msg = PARAM_NECESARIOS;
+					}	
+				} else {
+					isSuccess = false;
+					msg = FALTA_PERMISOS;
+				}				
+			} else {
+				isSuccess = false;
+				msg = SESION_EXPIRADA;
+			}
+			
+			result.put("isSuccess", isSuccess);
+			result.put("permiso", permiso);
+			result.put("msg", msg);
+			
+			printJson(resp, result);
+		} catch(Exception e){
+			e.printStackTrace();
+			getAlerta().enviarAlerta("listaRegion", e, getUsuarioBean(), ServicioHelper.EMAIL);
+		}
+	}	
 }

@@ -29,6 +29,7 @@ $(document).ready(function() {
             var frmValidate = new FormValidate(e.target);
             if (frmValidate.validate()) {
                 buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
                     fnListaPais();
                     $("#newPais").modal("hide");
                 }, true);
@@ -45,9 +46,9 @@ $(document).ready(function() {
             buildFormPost(param, function(data) {
                 for (var item in data.model) {
                     if (typeof(data.model[item]) === "boolean") {
-                        $("#edit_" + item).prop("checked", data.model[item]);
+                        $("#form-edit-pais #edit_" + item).prop("checked", data.model[item]);
                     } else {
-                        $("#edit_" + item).val(data.model[item]);
+                        $("#form-edit-pais #edit_" + item).val(data.model[item]);
                     }
                 }
                 $("#editPais").modal("show");
@@ -60,6 +61,7 @@ $(document).ready(function() {
             var frmValidate = new FormValidate(e.target);
             if (frmValidate.validate()) {
                 buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
                     fnListaPais();
                     $("#editPais").modal("hide");
                 }, true);
@@ -128,6 +130,7 @@ $(document).ready(function() {
             var frmValidate = new FormValidate(e.target);
             if (frmValidate.validate()) {
                 buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
                     fnListaEstado();
                     $("#newEstado").modal("hide");
                 }, true);
@@ -144,9 +147,9 @@ $(document).ready(function() {
             buildFormPost(param, function(data) {
                 for (var item in data.model) {
                     if (typeof(data.model[item]) === "boolean") {
-                        $("#edit_" + item).prop("checked", data.model[item]);
+                        $("#form-edit-estado #edit_estado_" + item).prop("checked", data.model[item]);
                     } else {
-                        $("#edit_" + item).val(data.model[item]);
+                        $("#form-edit-estado #edit_estado_" + item).val(data.model[item]);
                     }
                 }
                 $("#editEstado").modal("show");
@@ -159,6 +162,7 @@ $(document).ready(function() {
             var frmValidate = new FormValidate(e.target);
             if (frmValidate.validate()) {
                 buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
                     fnListaEstado();
                     $("#editEstado").modal("hide");
                 }, true);
@@ -185,6 +189,10 @@ $(document).ready(function() {
             $("#estado").val(estadoId);
             $("#title-estado").html(nombre);
             $("#panel-provincia").show();
+            var potop = $('#panel-provincia').offset().top;
+            $('html,body, #principal').animate({
+                scrollTop: potop
+            }, 1000);
             EstadoCtrl.fnListaProvincia();
         }
 
@@ -222,6 +230,7 @@ $(document).ready(function() {
             var frmValidate = new FormValidate(e.target);
             if (frmValidate.validate()) {
                 buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
                     fnListaProvincia();
                     $("#newProvincia").modal("hide");
                 }, true);
@@ -238,9 +247,9 @@ $(document).ready(function() {
             buildFormPost(param, function(data) {
                 for (var item in data.model) {
                     if (typeof(data.model[item]) === "boolean") {
-                        $("#edit_" + item).prop("checked", data.model[item]);
+                        $("#form-edit-provincia #edit_prov_" + item).prop("checked", data.model[item]);
                     } else {
-                        $("#edit_" + item).val(data.model[item]);
+                        $("#form-edit-provincia #edit_prov_" + item).val(data.model[item]);
                     }
                 }
                 $("#editProvincia").modal("show");
@@ -253,6 +262,7 @@ $(document).ready(function() {
             var frmValidate = new FormValidate(e.target);
             if (frmValidate.validate()) {
                 buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
                     fnListaProvincia();
                     $("#editProvincia").modal("hide");
                 }, true);
@@ -274,12 +284,114 @@ $(document).ready(function() {
             });
         }
 
+        function fnMostrarRegiones(provinciaId, nombre) {
+            EstadoCtrl.provincia = provinciaId;
+            $("#provincia").val(provinciaId);
+            $("#title-provincia").html(nombre);
+            $("#panel-region").show();
+            var potop = $('#panel-region').offset().top;
+            $('html,body, #principal').animate({
+                scrollTop: potop
+            }, 1000);
+            EstadoCtrl.fnListaRegion();
+        }
+
         EstadoCtrl.fnEliminarProvincia = fnEliminarProvincia;
         EstadoCtrl.fnConsultarProvincia = fnConsultarProvincia;
         EstadoCtrl.fnListaProvincia = fnListaProvincia;
+        EstadoCtrl.fnMostrarRegiones = fnMostrarRegiones;
 
         $("#form-new-provincia").on("submit", fnCrearProvincia);
         $("#form-edit-provincia").on("submit", fnModificarProvincia);
+
+
+        // Funciones Region
+        function fnListaRegion() {
+            buildFormPost({ key: 68, provincia: EstadoCtrl.provincia }, function(data) {
+
+                $("#table-region").parent("table").dataTable().fnDestroy();
+
+                createTable(data.lista, "table-region");
+                var options = $.extend(true, {}, tableOptions, {
+                    "aoColumns": [
+                        { "sClass": "left", "bSortable": false },
+                        { "sClass": "left", "bSortable": true },
+                        { "sClass": "left", "bSortable": true }
+                    ]
+                });
+
+                $("#table-region").parent("table").dataTable(options);
+
+            }, true);
+        }
+
+        function fnCrearRegion(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var frmValidate = new FormValidate(e.target);
+            if (frmValidate.validate()) {
+                buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
+                    fnListaRegion();
+                    $("#newRegion").modal("hide");
+                }, true);
+            } else {
+                noty({ text: "¡ Complete los campos requeridos !", type: 'warning', timeout: 3000 });
+            }
+        }
+
+        function fnConsultarRegion(regionId) {
+            $("#edit_regionId").val(regionId);
+            var param = {};
+            param.regionId = regionId;
+            param.key = 66;
+            buildFormPost(param, function(data) {
+                for (var item in data.model) {
+                    if (typeof(data.model[item]) === "boolean") {
+                        $("#form-edit-region #edit_region_" + item).prop("checked", data.model[item]);
+                    } else {
+                        $("#form-edit-region #edit_region_" + item).val(data.model[item]);
+                    }
+                }
+                $("#editRegion").modal("show");
+            }, true);
+        }
+
+        function fnModificarRegion(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var frmValidate = new FormValidate(e.target);
+            if (frmValidate.validate()) {
+                buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
+                    fnListaRegion()
+                    $("#editRegion").modal("hide");
+                }, true);
+            } else {
+                noty({ text: "¡ Complete los campos requeridos !", type: 'warning', timeout: 3000 });
+            }
+        }
+
+        function fnEliminarRegion(regionId) {
+            var param = {};
+            param.regionId = regionId;
+            param.key = 67;
+            alertify.confirm("<h3>¿Esta seguro de eliminar este registro?</h3>", function(e) {
+                if (e) {
+                    buildFormPost(param, function() {
+                        fnListaRegion();
+                    });
+                }
+            });
+        }
+
+
+        EstadoCtrl.fnEliminarRegion = fnEliminarRegion;
+        EstadoCtrl.fnConsultarRegion = fnConsultarRegion;
+        EstadoCtrl.fnListaRegion = fnListaRegion;
+
+        $("#form-new-region").on("submit", fnCrearRegion);
+        $("#form-edit-region").on("submit", fnModificarRegion);
 
     })(EstadoCtrl || (EstadoCtrl = {}));
 });

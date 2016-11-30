@@ -38,7 +38,7 @@
                         <div class="form-group">
                             <label for="descripcion" class="control-label col-md-4 col-lg-4">Descripcion</label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="text" name="descripcion" id="descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control" required />
+                                <input type="text" name="descripcion" id="descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control to-upper" required />
                             </div>
                         </div>
                         <div class="form-group">
@@ -73,7 +73,7 @@
                         <div class="form-group">
                             <label for="descripcion" class="control-label col-md-4 col-lg-4">Descripcion</label>
                             <div class="col-md-8 col-lg-8">
-                                <input type="text" name="descripcion" id="edit_descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control" required />
+                                <input type="text" name="descripcion" id="edit_descripcion" autocomplete="off" value="" placeholder="Descripcion" class="form-control to-upper" required />
                             </div>
                         </div>
                         <div class="form-group">

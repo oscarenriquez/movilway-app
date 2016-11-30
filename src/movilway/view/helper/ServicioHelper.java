@@ -445,35 +445,49 @@ public class ServicioHelper implements Serializable {
 		return access;
 	}
 
-	protected void dispacherController(HttpServletRequest req, HttpServletResponse resp, int key, String path) throws ServletException, IOException {
-		setContext(req.getContextPath());
-		setContext(getContext().substring(1, getContext().length()).trim());
-		setServiceId((long) key);
-
-		try {
-			boolean permiso = pageAcceso(req, getServiceId(), getContext());
-			if (!permiso) {
-				path = "/html/acceso.html";
+	protected boolean isEntidadEnabled() {
+		if (getSession() != null) {
+			Long entidad = (Long) getSession().getAttribute("idEntidad");
+			String nombreEntidad = (String) getSession().getAttribute("nombreEntidad");
+			if ((entidad != null) && (nombreEntidad != null) && !nombreEntidad.isEmpty()) {
+				return true;
 			}
+		}
+		return false;
+	}
+	
+	protected void dispacherController(HttpServletRequest req, HttpServletResponse resp, int key, String path) throws ServletException, IOException {
+		try {
+			setDefaultValues(req, key);			
+				if (isEntidadEnabled()) {
+					boolean permiso = pageAcceso(req, servicesid, context);
+					if (!permiso) {
+						path = "/html/acceso.html";
+					}
+				} else {
+					path = "/html/entidadDisabled.html";
+				}			
+			resp.setContentType("text/html");
+			resp.setHeader("Cache-Control", "no-cache");
+			resp.setHeader("charset", "UTF-8");
+			servletContext.getRequestDispatcher(path).forward(req, resp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		resp.setContentType("text/html");
-		resp.setHeader("Cache-Control", "no-cache");
-		resp.setHeader("charset", "UTF-8");
-		servletContext.getRequestDispatcher(path).forward(req, resp);
 	}
 
 	protected void setDefaultValues(HttpServletRequest req, int key) {
 		setSession(req.getSession(false));
-		setContext(req.getContextPath());
-		setContext(getContext().substring(1, getContext().length()).trim());
+		String context = req.getContextPath();
+		context = context.substring(1, context.length()).trim();
+		//String context = req.getServerName().substring(0, req.getServerName().indexOf("."));
+		setContext(context);
 		setServicesid((long) key);
 		ip = req.getRemoteAddr();
 		host = req.getRemoteHost();
 		ruser = req.getRemoteUser();
 		rport = req.getRemotePort();
+		
 	}
 
 	protected String getStringValue(String value) {

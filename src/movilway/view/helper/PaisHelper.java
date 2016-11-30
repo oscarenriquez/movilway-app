@@ -40,10 +40,11 @@ public class PaisHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							Pais pais = new Pais();
-							pais.setDescripcion(descripcion);
-							pais.setAbrev(abrev);							
+							pais.setDescripcion(descripcion.toUpperCase());
+							pais.setAbrev(abrev.toUpperCase());							
 							pais.setEmpresaId(getEmpresaId());							
 							getServiceLocator().getPaisService().saveEntity(pais);
+							msg = CREATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -101,9 +102,10 @@ public class PaisHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							Pais pais = getServiceLocator().getPaisService().loadEntity(Pais.class, Long.parseLong(paisId));
-							pais.setDescripcion(descripcion);
-							pais.setAbrev(abrev);
+							pais.setDescripcion(descripcion.toUpperCase());
+							pais.setAbrev(abrev.toUpperCase());
 							getServiceLocator().getPaisService().updateEntity(pais);
+							msg = UPDATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -215,7 +217,8 @@ public class PaisHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							Pais pais = getServiceLocator().getPaisService().loadEntity(Pais.class, Long.parseLong(paisId));
-							getServiceLocator().getPaisService().deleteEntity(pais);							
+							getServiceLocator().getPaisService().deleteEntity(pais);
+							msg = DELETE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -289,7 +292,7 @@ public class PaisHelper extends ServicioHelper {
 							option = new HashMap<>();
 							option.put("icon", ICON_DETALLE);
 							option.put("params", "PaisCtrl.fnMostrarEstados("+pais.getPaisId()+", '"+pais.getDescripcion()+"')");
-							option.put("label", "Eliminar");
+							option.put("label", "Ver Estados");
 							options.add(option);		
 							
 							JSONArray array = new JSONArray();														

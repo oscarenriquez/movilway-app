@@ -27,6 +27,7 @@ $(document).ready(function() {
             var frmValidate = new FormValidate(e.target);
             if (frmValidate.validate()) {
                 buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
                     fnListaTipoPuntoVenta();
                     $("#newTipoPuntoVenta").modal("hide");
                 }, true);
@@ -58,6 +59,7 @@ $(document).ready(function() {
             var frmValidate = new FormValidate(e.target);
             if (frmValidate.validate()) {
                 buildFormPost($(this).serialize(), function() {
+                    frmValidate.clean();
                     fnListaTipoPuntoVenta();
                     $("#editTipoPuntoVenta").modal("hide");
                 }, true);

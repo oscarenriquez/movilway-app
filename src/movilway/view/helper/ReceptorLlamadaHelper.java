@@ -41,10 +41,11 @@ public class ReceptorLlamadaHelper extends ServicioHelper {
 						try{
 							ReceptorLlamada receptorLlamada = new ReceptorLlamada();
 							receptorLlamada.setEmpresaId(getEmpresaId());
-							receptorLlamada.setDescripcion(descripcion);
-							receptorLlamada.setAbrev(abrev);
+							receptorLlamada.setDescripcion(descripcion.toUpperCase());
+							receptorLlamada.setAbrev(abrev.toUpperCase());
 							receptorLlamada.setEstatus(Boolean.TRUE);
 							getServiceLocator().getReceptorLlamadaService().saveEntity(receptorLlamada);
+							msg = CREATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -103,10 +104,11 @@ public class ReceptorLlamadaHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							ReceptorLlamada receptorLlamada = getServiceLocator().getReceptorLlamadaService().loadEntity(ReceptorLlamada.class, Long.parseLong(receptorId));
-							receptorLlamada.setDescripcion(descripcion);
-							receptorLlamada.setAbrev(abrev);
+							receptorLlamada.setDescripcion(descripcion.toUpperCase());
+							receptorLlamada.setAbrev(abrev.toUpperCase());
 							receptorLlamada.setEstatus(Boolean.valueOf(estatus));
 							getServiceLocator().getReceptorLlamadaService().updateEntity(receptorLlamada);
+							msg = UPDATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -218,7 +220,8 @@ public class ReceptorLlamadaHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							ReceptorLlamada receptorLlamada = getServiceLocator().getReceptorLlamadaService().loadEntity(ReceptorLlamada.class, Long.parseLong(receptorId));
-							getServiceLocator().getReceptorLlamadaService().deleteEntity(receptorLlamada);							
+							getServiceLocator().getReceptorLlamadaService().deleteEntity(receptorLlamada);
+							msg = DELETE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();

@@ -43,12 +43,13 @@ public class RespuestaLlamadaHelper extends ServicioHelper {
 						try{
 							RespuestaLlamada respuestaLlamada = new RespuestaLlamada();
 							respuestaLlamada.setEmpresaId(getEmpresaId());
-							respuestaLlamada.setDescripcion(descripcion);
-							respuestaLlamada.setAbrev(abrev);
+							respuestaLlamada.setDescripcion(descripcion.toUpperCase());
+							respuestaLlamada.setAbrev(abrev.toUpperCase());
 							respuestaLlamada.setEstatus(Boolean.TRUE);
 							respuestaLlamada.setEfectiva(Boolean.valueOf(efectiva));
 							respuestaLlamada.setGeneraLlamada(Boolean.valueOf(generaLlamada));
 							getServiceLocator().getRespuestaLlamadaService().saveEntity(respuestaLlamada);
+							msg = CREATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -109,12 +110,13 @@ public class RespuestaLlamadaHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							RespuestaLlamada respuestaLlamada = getServiceLocator().getRespuestaLlamadaService().loadEntity(RespuestaLlamada.class, Long.parseLong(respuestaId));
-							respuestaLlamada.setDescripcion(descripcion);
-							respuestaLlamada.setAbrev(abrev);
+							respuestaLlamada.setDescripcion(descripcion.toUpperCase());
+							respuestaLlamada.setAbrev(abrev.toUpperCase());
 							respuestaLlamada.setEstatus(Boolean.valueOf(estatus));
 							respuestaLlamada.setEfectiva(Boolean.valueOf(efectiva));
 							respuestaLlamada.setGeneraLlamada(Boolean.valueOf(generaLlamada));
 							getServiceLocator().getRespuestaLlamadaService().updateEntity(respuestaLlamada);
+							msg = UPDATE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -226,7 +228,8 @@ public class RespuestaLlamadaHelper extends ServicioHelper {
 					if(permiso){						
 						try{
 							RespuestaLlamada respuestaLlamada = getServiceLocator().getRespuestaLlamadaService().loadEntity(RespuestaLlamada.class, Long.parseLong(respuestaId));
-							getServiceLocator().getRespuestaLlamadaService().deleteEntity(respuestaLlamada);							
+							getServiceLocator().getRespuestaLlamadaService().deleteEntity(respuestaLlamada);
+							msg = DELETE;
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();

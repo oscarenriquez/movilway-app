@@ -1,6 +1,7 @@
 package movilway.dao.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @SuppressWarnings("serial")
@@ -11,7 +12,6 @@ public class Provincia implements Serializable {
 	private Pais pais;
 	private String descripcion;
 	private String abrev;
-	private Set<PuntoVenta> puntoVentas;
 	private Set<RegionProvincia> regionProvincias;
 
 	public Long getId() {
@@ -56,15 +56,7 @@ public class Provincia implements Serializable {
 
 	public void setAbrev(String abrev) {
 		this.abrev = abrev;
-	}
-
-	public Set<PuntoVenta> getPuntoVentas() {
-		return this.puntoVentas;
-	}
-
-	public void setPuntoVentas(Set<PuntoVenta> puntoVentas) {
-		this.puntoVentas = puntoVentas;
-	}
+	}	
 
 	public Set<RegionProvincia> getRegionProvincias() {
 		return this.regionProvincias;
@@ -72,6 +64,23 @@ public class Provincia implements Serializable {
 
 	public void setRegionProvincias(Set<RegionProvincia> regionProvincias) {
 		this.regionProvincias = regionProvincias;
+	}
+
+	public boolean addRegionProvincia(RegionProvincia e) {
+		if(regionProvincias == null) {
+			regionProvincias = new HashSet<>();
+		}
+		e.setProvincia(this);
+		e.setEstado(this.getEstado());
+		e.setPais(this.getPais());
+		return regionProvincias.add(e);
+	}
+
+	public boolean removeRegionProvincia(RegionProvincia o) {
+		o.setProvincia(null);
+		o.setEstado(null);
+		o.setPais(null);
+		return regionProvincias.remove(o);
 	}
 
 }

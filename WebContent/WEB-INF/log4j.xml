@@ -4,7 +4,7 @@
  
     <!-- A time/date based rolling appender -->
     <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
-     	<param name="File" value="${catalina.home}/logs/sig.log" />
+     	<param name="File" value="${catalina.home}/logs/movilway.log" /> 
         <param name="Append" value="true" />
         <param name="ImmediateFlush" value="true" />
         <param name="MaxFileSize" value="200MB" />
@@ -30,10 +30,10 @@
     
     <appender name="emailAppender" class="org.apache.log4j.net.SMTPAppender">
 	    <param name="BufferSize" value="1024" />
-	    <param name="SMTPHost" value="10.5.2.5" />
-	    <param name="From" value="logweb@empagua.com" />
-	    <param name="To" value="webapp@empagua.com" />
-	    <param name="Subject" value="Alarmas-MOVILWAY" />
+	    <param name="SMTPHost" value="198.38.82.160" />
+	    <param name="From" value="movilway@outsmobi.net" />
+	    <param name="To" value="soporte@outsmobi.net" />
+	    <param name="Subject" value="Alarmas-MovilWay" />
 	    <layout class="org.apache.log4j.PatternLayout">
 	        <param name="ConversionPattern" value="%d{dd-MM-yyyy HH:mm:ss} [%t] %p %c (%F:%L) - %m%n" />
 	    </layout>
