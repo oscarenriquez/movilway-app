@@ -153,9 +153,14 @@ if(sessionRequest == null){
 	    <script src="./script/highcharts-3d-4.0.4.js"></script>
 	    <script src="./script/highcharts-more-4.0.4.js"></script>	    
 	    <script src="./script/exporting-4.0.4.js"></script>	    
-	       <script src="./script/highcharts-heatmap.js"></script>
+	    <script src="./script/highcharts-heatmap.js"></script>
 		<script src="./script/themes/gray.js"></script>							
-		
+				
+		<!-- Plugins Controles -->
+	    <!-- Easy Pie Chart and Quick Stats -->
+	    <script src="./script/jquery.easing.js"></script>
+	    <script src="./script/jquery.easypiechart.min.js"></script>
+	    <script src="./script/jquery.sparkline.js"></script>	  
 		
 	    <!-- Plugins Controles -->
 	    

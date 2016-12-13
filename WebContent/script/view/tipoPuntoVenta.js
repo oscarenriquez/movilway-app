@@ -1,6 +1,7 @@
 var TipoPuntoVentaCtrl;
 $(document).ready(function() {
     (function(TipoPuntoVentaCtrl) {
+        "use strict"
 
         function fnListaTipoPuntoVenta() {
             buildFormPost({ key: 60 }, function(data) {

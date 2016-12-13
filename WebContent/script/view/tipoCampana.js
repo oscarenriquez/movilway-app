@@ -1,6 +1,7 @@
 var TipoCampanaCtrl;
 $(document).ready(function() {
     (function(TipoCampanaCtrl) {
+        "use strict"
 
         function fnListaTipoCampana() {
             buildFormPost({ key: 54 }, function(data) {

@@ -4,10 +4,13 @@
 <!-- Generated 17/11/2016 03:43:34 PM by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="movilway.dao.domain.PuntoVenta" table="punto_venta" optimistic-lock="version">
-        <id name="puntoventaId" type="java.lang.String">
-            <column name="puntoventa_id" />
-            <generator class="assigned" />
+        <id name="id" type="java.lang.Long" >
+            <column name="id" unique="true" />
+            <generator class="increment" />
         </id>
+        <property name="puntoventaId" type="java.lang.String" unique="true">
+            <column name="puntoventa_Id" length="100" />
+        </property>
         <many-to-one name="estado" class="movilway.dao.domain.Estado" fetch="select">
             <column name="estado_id" />
         </many-to-one>
@@ -29,17 +32,17 @@
         <property name="nivel" type="java.lang.String">
             <column name="nivel" length="400" />
         </property>
-        <property name="regionprovinciaId" type="java.lang.Long">
+        <many-to-one name="regionProvincia" class="movilway.dao.domain.RegionProvincia" fetch="select">
             <column name="regionprovincia_id" />
-        </property>
+        </many-to-one>
         <property name="direccion" type="java.lang.String">
             <column name="direccion" length="400" />
         </property>
         <property name="observaciones" type="java.lang.String">
             <column name="observaciones" length="4000" />
         </property>
-        <property name="DPuntoventasuperior" type="java.lang.Long">
-            <column name="d_puntoventasuperior" />
+        <property name="DPuntoventasuperior" type="java.lang.String">
+            <column name="d_puntoventasuperior"  length="100"/>
         </property>
         <property name="saldo" type="big_decimal">
             <column name="saldo" precision="15" />
@@ -47,6 +50,10 @@
         <property name="saldoFechahora" type="java.util.Date">
             <column name="saldo_fechahora" length="19" not-null="true" />
         </property>
+        <!-- <property name="coordenada" type="org.hibernate.spatial.GeometryType">
+            <column name="coordenada" />
+            
+    	</property> -->
         <property name="latitud" type="java.lang.Float">
             <column name="latitud" precision="12" scale="0" />
         </property>
@@ -56,8 +63,8 @@
         <property name="puntoAbastecimiento" type="big_decimal">
             <column name="punto_abastecimiento" precision="15" />
         </property>
-        <property name="conctacto" type="java.lang.String">
-            <column name="conctacto" length="100" />
+        <property name="contacto" type="java.lang.String">
+            <column name="contacto" length="100" />
         </property>
     </class>
 </hibernate-mapping>

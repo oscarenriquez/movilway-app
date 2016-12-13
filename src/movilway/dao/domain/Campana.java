@@ -1,6 +1,7 @@
 package movilway.dao.domain;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Set;
 
@@ -15,6 +16,13 @@ public class Campana implements Serializable {
 	private Long userId;
 	private Date fechahoraFin;
 	private Set<CampanaDetalle> campanaDetalles;
+	
+	public static final Comparator<Campana> BY_DATE = new Comparator<Campana>() {
+		@Override
+		public int compare(Campana o1, Campana o2) {	
+			return o1.fechahoraInicio.compareTo(o2.fechahoraFin);
+		}
+	};
 	
 	public Long getId() {
 		return this.campanaId;

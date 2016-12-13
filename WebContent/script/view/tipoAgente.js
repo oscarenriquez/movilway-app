@@ -1,6 +1,7 @@
 var TipoAgenteCtrl;
 $(document).ready(function() {
     (function(TipoAgenteCtrl) {
+        "use strict"
 
         function fnListaTipoAgente() {
             buildFormPost({ key: 48 }, function(data) {

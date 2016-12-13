@@ -294,7 +294,7 @@ public class ServicioHelper implements Serializable {
 
 		try {
 			security.dao.util.HibernateUtil.beginTransaction();
-			List<security.dao.domain.Usuario> listUsuarios = securityService.getListaUsuarioAplicacion(context);
+			List<security.dao.domain.Usuario> listUsuarios = securityService.getListaUsuarioAplicacion(context, getEmpresaId());
 			for (security.dao.domain.Usuario user : listUsuarios) {
 				Set<Rol> rolSet = user.getRolSet();
 				Iterator<Rol> iterRolSet = rolSet.iterator();
@@ -335,7 +335,7 @@ public class ServicioHelper implements Serializable {
 
 		try {
 			security.dao.util.HibernateUtil.beginTransaction();
-			List<security.dao.domain.Usuario> listUsuarios = securityService.getListaUsuarioAplicacion(context);
+			List<security.dao.domain.Usuario> listUsuarios = securityService.getListaUsuarioAplicacion(context, getEmpresaId());
 			for (security.dao.domain.Usuario user : listUsuarios) {
 				list.add(getServiceLocator().getUsuarioService().getUsuario(user.getId()));
 
@@ -478,9 +478,9 @@ public class ServicioHelper implements Serializable {
 
 	protected void setDefaultValues(HttpServletRequest req, int key) {
 		setSession(req.getSession(false));
-		String context = req.getContextPath();
-		context = context.substring(1, context.length()).trim();
-		//String context = req.getServerName().substring(0, req.getServerName().indexOf("."));
+		/*String context = req.getContextPath();
+		context = context.substring(1, context.length()).trim();*/
+		String context = req.getServerName().substring(0, req.getServerName().indexOf("."));
 		setContext(context);
 		setServicesid((long) key);
 		ip = req.getRemoteAddr();

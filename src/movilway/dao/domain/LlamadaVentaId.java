@@ -6,12 +6,12 @@ import java.io.Serializable;
 public class LlamadaVentaId implements Serializable {
 
 	private Long detalleId;
-	private Long corrLlamada;
+	private Integer corrLlamada;
 
 	public LlamadaVentaId() {
 	}
 
-	public LlamadaVentaId(Long detalleId, Long corrLlamada) {
+	public LlamadaVentaId(Long detalleId, Integer corrLlamada) {
 		this.detalleId = detalleId;
 		this.corrLlamada = corrLlamada;
 	}
@@ -24,11 +24,11 @@ public class LlamadaVentaId implements Serializable {
 		this.detalleId = detalleId;
 	}
 
-	public Long getCorrLlamada() {
+	public Integer getCorrLlamada() {
 		return this.corrLlamada;
 	}
 
-	public void setCorrLlamada(Long corrLlamada) {
+	public void setCorrLlamada(Integer corrLlamada) {
 		this.corrLlamada = corrLlamada;
 	}
 

@@ -1,6 +1,7 @@
 var ReceptorCtrl;
 $(document).ready(function() {
     (function(ReceptorCtrl) {
+        "use strict"
 
         function fnListaReceptor() {
             buildFormPost({ key: 36 }, function(data) {

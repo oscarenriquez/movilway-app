@@ -4,8 +4,7 @@ CACHE MANIFEST
 CACHE:
 # index.html is cached by default anyway -- this is just to be explicit
 ./html/index.html 
-./script/jquery-1.9.1.js
-./img/favicon.ico
+./script/jquery-2.1.4.min.js
 ./img/bg3.jpg
 ./css/sun.css
 ./script/cache.js
@@ -33,6 +32,5 @@ NETWORK:
 ./script/page.js
 ./script/idleTimeOut.js
 ./script/userAgentScript.js
-./script/view/documents.js
 ./img/font4.jpg
 *

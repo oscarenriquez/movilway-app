@@ -55,9 +55,9 @@ public class SessionHelper implements Serializable {
 	}
 
 	public String getContext(HttpServletRequest req){
-		String context = req.getContextPath();
-		context = context.substring(1, context.length()).trim();		
-		//String context = req.getServerName().substring(0,req.getServerName().indexOf("."));
+		/*String context = req.getContextPath();
+		context = context.substring(1, context.length()).trim();*/		
+		String context = req.getServerName().substring(0,req.getServerName().indexOf("."));
 		return context;		
 	}
 	

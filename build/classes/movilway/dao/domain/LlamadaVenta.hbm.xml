@@ -8,17 +8,17 @@
             <key-property name="detalleId" type="java.lang.Long">
                 <column name="detalle_id" />
             </key-property>
-            <key-property name="corrLlamada" type="java.lang.Long">
+            <key-property name="corrLlamada" type="java.lang.Integer">
                 <column name="corr_llamada" />
             </key-property>
         </composite-id>
         <property name="montoTraspaso" type="big_decimal">
             <column name="monto_traspaso" precision="15" not-null="true" />
         </property>
-        <property name="origenPuntoventaId" type="java.lang.Long">
+        <property name="origenPuntoventaId" type="java.lang.String">
             <column name="origen_puntoventa_id" not-null="true" />
         </property>
-        <property name="destinoPuntoventaId" type="java.lang.Long">
+        <property name="destinoPuntoventaId" type="java.lang.String">
             <column name="destino_puntoventa_id" not-null="true" />
         </property>
         <property name="comentarios" type="java.lang.String">

@@ -623,6 +623,11 @@ td.user-name {
     margin-top: 1px;
 }
 
+.progress-tiny {
+    height: 8px !important;
+    margin-bottom: 10px !important;
+}
+
 .progress-custom {
     bottom: 0;
     overflow: hidden;
@@ -2006,17 +2011,16 @@ table.tableOne td {
 .pie-chart-tiny {
     display: inline-block;
     position: relative;
-    margin: 20px 35px 12px;
-    padding-bottom: 13px;
+    margin: 20px 0 0 54px;
 }
 
 .percent {
     position: absolute;
     text-align: center;
     width: 100%;
-    margin-top: 38px;
-    font-size: 25px;
-    color: rgba(255, 255, 255, 0.68);
+    margin-top: 58px;
+    font-size: 2.2em;
+    color: rgba(0, 0, 0, 0.68);
     text-shadow: none;
     padding-left: 5px;
 }
@@ -2040,7 +2044,7 @@ table.tableOne td {
     top: -20px;
     width: 100%;
     text-align: center;
-    font-size: 12px;
+    font-size: 1em;
 }
 
 .tile i {
@@ -2170,7 +2174,7 @@ table.tableOne td {
         font-size: 25px;
     }
     .pie-chart-tiny {
-        margin: 20px 9px 12px;
+        margin: 20px 0 0 54px;
     }
 }
 
@@ -2189,7 +2193,7 @@ table.tableOne td {
         font-size: 23px;
     }
     .pie-chart-tiny {
-        margin: 20px 6px 12px;
+        margin: 20px 0 0 54px;
     }
     .quick-stats>.mini-quick-content>h2 {
         font-size: 16px;

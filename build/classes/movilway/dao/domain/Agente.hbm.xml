@@ -8,6 +8,9 @@
             <column name="agente_id" />
             <generator class="increment" />
         </id>
+         <property name="userId" type="java.lang.Long">
+            <column name="user_id" />
+        </property>
         <many-to-one name="tipoAgente" class="movilway.dao.domain.TipoAgente" fetch="join">
             <column name="tipoagente_id" not-null="true" />
         </many-to-one>

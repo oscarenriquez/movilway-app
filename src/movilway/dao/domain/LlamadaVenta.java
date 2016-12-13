@@ -8,8 +8,8 @@ public class LlamadaVenta implements Serializable {
 
 	private LlamadaVentaId id;
 	private BigDecimal montoTraspaso;
-	private Long origenPuntoventaId;
-	private Long destinoPuntoventaId;
+	private String origenPuntoventaId;
+	private String destinoPuntoventaId;
 	private String comentarios;
 	
 	public LlamadaVentaId getId() {
@@ -28,19 +28,19 @@ public class LlamadaVenta implements Serializable {
 		this.montoTraspaso = montoTraspaso;
 	}
 
-	public Long getOrigenPuntoventaId() {
+	public String getOrigenPuntoventaId() {
 		return this.origenPuntoventaId;
 	}
 
-	public void setOrigenPuntoventaId(Long origenPuntoventaId) {
+	public void setOrigenPuntoventaId(String origenPuntoventaId) {
 		this.origenPuntoventaId = origenPuntoventaId;
 	}
 
-	public Long getDestinoPuntoventaId() {
+	public String getDestinoPuntoventaId() {
 		return this.destinoPuntoventaId;
 	}
 
-	public void setDestinoPuntoventaId(Long destinoPuntoventaId) {
+	public void setDestinoPuntoventaId(String destinoPuntoventaId) {
 		this.destinoPuntoventaId = destinoPuntoventaId;
 	}
 

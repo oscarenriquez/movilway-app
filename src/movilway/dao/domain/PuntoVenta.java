@@ -5,10 +5,12 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+
 @SuppressWarnings("serial")
 public class PuntoVenta implements Serializable {
 
-	private Long puntoventaId;
+	private Long id;
+	private String puntoventaId;
 	private Estado estado;
 	private Pais pais;
 	private Provincia provincia;
@@ -16,27 +18,31 @@ public class PuntoVenta implements Serializable {
 	private Integer telefono;
 	private String descripcion;
 	private String nivel;
-	private Long regionprovinciaId;
+	private RegionProvincia regionProvincia;
 	private String direccion;
 	private String observaciones;
-	private Long DPuntoventasuperior;
+	private String DPuntoventasuperior;
 	private BigDecimal saldo;
 	private Date saldoFechahora;
-	private Point cordenada;
+	private Point coordenada;
 	private Float latitud;
 	private Float longitud;
 	private BigDecimal puntoAbastecimiento;
-	private String conctacto;	
-
-	public Long getId() {
-		return this.puntoventaId;
-	}
+	private String contacto;
 	
-	public Long getPuntoventaId() {
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getPuntoventaId() {
 		return this.puntoventaId;
 	}
 
-	public void setPuntoventaId(Long puntoventaId) {
+	public void setPuntoventaId(String puntoventaId) {
 		this.puntoventaId = puntoventaId;
 	}
 
@@ -94,14 +100,14 @@ public class PuntoVenta implements Serializable {
 
 	public void setNivel(String nivel) {
 		this.nivel = nivel;
+	}	
+
+	public RegionProvincia getRegionProvincia() {
+		return regionProvincia;
 	}
 
-	public Long getRegionprovinciaId() {
-		return this.regionprovinciaId;
-	}
-
-	public void setRegionprovinciaId(Long regionprovinciaId) {
-		this.regionprovinciaId = regionprovinciaId;
+	public void setRegionProvincia(RegionProvincia regionProvincia) {
+		this.regionProvincia = regionProvincia;
 	}
 
 	public String getDireccion() {
@@ -120,11 +126,11 @@ public class PuntoVenta implements Serializable {
 		this.observaciones = observaciones;
 	}
 
-	public Long getDPuntoventasuperior() {
+	public String getDPuntoventasuperior() {
 		return this.DPuntoventasuperior;
 	}
 
-	public void setDPuntoventasuperior(Long DPuntoventasuperior) {
+	public void setDPuntoventasuperior(String DPuntoventasuperior) {
 		this.DPuntoventasuperior = DPuntoventasuperior;
 	}
 
@@ -144,12 +150,12 @@ public class PuntoVenta implements Serializable {
 		this.saldoFechahora = saldoFechahora;
 	}	
 
-	public Point getCordenada() {
-		return cordenada;
+	public Point getCoordenada() {
+		return coordenada;
 	}
 
-	public void setCordenada(Point cordenada) {
-		this.cordenada = cordenada;
+	public void setCoordenada(Point coordenada) {
+		this.coordenada = coordenada;
 	}
 
 	public Float getLatitud() {
@@ -176,12 +182,12 @@ public class PuntoVenta implements Serializable {
 		this.puntoAbastecimiento = puntoAbastecimiento;
 	}
 
-	public String getConctacto() {
-		return this.conctacto;
+	public String getContacto() {
+		return this.contacto;
 	}
 
-	public void setConctacto(String conctacto) {
-		this.conctacto = conctacto;
+	public void setContacto(String contacto) {
+		this.contacto = contacto;
 	}
 
 }

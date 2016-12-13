@@ -1,10 +1,19 @@
 var AgenteCtrl;
 $(document).ready(function() {
     (function(AgenteCtrl) {
+        "use strict"
 
         function fnComboBoxTipoAgente() {
             var d1 = $.Deferred();
             buildCombo({ key: 61 }, $("[name=tipoAgente]"), null, false, true, false, function() {
+                d1.resolve("resolve");
+            });
+            return d1;
+        }
+
+        function fnComboBoxUsuariosAgentes() {
+            var d1 = $.Deferred();
+            buildCombo({ key: 70 }, $("[name=userId]"), null, false, true, false, function() {
                 d1.resolve("resolve");
             });
             return d1;
@@ -61,7 +70,10 @@ $(document).ready(function() {
                         $("#edit_" + item).val(data.model[item]);
                     }
                 }
-                setTimeout(function() { $("[name=tipoAgente]").trigger("liszt:updated"); }, 500);
+                setTimeout(function() {
+                    $("[name=tipoAgente]").trigger("liszt:updated");
+                    $("[name=userId]").trigger("liszt:updated");
+                }, 500);
                 $("#editAgente").modal("show");
             }, true);
         }
@@ -101,7 +113,9 @@ $(document).ready(function() {
         $("#form-edit-agente").on("submit", fnModificarAgente);
 
         $.when(fnListaAgente()).done(function() {
-            fnComboBoxTipoAgente();
+            $.when(fnComboBoxTipoAgente()).done(function() {
+                fnComboBoxUsuariosAgentes();
+            });
         });
     })(AgenteCtrl || (AgenteCtrl = {}));
 });

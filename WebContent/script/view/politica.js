@@ -1,6 +1,7 @@
 var PoliticaCtrl;
 $(document).ready(function() {
     (function(PoliticaCtrl) {
+        "use strict"
 
         function fnComboBoxTipoCampana() {
             var d1 = $.Deferred();

@@ -8,13 +8,13 @@
             <column name="detalle_id" />
             <generator class="increment" />
         </id>
-        <many-to-one name="agente" class="movilway.dao.domain.Agente" fetch="join">
+        <many-to-one name="agente" class="movilway.dao.domain.Agente" fetch="select">
             <column name="agente_id" />
         </many-to-one>
-        <many-to-one name="campana" class="movilway.dao.domain.Campana" fetch="join">
+        <many-to-one name="campana" class="movilway.dao.domain.Campana" fetch="select">
             <column name="campana_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="puntoVenta" class="movilway.dao.domain.PuntoVenta" fetch="join">
+        <many-to-one name="puntoVenta" class="movilway.dao.domain.PuntoVenta" fetch="select" >
             <column name="puntoventa_id" not-null="true" />
         </many-to-one>
         <property name="estatus" type="java.lang.String">

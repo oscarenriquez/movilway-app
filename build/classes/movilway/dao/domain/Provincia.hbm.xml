@@ -20,7 +20,7 @@
         <property name="abrev" type="java.lang.String">
             <column name="abrev" length="100" />
         </property>        
-        <set name="regionProvincias" table="region_provincia" inverse="true" lazy="true" fetch="join">
+        <set name="regionProvincias" table="region_provincia" inverse="false" lazy="true" fetch="join" cascade="save-update">
             <key>
                 <column name="provincia_id" not-null="true" />
             </key>

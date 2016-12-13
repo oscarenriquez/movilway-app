@@ -346,4 +346,69 @@ public class RespuestaLlamadaHelper extends ServicioHelper {
 			getAlerta().enviarAlerta("listaRespuestaLlamada", e, getUsuarioBean(), ServicioHelper.EMAIL);
 		}
 	}
+	
+	public void comboBoxRespuestaLlamada (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+		try{
+			setDefaultValues(req, key);
+			JSONObject result = new JSONObject();
+			JSONObject formulario = new JSONObject();
+			Boolean isSuccess = true;
+			Boolean permiso = false;
+			String msg = "";
+			
+			if(getSession() != null){												
+				permiso = pageAcceso(req, getServicesid(), getContext());
+				if(permiso){						
+					try{
+						JSONArray lista = new JSONArray();	
+						Map<String, Serializable> parameters = new HashMap<>();
+						parameters.put("empresaId", getEmpresaId());
+						List<RespuestaLlamada> listaRespuestaLlamada = getServiceLocator().getRespuestaLlamadaService().getAllEntitiesFiltered(RespuestaLlamada.class, parameters);
+						JSONObject seleccione = new JSONObject();
+						seleccione.put("ID", "");
+						seleccione.put("DESCRIPCION", "-- seleccione --");
+						lista.add(seleccione);
+						for(RespuestaLlamada respuesta : listaRespuestaLlamada) {
+							JSONObject jsObj = new JSONObject();
+							jsObj.put("ID", respuesta.getRespuestaId());
+							jsObj.put("DESCRIPCION", respuesta.getDescripcion().toUpperCase());
+							lista.add(jsObj);
+						}
+						formulario.put("comboBox", lista);
+					} catch (InfraestructureException ie) {
+						try {
+							HibernateUtil.rollbackTransaction();
+						} catch (InfraestructureException e) {
+							e.printStackTrace();
+						}
+						getAlerta().enviarAlerta("comboBoxReceptor", ie, getUsuarioBean(),  EMAIL);
+						ie.printStackTrace();
+						msg = DISABLED_BD;
+						isSuccess = false;
+					} catch (Exception e){
+						getAlerta().enviarAlerta("comboBoxReceptor", e, getUsuarioBean(),  EMAIL);
+						e.printStackTrace();
+						msg = DISABLED_BD;
+						isSuccess = false;
+					}						
+				} else {
+					isSuccess = false;
+					msg = FALTA_PERMISOS;
+				}				
+			} else {
+				isSuccess = false;
+				msg = SESION_EXPIRADA;
+			}
+			
+			result.put("isSuccess", isSuccess);
+			result.put("permiso", permiso);
+			result.put("msg", msg);
+			result.put("formulario", formulario);
+			
+			printJson(resp, result);
+		} catch(Exception e){
+			e.printStackTrace();
+			getAlerta().enviarAlerta("comboBoxReceptor", e, getUsuarioBean(), ServicioHelper.EMAIL);
+		}
+	}
 }

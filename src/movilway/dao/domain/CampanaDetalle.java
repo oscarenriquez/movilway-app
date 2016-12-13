@@ -1,15 +1,27 @@
 package movilway.dao.domain;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 @SuppressWarnings("serial")
 public class CampanaDetalle implements Serializable {
 
+	public static final String EN_ESPERA = "EN ESPERA";
+	public static final String ASIGNADA = "ASIGNADA";
+	public static final String LLAMADA_ENCURSO = "LLAMADA EN CURSO";
+	public static final String COMPLETADO = "COMPLETADO";
 	private Long detalleId;
 	private Agente agente;
 	private Campana campana;
 	private PuntoVenta puntoVenta;
 	private String estatus;
+	
+	public static final Comparator<CampanaDetalle> BY_ID = new Comparator<CampanaDetalle>() {
+		@Override
+		public int compare(CampanaDetalle o1, CampanaDetalle o2) {	
+			return o1.detalleId.compareTo(o2.detalleId);
+		}
+	};
 	
 	public Long getId() {
 		return this.detalleId;

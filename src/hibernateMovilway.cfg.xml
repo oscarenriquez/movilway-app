@@ -16,6 +16,20 @@
   <property name="hibernate.generate_statistics">false</property>
   <property name="hibernate.use_sql_comments">false</property>
   
+  <!-- <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+  <property name="hibernate.connection.password">octubre23</property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/movilway</property>
+  <property name="hibernate.connection.username">ojenriquez</property>  
+  <property name="hibernate.default_schema">movilway</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>    
+  <property name="hibernate.current_session_context_class">thread</property>
+  <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+  <property name="hibernate.hibernate.query.substitutions">true=1, false=0</property>
+  <property name="hibernate.show_sql">false</property>
+  <property name="hibernate.max_fetch_depth">3</property>
+  <property name="hibernate.default_batch_fetch_size">4</property>
+  <property name="hibernate.generate_statistics">false</property>
+  <property name="hibernate.use_sql_comments">false</property> -->
   
   <mapping resource="movilway/dao/domain/Agente.hbm.xml"/>
   <mapping resource="movilway/dao/domain/ArchivoSaldos.hbm.xml"/>

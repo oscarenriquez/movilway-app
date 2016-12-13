@@ -6,6 +6,7 @@ import java.io.Serializable;
 public class Agente implements Serializable {
 
 	private Long agenteId;
+	private Long userId;	
 	private TipoAgente tipoAgente;
 	private String nombre;
 	private Boolean estatus;	
@@ -16,6 +17,14 @@ public class Agente implements Serializable {
 	
 	public Long getAgenteId() {
 		return this.agenteId;
+	}
+	
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public void setAgenteId(Long agenteId) {

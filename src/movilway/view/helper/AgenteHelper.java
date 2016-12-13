@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import movilway.dao.domain.Agente;
 import movilway.dao.domain.TipoAgente;
+import movilway.dao.domain.Usuario;
 import movilway.dao.exception.InfraestructureException;
 import movilway.dao.util.HibernateUtil;
 import net.sf.json.JSONArray;
@@ -34,17 +35,24 @@ public class AgenteHelper extends ServicioHelper {
 			
 			if(getSession() != null){
 				String tipoagenteId = getNumberValue(req.getParameter("tipoAgente"));
-				String nombre = getStringValue(req.getParameter("nombre"));
-				if(vParam(tipoagenteId) && vParam(nombre)){
+				String userId = getNumberValue(req.getParameter("userId"));
+				if(vParam(tipoagenteId) && vParam(userId)){
 					permiso = pageAcceso(req, getServicesid(), getContext());
 					if(permiso){						
 						try{
-							Agente agente = new Agente();
-							agente.setTipoAgente(getServiceLocator().getTipoAgenteService().loadEntity(TipoAgente.class, Long.valueOf(tipoagenteId)));
-							agente.setNombre(nombre.toUpperCase());
-							agente.setEstatus(Boolean.TRUE);
-							getServiceLocator().getAgenteService().saveEntity(agente);
-							msg = CREATE;
+							Usuario usuario = getServiceLocator().getUsuarioService().getUsuario(Long.valueOf(userId));
+							if(usuario != null) {
+								Agente agente = new Agente();
+								agente.setUserId(usuario.getId());
+								agente.setNombre(usuario.getNombre() + " " + usuario.getApellido());
+								agente.setTipoAgente(getServiceLocator().getTipoAgenteService().loadEntity(TipoAgente.class, Long.valueOf(tipoagenteId)));								
+								agente.setEstatus(Boolean.TRUE);
+								getServiceLocator().getAgenteService().saveEntity(agente);
+								msg = CREATE;
+							} else {
+								isSuccess = false;
+								msg = PARAM_NECESARIOS;
+							}
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -96,18 +104,25 @@ public class AgenteHelper extends ServicioHelper {
 			if(getSession() != null){
 				String agenteId = getNumberValue(req.getParameter("agenteId"));
 				String tipoagenteId = getNumberValue(req.getParameter("tipoAgente"));
-				String nombre = getStringValue(req.getParameter("nombre"));
+				String userId = getNumberValue(req.getParameter("userId"));
 				String estatus = getBooleanValue(req.getParameter("estatus"));				
-				if(vParam(agenteId) && vParam(tipoagenteId) && vParam(nombre) && vParam(estatus)){
+				if(vParam(agenteId) && vParam(tipoagenteId) && vParam(userId) && vParam(estatus)){
 					permiso = pageAcceso(req, getServicesid(), getContext());
 					if(permiso){						
 						try{
-							Agente agente = getServiceLocator().getAgenteService().loadEntity(Agente.class, Long.parseLong(agenteId));
-							agente.setNombre(nombre.toUpperCase());
-							agente.setTipoAgente(getServiceLocator().getTipoAgenteService().loadEntity(TipoAgente.class, Long.valueOf(tipoagenteId)));
-							agente.setEstatus(Boolean.valueOf(estatus));
-							getServiceLocator().getAgenteService().updateEntity(agente);
-							msg = UPDATE;
+							Usuario usuario = getServiceLocator().getUsuarioService().getUsuario(Long.valueOf(userId));
+							if(usuario != null) {
+								Agente agente = getServiceLocator().getAgenteService().loadEntity(Agente.class, Long.parseLong(agenteId));
+								agente.setUserId(usuario.getId());
+								agente.setNombre(usuario.getNombre() + " " + usuario.getApellido());																					
+								agente.setTipoAgente(getServiceLocator().getTipoAgenteService().loadEntity(TipoAgente.class, Long.valueOf(tipoagenteId)));
+								agente.setEstatus(Boolean.valueOf(estatus));
+								getServiceLocator().getAgenteService().updateEntity(agente);
+								msg = UPDATE;
+							} else {
+								isSuccess = false;
+								msg = PARAM_NECESARIOS;
+							}
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();
@@ -331,6 +346,69 @@ public class AgenteHelper extends ServicioHelper {
 		} catch(Exception e){
 			e.printStackTrace();
 			getAlerta().enviarAlerta("listaAgente", e, getUsuarioBean(), ServicioHelper.EMAIL);
+		}
+	}
+	
+	public void comboBoxUsuariosAgentes (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+		try{
+			setDefaultValues(req, key);
+			JSONObject result = new JSONObject();
+			JSONObject formulario = new JSONObject();
+			Boolean isSuccess = true;
+			Boolean permiso = false;
+			String msg = "";
+			
+			if(getSession() != null){												
+				permiso = pageAcceso(req, getServicesid(), getContext());
+				if(permiso){						
+					try{
+						List<Usuario> listaUsuarios = getListagUsuariosAplicacionRol(getContext(), Long.valueOf(getBundle().getString("movilway.roles.agente.id").trim()));						
+						JSONArray lista = new JSONArray();
+						JSONObject seleccione = new JSONObject();
+						seleccione.put("ID", "");
+						seleccione.put("DESCRIPCION", "-- seleccione --");
+						lista.add(seleccione);
+						for(Usuario usuario : listaUsuarios) {
+							JSONObject jsObj = new JSONObject();
+							jsObj.put("ID", usuario.getId());
+							jsObj.put("DESCRIPCION", usuario.getNombre() + " " + usuario.getApellido());
+							lista.add(jsObj);
+						}
+						formulario.put("comboBox", lista);
+					} catch (InfraestructureException ie) {
+						try {
+							HibernateUtil.rollbackTransaction();
+						} catch (InfraestructureException e) {
+							e.printStackTrace();
+						}
+						getAlerta().enviarAlerta("comboBoxUsuariosAgentes", ie, getUsuarioBean(),  EMAIL);
+						ie.printStackTrace();
+						msg = DISABLED_BD;
+						isSuccess = false;
+					} catch (Exception e){
+						getAlerta().enviarAlerta("comboBoxUsuariosAgentes", e, getUsuarioBean(),  EMAIL);
+						e.printStackTrace();
+						msg = DISABLED_BD;
+						isSuccess = false;
+					}						
+				} else {
+					isSuccess = false;
+					msg = FALTA_PERMISOS;
+				}				
+			} else {
+				isSuccess = false;
+				msg = SESION_EXPIRADA;
+			}
+			
+			result.put("isSuccess", isSuccess);
+			result.put("permiso", permiso);
+			result.put("msg", msg);
+			result.put("formulario", formulario);
+			
+			printJson(resp, result);
+		} catch(Exception e){
+			e.printStackTrace();
+			getAlerta().enviarAlerta("comboBoxUsuariosAgentes", e, getUsuarioBean(), ServicioHelper.EMAIL);
 		}
 	}
 }

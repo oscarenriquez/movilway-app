@@ -1,6 +1,7 @@
 var RespuestaCtrl;
 $(document).ready(function() {
     (function(RespuestaCtrl) {
+        "use strict"
 
         function fnListaRespuesta() {
             buildFormPost({ key: 42 }, function(data) {

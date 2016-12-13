@@ -3,6 +3,7 @@ var EstadoCtrl;
 $(document).ready(function() {
     // Pais Controller
     (function(PaisCtrl, EstadoCtrl) {
+        "use strict"
 
         function fnListaPais() {
             buildFormPost({ key: 24 }, function(data) {

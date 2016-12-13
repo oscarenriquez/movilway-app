@@ -1,7 +1,10 @@
 package movilway.service.impl;
 
+import java.util.List;
+
 import movilway.dao.PuntoVentaDao;
 import movilway.dao.domain.PuntoVenta;
+import movilway.dao.exception.InfraestructureException;
 import movilway.dao.impl.PuntoVentaDaoHibernateImpl;
 import movilway.dao.util.GenericDao;
 import movilway.service.PuntoVentaService;
@@ -23,5 +26,10 @@ public class PuntoVentaServiceImpl<T> extends GenericServiceImpl<T> implements P
 			service = new PuntoVentaServiceImpl<>();
 		}			
 		return service;
+	}
+
+	@Override
+	public List<PuntoVenta> getListaPuntosVentaByPaisEstadoRegion(Long paisId, Long estadoId, Long provinciaId)	throws InfraestructureException {
+		return dao.getListaPuntosVentaByPaisEstadoRegion(paisId, estadoId, provinciaId);
 	}
 }
