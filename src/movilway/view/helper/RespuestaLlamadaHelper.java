@@ -372,6 +372,7 @@ public class RespuestaLlamadaHelper extends ServicioHelper {
 							JSONObject jsObj = new JSONObject();
 							jsObj.put("ID", respuesta.getRespuestaId());
 							jsObj.put("DESCRIPCION", respuesta.getDescripcion().toUpperCase());
+							jsObj.put("TYPE_EXTRA", respuesta.getGeneraLlamada());
 							lista.add(jsObj);
 						}
 						formulario.put("comboBox", lista);

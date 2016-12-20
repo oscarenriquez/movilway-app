@@ -21,10 +21,11 @@ import movilway.dao.domain.PuntoVenta;
 import movilway.dao.domain.ReceptorLlamada;
 import movilway.dao.domain.RespuestaLlamada;
 import movilway.dao.domain.TipoCampana;
+import movilway.dao.domain.Traslado;
 import movilway.dao.exception.InfraestructureException;
 import movilway.dao.util.HibernateUtil;
 import movilway.dao.util.Utils;
-import movilway.service.util.FechaHoraUtil;
+import static movilway.service.util.FechaHoraUtil.*;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -81,7 +82,7 @@ public class InboxHelper extends ServicioHelper {
 								campana.put("observaciones", observaciones);
 								campana.put("total", total);
 								campana.put("estatus", estatus);
-								campana.put("fechahoraInicio", FechaHoraUtil.getFechaStringLarga(fechahoraInicio));
+								campana.put("fechahoraInicio", getFechaStringLarga(fechahoraInicio));
 								campana.put("porcentaje", Math.round(porcentaje.doubleValue()));
 								campana.put("llamadas", llamadaNotif);
 								
@@ -141,11 +142,11 @@ public class InboxHelper extends ServicioHelper {
 			if(getSession() != null){
 				String campanaId = getNumberValue(req.getParameter("campanaId"));
 				String amount = getNumberValue(req.getParameter("amount"));
-				if(vParam(campanaId) && vParam(amount)){
+				if(vParam(campanaId)){
 					permiso = pageAcceso(req, getServicesid(), getContext());
 					if(permiso){						
 						try{
-							if(amount.equals("0")) {
+							if(amount.isEmpty() || amount.equals("0")) {
 								amount = "10";
 							}
 							Long campanaIdL = Long.valueOf(campanaId);
@@ -153,7 +154,10 @@ public class InboxHelper extends ServicioHelper {
 							if(campana != null) {
 								Boolean isVenta = campana.getTipoCampana().getId().equals(TipoCampana.VENTA);
 								List<Politica> politicas = getServiceLocator().getPoliticaService().getListPoliticasByCampana(campanaIdL);
-								List<CampanaDetalle> campDetalles = getServiceLocator().getCampanaService().getListaCampanaDetalle(campanaIdL, Integer.valueOf(amount), CampanaDetalle.ASIGNADA);
+								
+								// Obtiene listado de detalles ordenadas
+								String horaProgramada = getBundle().getString("movilway.param.campana.llamadaProgramada"); // Avisar antes de hora programada
+								List<CampanaDetalle> campDetalles = getServiceLocator().getCampanaService().getListaCampanaDetalle(campanaIdL, Integer.valueOf(amount), CampanaDetalle.ASIGNADA, horaProgramada);
 																						
 								for( CampanaDetalle detalle : campDetalles ) {
 									JSONObject obj = new JSONObject();
@@ -167,16 +171,17 @@ public class InboxHelper extends ServicioHelper {
 									obj.put("observaciones", puntoVenta.getObservaciones());
 									obj.put("tipoPuntoVenta", puntoVenta.getTipoPuntoVenta().getDescripcion());
 									obj.put("saldo", puntoVenta.getSaldo());
-									obj.put("saldoFechahora", FechaHoraUtil.getFechaStringLarga(puntoVenta.getSaldoFechahora()));
-									obj.put("puntoAbastecimiento", puntoVenta.getPuntoAbastecimiento());
-									obj.put("pais", puntoVenta.getPais().getDescripcion());									
-									obj.put("estado", puntoVenta.getEstado().getDescripcion());
-									obj.put("provincia", puntoVenta.getProvincia().getDescripcion());
-									obj.put("region", puntoVenta.getRegionProvincia().getDescripcion());
-									obj.put("paisId", puntoVenta.getPais().getId());									
-									obj.put("estadoId", puntoVenta.getEstado().getId());
-									obj.put("provinciaId", puntoVenta.getProvincia().getId());
-									obj.put("regionId", puntoVenta.getRegionProvincia().getId());
+									obj.put("saldoFechahora", getFechaStringLarga(puntoVenta.getSaldoFechahora()));
+									obj.put("puntoAbastecimiento", puntoVenta.getPuntoAbastecimiento());									
+									obj.put("pais", puntoVenta.getPais() != null ? puntoVenta.getPais().getDescripcion() : "");									
+									obj.put("estado", puntoVenta.getEstado() != null ?  puntoVenta.getEstado().getDescripcion() : "");
+									obj.put("provincia", puntoVenta.getProvincia() != null ? puntoVenta.getProvincia().getDescripcion() : "");
+									obj.put("region", puntoVenta.getRegionProvincia() != null ? puntoVenta.getRegionProvincia().getDescripcion() : "");
+									obj.put("paisId", puntoVenta.getPais() != null ? puntoVenta.getPais().getId() : 0L);
+									obj.put("estadoId", puntoVenta.getEstado() != null ? puntoVenta.getEstado().getId() : 0L);
+									obj.put("provinciaId", puntoVenta.getProvincia() != null ? puntoVenta.getProvincia().getId() : 0L);
+									obj.put("regionId", puntoVenta.getRegionProvincia() != null ? puntoVenta.getRegionProvincia().getId() : 0L);
+									obj.put("fechaProgramada", getFormatDateLong(detalle.getFechaProgramada()));
 									JSONArray jsArrPoliticas = new JSONArray();
 									for(Politica politica : politicas) {
 										JSONObject o = new JSONObject();
@@ -251,7 +256,7 @@ public class InboxHelper extends ServicioHelper {
 							Long detalleIdLong = Long.valueOf(detalleId);													
 							LlamadaId id = new LlamadaId();
 							id.setDetalleId(detalleIdLong);
-							id.setCorrLlamada(1);
+							id.setCorrLlamada((getServiceLocator().getLlamadaService().getCorrelativoLlamada(detalleIdLong) + 1));
 							Llamada llamada = getServiceLocator().getLlamadaService().loadEntity(Llamada.class, id);
 							if(llamada != null) {
 								llamada.setFechahoraFin(new Date());
@@ -261,6 +266,7 @@ public class InboxHelper extends ServicioHelper {
 								llamada.setId(id);
 								llamada.setFechahoraInicio(new Date());
 								llamada.setFechahoraFin(new Date());
+								llamada.setEmpresaId(getEmpresaId());
 								getServiceLocator().getLlamadaService().saveEntity(llamada);
 								
 								CampanaDetalle detalle = getServiceLocator().getCampanaDetalleService().loadEntity(CampanaDetalle.class, detalleIdLong);
@@ -321,6 +327,7 @@ public class InboxHelper extends ServicioHelper {
 				String receptorId = getNumberValue(req.getParameter("receptorId"));
 				String respuestaId = getNumberValue(req.getParameter("respuestaId"));
 				String comentarios = getStringValue(req.getParameter("comentarios"));
+				String fechaProgramada = getStringValue(req.getParameter("fechaProgramada"));
 				String telefonoLlamado = getNumberValue(req.getParameter("telefonoLlamado"));
 				String referencia = getStringValue(req.getParameter("referencia"));
 				if(vParam(detalleId) && vParam(receptorId) && vParam(respuestaId) && vParam(comentarios) && vParam(telefonoLlamado) && vParam(referencia)){
@@ -330,22 +337,32 @@ public class InboxHelper extends ServicioHelper {
 							Long detalleIdLong = Long.valueOf(detalleId);														
 							LlamadaId id = new LlamadaId();
 							id.setDetalleId(detalleIdLong);
-							id.setCorrLlamada(1);
+							id.setCorrLlamada(getServiceLocator().getLlamadaService().getCorrelativoLlamada(detalleIdLong));
+							
+							RespuestaLlamada respuesta = getServiceLocator().getRespuestaLlamadaService().loadEntity(RespuestaLlamada.class, Long.valueOf(respuestaId));
 							
 							Llamada llamada = getServiceLocator().getLlamadaService().loadEntity(Llamada.class, id);
 							llamada.setComentarios(comentarios);
 							llamada.setReferencia(referencia);
 							llamada.setTelefonoLlamado(Integer.valueOf(telefonoLlamado));
 							llamada.setReceptorLlamada(getServiceLocator().getReceptorLlamadaService().loadEntity(ReceptorLlamada.class, Long.valueOf(receptorId)));
-							llamada.setRespuestaLlamada(getServiceLocator().getRespuestaLlamadaService().loadEntity(RespuestaLlamada.class, Long.valueOf(respuestaId)));
+							llamada.setRespuestaLlamada(respuesta);
+							llamada.setEmpresaId(getEmpresaId());
 							
 							llamada.setFechahoraFin(new Date());
 							
 							getServiceLocator().getLlamadaService().updateEntity(llamada);
 							HibernateUtil.flushSession();
 							
+							
 							CampanaDetalle detalle = getServiceLocator().getCampanaDetalleService().loadEntity(CampanaDetalle.class, detalleIdLong);
-							detalle.setEstatus(CampanaDetalle.COMPLETADO);							
+							if(respuesta.getGeneraLlamada()){
+								detalle.setEstatus(CampanaDetalle.ASIGNADA);
+								detalle.setFechaProgramada(getParseDateLong(fechaProgramada));
+							} else {
+								detalle.setEstatus(CampanaDetalle.COMPLETADO);
+							}
+																											
 							getServiceLocator().getCampanaDetalleService().updateEntity(detalle);
 						} catch (InfraestructureException ie) {
 							try {
@@ -398,27 +415,75 @@ public class InboxHelper extends ServicioHelper {
 			if(getSession() != null){
 				String detalleId = getNumberValue(req.getParameter("detalleId"));
 				String montoTraspaso = getNumberValue(req.getParameter("montoTraspaso"));
-				String origenPuntoVentaId = getNumberValue(req.getParameter("origenPuntoVentaId"));
-				String destinoPuntoVentaId = getNumberValue(req.getParameter("destinoPuntoVentaId"));
+				String origenPuntoVentaId = getStringValue(req.getParameter("origenPuntoventaId"));
+				String destinoPuntoVentaId = getStringValue(req.getParameter("destinoPuntoventaId"));
 				String comentarios = getStringValue(req.getParameter("comentarios"));
 				if(vParam(detalleId) && vParam(destinoPuntoVentaId) && vParam(origenPuntoVentaId) && vParam(comentarios) && vParam(montoTraspaso)){
 					permiso = pageAcceso(req, getServicesid(), getContext());
 					if(permiso){						
-						try{							
-							Long detalleIdLong = Long.valueOf(detalleId);														
-							LlamadaVentaId id = new LlamadaVentaId();
-							id.setDetalleId(detalleIdLong);
-							id.setCorrLlamada(1);
+						try{
 							
-							LlamadaVenta llamada = new LlamadaVenta();
-							llamada.setId(id);
-							llamada.setComentarios(comentarios);
-							llamada.setMontoTraspaso(new BigDecimal(montoTraspaso));
-							llamada.setOrigenPuntoventaId(origenPuntoVentaId);
-							llamada.setDestinoPuntoventaId(destinoPuntoVentaId);
+							BigDecimal montoTraspasoBg = new BigDecimal(montoTraspaso);
 							
-							getServiceLocator().getLlamadaVentaService().saveEntity(llamada);
-							HibernateUtil.flushSession();
+							PuntoVenta puntoDestino = getServiceLocator().getPuntoVentaService().getPuntoVentaByPuntoventaId(destinoPuntoVentaId, getEmpresaId());
+							PuntoVenta puntoOrigen = getServiceLocator().getPuntoVentaService().getPuntoVentaByPuntoventaId(origenPuntoVentaId, getEmpresaId());
+							
+							BigDecimal saldoOrigen = puntoOrigen.getSaldo();
+							BigDecimal saldoDestino = puntoDestino.getSaldo();
+							
+							if(montoTraspasoBg.compareTo(saldoOrigen) <= 0) {
+								Long detalleIdLong = Long.valueOf(detalleId);														
+								LlamadaVentaId id = new LlamadaVentaId();
+								id.setDetalleId(detalleIdLong);
+								id.setCorrLlamada((getServiceLocator().getLlamadaService().getCorrelativoLlamada(detalleIdLong) + 1));
+								
+								LlamadaVenta llamada = new LlamadaVenta();
+								llamada.setId(id);
+								llamada.setComentarios(comentarios);
+								llamada.setMontoTraspaso(montoTraspasoBg);
+								llamada.setOrigenPuntoventaId(origenPuntoVentaId);
+								llamada.setDestinoPuntoventaId(destinoPuntoVentaId);
+								llamada.setEmpresaId(getEmpresaId());
+								
+								getServiceLocator().getLlamadaVentaService().saveEntity(llamada);
+								HibernateUtil.flushSession();
+								
+								CampanaDetalle detalle = getServiceLocator().getCampanaDetalleService().loadEntity(CampanaDetalle.class, detalleIdLong);
+								detalle.setEstatus(CampanaDetalle.COMPLETADO);							
+								getServiceLocator().getCampanaDetalleService().updateEntity(detalle);
+								
+								// Se crea traslado
+								// ---->
+								// ---->								
+								Traslado traslado = new Traslado();
+								traslado.setEmpresaId(getEmpresaId());
+								traslado.setFechahora(new Date());
+								traslado.setPuntoDestinoId(puntoDestino.getId());
+								traslado.setPuntoOrigenId(puntoOrigen.getId());
+								traslado.setMontoAntesDestino(saldoDestino);
+								traslado.setMontoAntesOrigen(saldoOrigen);
+								traslado.setMontoDespuesOrigen(saldoOrigen.subtract(montoTraspasoBg)); // Saldo origen menos monto traslado
+								traslado.setMontoTransf(montoTraspasoBg);
+								traslado.setMontoDespuesDestino(saldoDestino.add(montoTraspasoBg)); // Saldo destion más monto traslado
+																
+								getServiceLocator().getTrasladoService().saveEntity(traslado);
+								
+								// Se actualiza saldo en origen
+								puntoOrigen.setSaldo(saldoOrigen.subtract(montoTraspasoBg));
+								puntoOrigen.setSaldoFechahora(new Date());
+								getServiceLocator().getPuntoVentaService().updateEntity(puntoOrigen);
+								
+								// Se actualiza saldo en destino
+								puntoDestino.setSaldo(saldoDestino.add(montoTraspasoBg));
+								puntoDestino.setSaldoFechahora(new Date());
+								getServiceLocator().getPuntoVentaService().updateEntity(puntoDestino);
+								HibernateUtil.flushSession();
+								
+							} else {
+								isSuccess = false;
+								msg = AMOUNT_NOT_AVAILABLE;
+							}																												
+							
 						} catch (InfraestructureException ie) {
 							try {
 								HibernateUtil.rollbackTransaction();

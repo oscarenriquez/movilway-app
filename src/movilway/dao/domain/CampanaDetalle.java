@@ -2,6 +2,7 @@ package movilway.dao.domain;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.Date;
 
 @SuppressWarnings("serial")
 public class CampanaDetalle implements Serializable {
@@ -14,6 +15,7 @@ public class CampanaDetalle implements Serializable {
 	private Agente agente;
 	private Campana campana;
 	private PuntoVenta puntoVenta;
+	private Date fechaProgramada;
 	private String estatus;
 	
 	public static final Comparator<CampanaDetalle> BY_ID = new Comparator<CampanaDetalle>() {
@@ -57,6 +59,14 @@ public class CampanaDetalle implements Serializable {
 
 	public void setPuntoVenta(PuntoVenta puntoVenta) {
 		this.puntoVenta = puntoVenta;
+	}
+
+	public Date getFechaProgramada() {
+		return fechaProgramada;
+	}
+
+	public void setFechaProgramada(Date fechaProgramada) {
+		this.fechaProgramada = fechaProgramada;
 	}
 
 	public String getEstatus() {

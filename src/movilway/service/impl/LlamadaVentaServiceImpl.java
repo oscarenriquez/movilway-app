@@ -2,6 +2,7 @@ package movilway.service.impl;
 
 import movilway.dao.LlamadaVentaDao;
 import movilway.dao.domain.LlamadaVenta;
+import movilway.dao.exception.InfraestructureException;
 import movilway.dao.impl.LlamadaVentaDaoHibernateImpl;
 import movilway.dao.util.GenericDao;
 import movilway.service.LlamadaVentaService;
@@ -23,5 +24,10 @@ public class LlamadaVentaServiceImpl<T> extends GenericServiceImpl<T> implements
 			service = new LlamadaVentaServiceImpl<>();
 		}			
 		return service;
+	}
+
+	@Override
+	public Integer getCorrelativoLlamadaVenta(Long detalleId) throws InfraestructureException {		
+		return dao.getCorrelativoLlamadaVenta(detalleId);
 	}
 }

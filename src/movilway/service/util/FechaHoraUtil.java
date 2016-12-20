@@ -137,7 +137,20 @@ public final class FechaHoraUtil {
 		return result;
 	}
 
-	public static final String getParseDateLong(Date fecha) {
+	public static final Date getParseDateLong(String fecha) {
+		Date result = null;
+		if (fecha != null && !fecha.isEmpty()) {
+			try {
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+				result = sdf.parse(fecha);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public static final String getFormatDateLong(Date fecha) {
 		String result = "";
 		if (fecha != null) {
 			try {

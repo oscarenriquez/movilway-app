@@ -52,18 +52,18 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form method="POST" id="form-new-llamada">
-                <div class="modal-header">
+                <div class="modal-header alert-info">
                     <h4 class="modal-title"><span id="label-llamada-punto"></span></h4>
                 </div>
                 <div class="modal-body">
                     <div class="jumbotron text-center" id="info-new-llamada">
-                        <h3>
+                        <div class="fx">
                             <div style="margin: 10px;">
                                 <i class="glyphicon glyphicon-earphone fx2 text-success"></i>
                                 <span id="telefono-referencia"></span>
                             </div>
                             <button type="button" class="btn btn-success btn-lg" id="iniciarLlamada"> Iniciar Llamada</button>
-                        </h3>
+                        </div>
                     </div>
                     <div class="form-horizontal" style="display:none;" id="content-new-llamada">
                         <div class="row">
@@ -108,6 +108,19 @@
                             </div>
                         </div>
 
+                        <div class="form-group" id="content-fecha-programada" style="display:none;">
+                            <label for="fechaProgramada" class="control-label col-md-2 col-lg-2">Fecha Programada:</label>
+                            <div class="col-md-10 col-lg-10">
+                                <div class='input-group date' id='datetimepicker_fechaProgramada'>
+                                    <input type="text" name="fechaProgramada" id="fechaProgramada" class="form-control" placeholder="Fecha Programada" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="telefonoLlamado" class="control-label col-md-2 col-lg-2"><i class="glyphicon glyphicon-earphone"></i> Tel&eacute;fono:</label>
                             <div class="col-md-4 col-lg-4">
@@ -146,13 +159,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="jumbotron text-center" id="info-new-llamada-venta">
-                        <h3>
+                        <div class="fx">
                             <div style="margin: 10px;">
                                 <i class="glyphicon glyphicon-earphone fx2 text-success"></i>
                                 <span id="telefono-referencia-venta"></span>
                             </div>
                             <button type="button" class="btn btn-success btn-lg" id="iniciarLlamadaVenta"> Iniciar Llamada</button>
-                        </h3>
+                        </div>
                     </div>
                     <div class="form-horizontal" style="display:none;" id="content-new-llamada-venta">
                         <div class="row">
@@ -184,9 +197,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="montoTraspaso" class="control-label col-md-2 col-lg-2"><i class="glyphicon glyphicon-earphone"></i> Tel&eacute;fono:</label>
+                            <label for="montoTraspaso" class="control-label col-md-2 col-lg-2"> Monto Traspaso:</label>
                             <div class="col-md-10 col-lg-10 text-right">
-                                <input type="number" name="montoTraspaso" id="montoTraspaso" class="form-control" placeholder="Telefono" required step="0.01" />
+                                <div class="input-group">
+                                    <span class="input-group-addon">Q</span>
+                                    <input type="number" name="montoTraspaso" id="montoTraspaso" class="form-control" placeholder="Monto Traspaso" required step="0.01" aria-label="Amount (to the nearest dollar)" />
+                                </div>
                             </div>
                         </div>
 

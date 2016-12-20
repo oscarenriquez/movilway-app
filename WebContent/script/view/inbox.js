@@ -62,7 +62,8 @@ var InboxCtrl;
 $(document).ready(function() {
     (function(InboxCtrl) {
         "use strict"
-
+        InboxCtrl.listadoCampaDetalle = new Array();
+        InboxCtrl.detalleEnCurso = {};
         clearTimeout(InboxCtrl.llamadaEncurso);
         $("#toggle-sidebar").on("click", function() {
             $(this).find("i").toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left")
@@ -79,7 +80,7 @@ $(document).ready(function() {
 
         function fnComboBoxRespuesta() {
             var d1 = $.Deferred();
-            buildCombo({ key: 71 }, $("[name=respuestaId]"), null, false, true, false, function() {
+            buildCombo({ key: 71 }, $("[name=respuestaId]"), null, false, true, true, function() {
                 d1.resolve("resolve");
             });
             return d1;
@@ -93,9 +94,23 @@ $(document).ready(function() {
             return d1;
         }
 
-        function loadLlamada(detalle) {
-            console.log(detalle);
+        function validaNuevaLlamada(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log(e);
+            var value = e.currentTarget.value;
+            var type = $("option[value=" + value + "]").data("type");
+            if (value && type && type === true) {
+                $("#content-fecha-programada").slideDown();
+                $("#fechaProgramada").val(moment().add(1, "days").format("DD/MM/YYYY HH:mm"));
+            } else {
+                $("#content-fecha-programada").slideUp();
+                $("#fechaProgramada").val("");
+            }
+        }
 
+        function loadLlamada(detalle) {
+            InboxCtrl.detalleEnCurso = detalle;
             var llamadaHTML = '<dl>' +
                 '<dt>FECHA ULT. REGARGA</dt>' +
                 '<dd>' + detalle.saldoFechahora + '</dd>' +
@@ -143,48 +158,55 @@ $(document).ready(function() {
             }
         }
 
+        function refreshCampanaDetalle() {
+            $("#detalles").html('');
+            for (var i = 0; i < InboxCtrl.listadoCampaDetalle.length; i++) {
+
+                var detalle = InboxCtrl.listadoCampaDetalle[i];
+                var detalleHTML = '';
+                detalleHTML += '     <div class="pull-right"> ';
+                detalleHTML += '     </div> ';
+                detalleHTML += '     <div class="media-body"> ';
+                detalleHTML += '         <div class="lgi-heading">' + detalle.descripcion + '</div> ';
+                if (detalle.fechaProgramada) {
+                    detalleHTML += '         <small class="lgi-text"><span class="label label-naranja">Llamada Programada: ' + detalle.fechaProgramada + '</span></small> ';
+                }
+                if (detalle.contacto) {
+                    detalleHTML += '         <small class="lgi-text">' + detalle.contacto + '</small> ';
+                }
+                detalleHTML += '         <small class="lgi-text">' + detalle.tipoPuntoVenta + '</small> ';
+                detalleHTML += '         <ul class="lgi-attrs"> ';
+                detalleHTML += '             <li>Direcci&oacute;n: ' + detalle.direccion + '</li> ';
+                detalleHTML += '             <li>Saldo: Q ' + Number(detalle.saldo).formatMoney() + '</li> ';
+                detalleHTML += '             <li>Fecha: ' + detalle.saldoFechahora + '</li> ';
+                detalleHTML += '         </ul> ';
+                detalleHTML += '     </div> ';
+
+                var $button = $('<button class="btn btn-success" type="button" />');
+                $button.append('<span class="glyphicon glyphicon-earphone"></span>');
+                $button.data('detalle', detalle);
+                $button.on("click", function(e) {
+                    var _this = $(e.currentTarget).data('detalle');
+                    e.preventDefault();
+                    InboxCtrl.loadLlamada(_this);
+                });
+
+
+                var $item = $("<div class='list-group-item media' />").append(detalleHTML);
+
+                $item.find('.pull-right').append($button);
+
+                $("#detalles").append($item);
+            }
+        }
+
         function loadCampana(campanaId) {
             clearTimeout(InboxCtrl.llamadaEncurso);
             InboxCtrl.currentCampana = campanaId;
             buildFormPost({ key: 74, campanaId: campanaId }, function(data) {
                 $(".ah-label").text(data.textoReferencia);
-                $("#detalles").html('');
-                var detalles = data.detalles;
-                for (var i = 0; i < detalles.length; i++) {
-
-                    var detalle = detalles[i];
-                    var detalleHTML = '';
-                    detalleHTML += '     <div class="pull-right"> ';
-                    detalleHTML += '     </div> ';
-                    detalleHTML += '     <div class="media-body"> ';
-                    detalleHTML += '         <div class="lgi-heading">' + detalle.descripcion + '</div> ';
-                    if (detalle.contacto) {
-                        detalleHTML += '         <small class="lgi-text">' + detalle.contacto + '</small> ';
-                    }
-                    detalleHTML += '         <small class="lgi-text">' + detalle.tipoPuntoVenta + '</small> ';
-                    detalleHTML += '         <ul class="lgi-attrs"> ';
-                    detalleHTML += '             <li>Direcci&oacute;n: ' + detalle.direccion + '</li> ';
-                    detalleHTML += '             <li>Saldo: Q ' + Number(detalle.saldo).formatMoney() + '</li> ';
-                    detalleHTML += '             <li>Fecha: ' + detalle.saldoFechahora + '</li> ';
-                    detalleHTML += '         </ul> ';
-                    detalleHTML += '     </div> ';
-
-                    var $button = $('<button class="btn btn-success" type="button" />');
-                    $button.append('<span class="glyphicon glyphicon-earphone"></span>');
-                    $button.data('detalle', detalle);
-                    $button.on("click", function(e) {
-                        var _this = $(e.currentTarget).data('detalle');
-                        e.preventDefault();
-                        InboxCtrl.loadLlamada(_this);
-                    });
-
-
-                    var $item = $("<div class='list-group-item media' />").append(detalleHTML);
-
-                    $item.find('.pull-right').append($button);
-
-                    $("#detalles").append($item);
-                }
+                InboxCtrl.listadoCampaDetalle = data.detalles;
+                refreshCampanaDetalle();
             }, true);
         }
 
@@ -253,6 +275,7 @@ $(document).ready(function() {
                 $('#content-new-llamada').show();
                 $("#cerrarLlamada").hide();
                 $("#guardarLlamada").show();
+                $("#content-fecha-programada").hide();
                 InboxCtrl.chrono.initializeClock();
                 if (loopLlamada) {
                     InboxCtrl.llamadaEncurso = setTimeout(loopLlamada, 60000);
@@ -274,13 +297,28 @@ $(document).ready(function() {
                     }, 500);
                     frmValidate.clean();
                     InboxCtrl.chrono.stopClock();
-                    $.when(cargarInforGeneral()).then(function() {
-                        loadCurrentCampana();
-                    });
+                    if (InboxCtrl.listadoCampaDetalle.length <= 5) {
+                        $.when(cargarInforGeneral()).then(function() {
+                            loadCurrentCampana();
+                        });
+                    } else {
+                        var index = -1;
+                        for (var i = 0; i < InboxCtrl.listadoCampaDetalle.length; i++) {
+                            if (InboxCtrl.listadoCampaDetalle[i].detalleId === InboxCtrl.detalleEnCurso.detalleId) {
+                                index = i;
+                                break;
+                            }
+                        }
+                        if (index > -1) {
+                            InboxCtrl.listadoCampaDetalle.splice(index, 1);
+                        }
+                        refreshCampanaDetalle();
+                    }
                     $("#cerrarLlamada").show();
                     $("#guardarLlamada").hide();
                     $('#info-new-llamada').show();
                     $('#content-new-llamada').hide();
+                    $("#content-fecha-programada").hide();
                     $("#newLlamada").modal("hide");
                 }, true);
             } else {
@@ -323,6 +361,22 @@ $(document).ready(function() {
             }
         }
 
+        function cancelarLlamadaVenta(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            clearTimeout(InboxCtrl.llamadaEncurso);
+            setTimeout(function() {
+                $(".combo-punto-venta").val("").trigger("liszt:updated");
+            }, 500);
+            var frmValidate = new FormValidate(document.getElementById("form-new-llamada-venta"));
+            frmValidate.clean();
+            $("#cerrarLlamadaVenta").show();
+            $("#guardarLlamadaVenta").hide();
+            $('#info-new-llamada-venta').show();
+            $('#content-new-llamada-venta').hide();
+            $("#newLlamadaVenta").modal("hide");
+        }
+
         $('.pie-chart-tiny').easyPieChart(easyPie);
 
         InboxCtrl.loadCurrentCampana = loadCurrentCampana;
@@ -331,18 +385,27 @@ $(document).ready(function() {
         InboxCtrl.chrono = new Chrono();
 
         $.when(cargarInforGeneral()).then(function(firstCampana) {
-            loadCampana(firstCampana);
+            if (firstCampana > 0) {
+                loadCampana(firstCampana);
 
-            $.when(fnComboBoxReceptor()).then(function() {
-                fnComboBoxRespuesta();
-            });
+                $.when(fnComboBoxReceptor()).then(function() {
+                    fnComboBoxRespuesta();
+                });
+            } else {
+                noty({ text: "¡ No tiene campa&ntilde;as asignadas !", type: 'warning', timeout: 3000 });
+            }
         });
 
+        $("select[name=respuestaId]").on("change", validaNuevaLlamada);
         $("#form-new-llamada").on("submit", saveLlamada);
         $("#iniciarLlamada").on("click", iniciarLlamada);
 
         $("#form-new-llamada-venta").on("submit", saveLlamadaVenta);
         $("#iniciarLlamadaVenta").on("click", iniciarLlamadaVenta);
+
+        $("#cerrarLlamadaVenta").on("click", cancelarLlamadaVenta);
+
+        $("#datetimepicker_fechaProgramada").datetimepicker({ locale: "es" });
 
     })((InboxCtrl || (InboxCtrl = {})));
 });

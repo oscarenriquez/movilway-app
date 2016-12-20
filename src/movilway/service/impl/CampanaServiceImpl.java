@@ -37,7 +37,7 @@ public class CampanaServiceImpl<T> extends GenericServiceImpl<T> implements Camp
 	}
 
 	@Override
-	public List<CampanaDetalle> getListaCampanaDetalle(Long campanaId, Integer amount, String estatus) throws InfraestructureException {		
-		return dao.getListaCampanaDetalle(campanaId, amount, estatus);
+	public List<CampanaDetalle> getListaCampanaDetalle(Long campanaId, Integer amount, String estatus, String dateSubstract) throws InfraestructureException {		
+		return dao.getListaCampanaDetalle(campanaId, amount, estatus, dateSubstract);
 	}
 }

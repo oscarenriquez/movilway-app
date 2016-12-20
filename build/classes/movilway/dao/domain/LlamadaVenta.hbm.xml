@@ -12,6 +12,9 @@
                 <column name="corr_llamada" />
             </key-property>
         </composite-id>
+        <property name="empresaId" type="java.lang.Long">
+            <column name="empresa_id" not-null="true" />
+        </property>
         <property name="montoTraspaso" type="big_decimal">
             <column name="monto_traspaso" precision="15" not-null="true" />
         </property>

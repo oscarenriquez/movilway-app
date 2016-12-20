@@ -10,6 +10,7 @@ import java.util.Date;
 public class PuntoVenta implements Serializable {
 
 	private Long id;
+	private Long empresaId;
 	private String puntoventaId;
 	private Estado estado;
 	private Pais pais;
@@ -32,6 +33,14 @@ public class PuntoVenta implements Serializable {
 	
 	public Long getId() {
 		return id;
+	}
+
+	public Long getEmpresaId() {
+		return empresaId;
+	}
+
+	public void setEmpresaId(Long empresaId) {
+		this.empresaId = empresaId;
 	}
 
 	public void setId(Long id) {
@@ -190,4 +199,14 @@ public class PuntoVenta implements Serializable {
 		this.contacto = contacto;
 	}
 
+	@Override
+	public String toString() {
+		return "PuntoVenta [id=" + id + ", empresaId=" + empresaId + ", puntoventaId=" + puntoventaId + ", estado="
+				+ estado + ", pais=" + pais + ", provincia=" + provincia + ", tipoPuntoVenta=" + tipoPuntoVenta
+				+ ", telefono=" + telefono + ", descripcion=" + descripcion + ", nivel=" + nivel + ", regionProvincia="
+				+ regionProvincia + ", direccion=" + direccion + ", observaciones=" + observaciones
+				+ ", DPuntoventasuperior=" + DPuntoventasuperior + ", saldo=" + saldo + ", saldoFechahora="
+				+ saldoFechahora + ", coordenada=" + coordenada + ", latitud=" + latitud + ", longitud=" + longitud
+				+ ", puntoAbastecimiento=" + puntoAbastecimiento + ", contacto=" + contacto + "]";
+	}	
 }

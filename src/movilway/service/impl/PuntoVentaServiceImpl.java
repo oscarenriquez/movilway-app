@@ -32,4 +32,9 @@ public class PuntoVentaServiceImpl<T> extends GenericServiceImpl<T> implements P
 	public List<PuntoVenta> getListaPuntosVentaByPaisEstadoRegion(Long paisId, Long estadoId, Long provinciaId)	throws InfraestructureException {
 		return dao.getListaPuntosVentaByPaisEstadoRegion(paisId, estadoId, provinciaId);
 	}
+
+	@Override
+	public PuntoVenta getPuntoVentaByPuntoventaId(String puntoventaId, Long empresaId) throws InfraestructureException {		
+		return dao.getPuntoVentaByPuntoventaId(puntoventaId, empresaId);
+	}
 }

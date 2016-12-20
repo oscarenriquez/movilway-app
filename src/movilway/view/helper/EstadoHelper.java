@@ -1001,5 +1001,214 @@ public class EstadoHelper extends ServicioHelper {
 			e.printStackTrace();
 			getAlerta().enviarAlerta("listaRegion", e, getUsuarioBean(), ServicioHelper.EMAIL);
 		}
-	}	
+	}
+	
+	public void comboBoxEstadosByPais (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+		try{
+			setDefaultValues(req, key);
+			JSONObject result = new JSONObject();
+			JSONObject formulario = new JSONObject();
+			Boolean isSuccess = true;
+			Boolean permiso = false;
+			String msg = "";
+			
+			if(getSession() != null){												
+				permiso = pageAcceso(req, getServicesid(), getContext());
+				if(permiso){
+					String paisId = getNumberValue(req.getParameter("pais"));
+					if(vParam(paisId)){
+						try{														
+							List<Estado> listaEstados = getServiceLocator().getEstadoService().getListaEstadosByPais(Long.valueOf(paisId));
+							JSONArray lista = new JSONArray();
+							JSONObject seleccione = new JSONObject();
+							seleccione.put("ID", "");
+							seleccione.put("DESCRIPCION", "-- seleccione --");
+							lista.add(seleccione);
+							for(Estado estado : listaEstados) {
+								JSONObject jsObj = new JSONObject();
+								jsObj.put("ID", estado.getEstadoId());
+								jsObj.put("DESCRIPCION", estado.getAbrev() + " - " + estado.getDescripcion());
+								lista.add(jsObj);
+							}
+							formulario.put("comboBox", lista);
+						} catch (InfraestructureException ie) {
+							try {
+								HibernateUtil.rollbackTransaction();
+							} catch (InfraestructureException e) {
+								e.printStackTrace();
+							}
+							getAlerta().enviarAlerta("comboBoxEstadosByPais", ie, getUsuarioBean(),  EMAIL);
+							ie.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						} catch (Exception e){
+							getAlerta().enviarAlerta("comboBoxEstadosByPais", e, getUsuarioBean(),  EMAIL);
+							e.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						}	
+					} else {
+						isSuccess = false;
+						msg = PARAM_NECESARIOS;
+					}	
+				} else {
+					isSuccess = false;
+					msg = FALTA_PERMISOS;
+				}				
+			} else {
+				isSuccess = false;
+				msg = SESION_EXPIRADA;
+			}
+			
+			result.put("isSuccess", isSuccess);
+			result.put("permiso", permiso);
+			result.put("msg", msg);
+			result.put("formulario", formulario);
+			
+			printJson(resp, result);
+		} catch(Exception e){
+			e.printStackTrace();
+			getAlerta().enviarAlerta("comboBoxEstadosByPais", e, getUsuarioBean(), ServicioHelper.EMAIL);
+		}
+	}
+	
+	
+	public void comboBoxProvinciasByEstado (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+		try{
+			setDefaultValues(req, key);
+			JSONObject result = new JSONObject();
+			JSONObject formulario = new JSONObject();
+			Boolean isSuccess = true;
+			Boolean permiso = false;
+			String msg = "";
+			
+			if(getSession() != null){												
+				permiso = pageAcceso(req, getServicesid(), getContext());
+				if(permiso){
+					String estadoId = getNumberValue(req.getParameter("estado"));
+					if(vParam(estadoId)){
+						try{														
+							List<Provincia> listaProvincias = getServiceLocator().getProvinciaService().getListaProvinciasByEstado(Long.valueOf(estadoId));
+							JSONArray lista = new JSONArray();
+							JSONObject seleccione = new JSONObject();
+							seleccione.put("ID", "");
+							seleccione.put("DESCRIPCION", "-- seleccione --");
+							lista.add(seleccione);
+							for(Provincia provincia : listaProvincias) {
+								JSONObject jsObj = new JSONObject();
+								jsObj.put("ID", provincia.getProvinciaId());
+								jsObj.put("DESCRIPCION", provincia.getAbrev() + " - " + provincia.getDescripcion());
+								lista.add(jsObj);
+							}
+							formulario.put("comboBox", lista);
+						} catch (InfraestructureException ie) {
+							try {
+								HibernateUtil.rollbackTransaction();
+							} catch (InfraestructureException e) {
+								e.printStackTrace();
+							}
+							getAlerta().enviarAlerta("comboBoxProvinciasByEstado", ie, getUsuarioBean(),  EMAIL);
+							ie.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						} catch (Exception e){
+							getAlerta().enviarAlerta("comboBoxProvinciasByEstado", e, getUsuarioBean(),  EMAIL);
+							e.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						}	
+					} else {
+						isSuccess = false;
+						msg = PARAM_NECESARIOS;
+					}	
+				} else {
+					isSuccess = false;
+					msg = FALTA_PERMISOS;
+				}				
+			} else {
+				isSuccess = false;
+				msg = SESION_EXPIRADA;
+			}
+			
+			result.put("isSuccess", isSuccess);
+			result.put("permiso", permiso);
+			result.put("msg", msg);
+			result.put("formulario", formulario);
+			
+			printJson(resp, result);
+		} catch(Exception e){
+			e.printStackTrace();
+			getAlerta().enviarAlerta("comboBoxProvinciasByEstado", e, getUsuarioBean(), ServicioHelper.EMAIL);
+		}
+	}
+	
+	
+	public void comboBoxRegionesByProvincia (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+		try{
+			setDefaultValues(req, key);
+			JSONObject result = new JSONObject();
+			JSONObject formulario = new JSONObject();
+			Boolean isSuccess = true;
+			Boolean permiso = false;
+			String msg = "";
+			
+			if(getSession() != null){												
+				permiso = pageAcceso(req, getServicesid(), getContext());
+				if(permiso){
+					String provinciaId = getNumberValue(req.getParameter("provincia"));
+					if(vParam(provinciaId)){
+						try{														
+							List<RegionProvincia> listaRegiones = getServiceLocator().getRegionProvinciaService().getListaRegionProvincia(Long.valueOf(provinciaId));
+							JSONArray lista = new JSONArray();
+							JSONObject seleccione = new JSONObject();
+							seleccione.put("ID", "");
+							seleccione.put("DESCRIPCION", "-- seleccione --");
+							lista.add(seleccione);
+							for(RegionProvincia region : listaRegiones) {
+								JSONObject jsObj = new JSONObject();
+								jsObj.put("ID", region.getRegionprovinciaId());
+								jsObj.put("DESCRIPCION", region.getAbrev() + " - " + region.getDescripcion());
+								lista.add(jsObj);
+							}
+							formulario.put("comboBox", lista);
+						} catch (InfraestructureException ie) {
+							try {
+								HibernateUtil.rollbackTransaction();
+							} catch (InfraestructureException e) {
+								e.printStackTrace();
+							}
+							getAlerta().enviarAlerta("comboBoxRegionesByProvincia", ie, getUsuarioBean(),  EMAIL);
+							ie.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						} catch (Exception e){
+							getAlerta().enviarAlerta("comboBoxRegionesByProvincia", e, getUsuarioBean(),  EMAIL);
+							e.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						}	
+					} else {
+						isSuccess = false;
+						msg = PARAM_NECESARIOS;
+					}	
+				} else {
+					isSuccess = false;
+					msg = FALTA_PERMISOS;
+				}				
+			} else {
+				isSuccess = false;
+				msg = SESION_EXPIRADA;
+			}
+			
+			result.put("isSuccess", isSuccess);
+			result.put("permiso", permiso);
+			result.put("msg", msg);
+			result.put("formulario", formulario);
+			
+			printJson(resp, result);
+		} catch(Exception e){
+			e.printStackTrace();
+			getAlerta().enviarAlerta("comboBoxRegionesByProvincia", e, getUsuarioBean(), ServicioHelper.EMAIL);
+		}
+	}
 }

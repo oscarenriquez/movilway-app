@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 public class LlamadaVenta implements Serializable {
 
 	private LlamadaVentaId id;
+	private Long empresaId;
 	private BigDecimal montoTraspaso;
 	private String origenPuntoventaId;
 	private String destinoPuntoventaId;
@@ -14,6 +15,14 @@ public class LlamadaVenta implements Serializable {
 	
 	public LlamadaVentaId getId() {
 		return this.id;
+	}
+
+	public Long getEmpresaId() {
+		return empresaId;
+	}
+
+	public void setEmpresaId(Long empresaId) {
+		this.empresaId = empresaId;
 	}
 
 	public void setId(LlamadaVentaId id) {

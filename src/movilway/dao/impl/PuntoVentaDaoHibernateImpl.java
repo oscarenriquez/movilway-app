@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.criterion.Restrictions;
 
 import movilway.dao.PuntoVentaDao;
 import movilway.dao.domain.PuntoVenta;
@@ -30,12 +31,24 @@ public class PuntoVentaDaoHibernateImpl<T> extends GenericDaoHibernateApplicatio
 					.setLong("paisId", paisId)
 					.setLong("estadoId", estadoId)
 					.setLong("provinciaId", provinciaId)
-					.list();
+					.list();// Listado de puntos de venta
 			List<PuntoVenta> puntosVenta = new ArrayList<>();
 			for(Object obj : list){
 				puntosVenta.add((PuntoVenta)obj);
 			}
 			return puntosVenta;
+		} catch (HibernateException he){
+			throw new InfraestructureException(he);
+		}
+	}
+
+	@Override
+	public PuntoVenta getPuntoVentaByPuntoventaId(String puntoventaId, Long empresaId) throws InfraestructureException {
+		try {			
+			return (PuntoVenta) getSession().createCriteria(PuntoVenta.class)
+											.add(Restrictions.eq("puntoventaId", puntoventaId))
+											.add(Restrictions.eq("empresaId", empresaId))
+											.uniqueResult(); // Punto de venta
 		} catch (HibernateException he){
 			throw new InfraestructureException(he);
 		}

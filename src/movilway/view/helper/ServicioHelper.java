@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -44,6 +45,8 @@ public class ServicioHelper implements Serializable {
 	private Long servicesid;
 	protected static final String FALTA_PERMISOS = "No posee permisos para completar esta solicitud, comuniquese con el administrador!!";
 	protected static final String PARAM_NECESARIOS = "No es posible realizar esta solicitud, no cuenta con los parametros necesarios!!";
+	protected static final String VALIDATE_FORM = "Complete todos los campos requeridos!!";
+	protected static final String AMOUNT_NOT_AVAILABLE = "¡El monto ingresado no esta disponible en el punto venta origen!";
 	protected static final String DISABLED_BD = "Este servicio no se encuentra disponible en este momento, intente mas tarde!!";
 	protected static final String SIN_INFO = "No existe informacion para esta consulta!!";
 	protected static final String CREATE = "¡Registro creado!";
@@ -68,6 +71,7 @@ public class ServicioHelper implements Serializable {
 	protected PropertyResourceBundle bundle;
 	private HttpSession session;
 	private Alerta alerta;
+	public static final DecimalFormat df = new DecimalFormat("###,###,###,###.##");
 
 	public String ip = null;
 	public String host = null;
@@ -478,9 +482,9 @@ public class ServicioHelper implements Serializable {
 
 	protected void setDefaultValues(HttpServletRequest req, int key) {
 		setSession(req.getSession(false));
-		/*String context = req.getContextPath();
-		context = context.substring(1, context.length()).trim();*/
-		String context = req.getServerName().substring(0, req.getServerName().indexOf("."));
+		String context = req.getContextPath();
+		context = context.substring(1, context.length()).trim();
+		//String context = req.getServerName().substring(0, req.getServerName().indexOf("."));
 		setContext(context);
 		setServicesid((long) key);
 		ip = req.getRemoteAddr();
@@ -490,16 +494,35 @@ public class ServicioHelper implements Serializable {
 		
 	}
 
-	protected String getStringValue(String value) {
-		return value == null ? "" : value;
+	public String getStringValue(String value) {
+		if(value == null) {
+			return "";
+		}
+		value = value.trim();
+		value = value.replaceAll("\n", "");
+		value = value.replaceAll("\t", "");
+		
+		return value;
 	}
 	
-	protected String getBooleanValue(String value) {
-		return value == null ? "false" : value;
+	public String getBooleanValue(String value) {
+		value = getStringValue(value); 
+		value = value.toLowerCase();
+		if(value.isEmpty()) {
+			return "false";
+		}
+		if(value.matches("true|false")){
+			return value;
+		}
+		return "false";
 	}
 	
-	protected String getNumberValue(String value) {
-		return value == null ? "0" : value;
+	public String getNumberValue(String value) {
+		value = getStringValue(value); 			
+		if(value.matches("\\d{1,20}")){
+			return value;
+		}
+		return "";
 	}
 	
 	protected String getEstatus(Boolean value) {

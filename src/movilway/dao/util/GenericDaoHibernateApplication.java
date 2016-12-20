@@ -212,7 +212,6 @@ public abstract class GenericDaoHibernateApplication <T> implements GenericDao<T
 		}
 
 		List<Object> result = query.list();
-
 		return result;
 	}
 }

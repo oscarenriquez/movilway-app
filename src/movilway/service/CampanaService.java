@@ -11,5 +11,5 @@ public interface CampanaService<T> extends GenericService<T>  {
 
 	public List<Map<String, Object>> getInforCampanasByUser(Long userId, String estatus) throws InfraestructureException;
 	
-	public List<CampanaDetalle> getListaCampanaDetalle(Long campanaId, Integer amount, String estatus) throws InfraestructureException;
+	public List<CampanaDetalle> getListaCampanaDetalle(Long campanaId, Integer amount, String estatus, String dateSubstract) throws InfraestructureException;
 }

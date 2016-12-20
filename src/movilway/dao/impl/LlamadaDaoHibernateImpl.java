@@ -1,7 +1,11 @@
 package movilway.dao.impl;
 
+import org.hibernate.HibernateException;
+import org.hibernate.type.StandardBasicTypes;
+
 import movilway.dao.LlamadaDao;
 import movilway.dao.domain.Llamada;
+import movilway.dao.exception.InfraestructureException;
 import movilway.dao.util.GenericDaoHibernateApplication;
 
 public class LlamadaDaoHibernateImpl<T> extends GenericDaoHibernateApplication<T> implements LlamadaDao<T> {
@@ -15,5 +19,17 @@ public class LlamadaDaoHibernateImpl<T> extends GenericDaoHibernateApplication<T
 			dao = new LlamadaDaoHibernateImpl<>();
 		}			
 		return dao;
+	}
+
+	@Override
+	public Integer getCorrelativoLlamada(Long detalleId) throws InfraestructureException {
+		try {
+			return (Integer) getSession().createSQLQuery("select ifnull(max(l.corr_llamada), 0) as Correlativo from llamada as l where l.detalle_id = :detalleId ")
+							.addScalar("Correlativo", StandardBasicTypes.INTEGER)
+							.setLong("detalleId", detalleId)					
+							.uniqueResult();
+		} catch (HibernateException he) {
+			throw new InfraestructureException(he);
+		}
 	}
 }

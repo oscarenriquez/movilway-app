@@ -456,34 +456,35 @@ function llenaComboPPL(data, obj, sele, isSelec, isChosen) {
  */
 function llenaComboRel(data, obj, sele, isSelec, isChosen) {
     obj.html("");
-    obj.html("<option value=''>Seleccione una opcion</option> ");
     $.each(data, function(index, el) {
         if (isSelec) {
             if (sele instanceof Array) {
                 var opt = "";
-                opt = "<option value='" + el.ID + "' data-type='" + el.DESCRIPCION.toUpperCase() + "'>" + el.DESCRIPCION.toUpperCase() + "</option> ";
+                opt = "<option value='" + el.ID + "' data-type='" + el.TYPE_EXTRA + "'>" + el.DESCRIPCION.toUpperCase() + "</option> ";
                 for (var i = 0; i < sele.length; i++) {
                     if (sele[i] == el.ID) {
-                        opt = "<option value='" + el.ID + "' data-type='" + el.DESCRIPCION.toUpperCase() + "' selected>" + el.DESCRIPCION.toUpperCase() + "</option> ";
+                        opt = "<option value='" + el.ID + "' data-type='" + el.TYPE_EXTRA + "' selected>" + el.DESCRIPCION.toUpperCase() + "</option> ";
                         break;
                     }
                 }
                 obj.append(opt);
             } else {
                 if (el.ID == sele) {
-                    obj.append("<option value='" + el.ID + "' data-type='" + el.DESCRIPCION.toUpperCase() + "' selected>" + el.DESCRIPCION.toUpperCase() + "</option> ");
+                    obj.append("<option value='" + el.ID + "' data-type='" + el.TYPE_EXTRA + "' selected>" + el.DESCRIPCION.toUpperCase() + "</option> ");
                 } else {
-                    obj.append("<option value='" + el.ID + "' data-type='" + el.DESCRIPCION.toUpperCase() + "'>" + el.DESCRIPCION.toUpperCase() + "</option> ");
+                    obj.append("<option value='" + el.ID + "' data-type='" + el.TYPE_EXTRA + "'>" + el.DESCRIPCION.toUpperCase() + "</option> ");
                 }
             }
         } else {
-            obj.append("<option value='" + el.ID + "' data-type='" + el.DESCRIPCION.toUpperCase() + "'>" + el.DESCRIPCION.toUpperCase() + "</option> ");
+            obj.append("<option value='" + el.ID + "' data-type='" + el.TYPE_EXTRA + "'>" + el.DESCRIPCION.toUpperCase() + "</option> ");
         }
 
     });
 
     if (isChosen) {
         obj.chosen({ no_results_text: 'Oops!, no existe informacion con: ', width: "100%" });
+    } else {
+        obj.prepend("<option value=''>Seleccione una opcion</option> ");
     }
 }
 

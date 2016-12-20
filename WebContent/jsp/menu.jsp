@@ -42,6 +42,7 @@ if(sessionRequest == null){
 		    <link rel="shortcut icon" href="./img/favicon.ico" />
 		    <link rel="stylesheet" href="./css/bootstrap.min.css" />
 		    <link rel="stylesheet" href="./css/bootstrap-theme-green.css" />
+		    <link rel="stylesheet" href="./bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
 		    <style type="text/css" media="screen">
 			@import "./css/demo_table_jui.css";
 			@import "./css/demo_table_complete.css";
@@ -135,7 +136,9 @@ if(sessionRequest == null){
 		<script src="http://maps.google.com/maps/api/js?sensor=false"></script> 
 		<script src="./script/infobubble-compiled.js"></script> 
 		<script src="./script/jquery-1.9.1.js"></script>
-		<script src="./script/jquery-ui-1.9.2.custom.min.js"></script>
+		<script src="./script/jquery-ui-1.9.2.custom.min.js"></script>		
+		<script src="./bower_components/moment/min/moment.min.js"></script>
+		<script src="./bower_components/moment/locale/es.js"></script>
 		    
 		<script src="./script/jquery.throttle.min.js"></script>
 		<script src="./script/jquery.fileDownload.js?v3.9"></script>	    
@@ -170,10 +173,9 @@ if(sessionRequest == null){
 	    <!-- Choosen -->
 	    <script src="./script/chosen.jquery.js"></script>
 	    
-	    <!-- datepicker -->
-	    <script src="./script/bootstrap-datepicker.js"></script>
-	    <script src="./script/prototype.js"></script>
-	    <script src="./script/datetimepicker.js"></script>
+	    <!-- datepicker -->	    
+	    <script src="./script/prototype.js"></script>	    	   
+	    <script src="./bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 	    
 	    <!-- App Own -->
 	    <script src="./script/menu.js"></script>

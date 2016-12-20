@@ -75,17 +75,45 @@ public class CampanaDaoHibernateImpl<T> extends GenericDaoHibernateApplication<T
 	}
 
 	@Override
-	public List<CampanaDetalle> getListaCampanaDetalle(Long campanaId, Integer amount, String estatus) throws InfraestructureException {		
+	public List<CampanaDetalle> getListaCampanaDetalle(Long campanaId, Integer amount, String estatus, String dateSubstract) throws InfraestructureException {		
 		try {
 			StringBuilder sb = new StringBuilder();			
-			sb.append(" select cd from Campana c inner join c.campanaDetalles cd where c.campanaId = :campanaId and cd.estatus = :estatus order by cd.detalleId asc ");			
+			sb.append(" select cd from Campana c inner join c.campanaDetalles cd ");
+			sb.append(" where c.campanaId = :campanaId ");
+			sb.append(" and cd.estatus = :estatus ");
+			sb.append(" and ( cd.fechaProgramada is null or cd.fechaProgramada < addtime(now(), :dateSubstract) ) ");
+			sb.append(" order by cd.detalleId asc ");
+			
+			StringBuilder sb2 = new StringBuilder();
+			sb2.append(" select cd from Campana c inner join c.campanaDetalles cd ");
+			sb2.append(" where c.campanaId = :campanaId ");
+			sb2.append(" and cd.estatus = :estatus ");
+			sb2.append(" and cd.fechaProgramada is not null ");
+			sb2.append(" and cd.fechaProgramada >= addtime(now(), :dateSubstract) ");
+			sb2.append(" order by cd.fechaProgramada asc ");
 			
 			List<?> list = getSession().createQuery(sb.toString())
 					.setLong("campanaId", campanaId)
-					.setString("estatus", estatus).setMaxResults(amount).list();
+					.setString("estatus", estatus)
+					.setString("dateSubstract", dateSubstract)
+					.setMaxResults(amount).list();
+			
+			List<?> listProgramada = getSession().createQuery(sb2.toString())
+					.setLong("campanaId", campanaId)
+					.setString("estatus", estatus)
+					.setString("dateSubstract", dateSubstract)
+					.setMaxResults(amount).list();
+			
 			List<CampanaDetalle> resultado = new ArrayList<>();
 			
+			for( Object obj : listProgramada ) {
+				resultado.add((CampanaDetalle) obj);
+			}
+			
 			for( Object obj : list ) {
+				if(resultado.size() == amount)
+					break;
+				
 				resultado.add((CampanaDetalle) obj);
 			}
 			

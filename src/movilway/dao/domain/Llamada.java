@@ -7,6 +7,7 @@ import java.util.Date;
 public class Llamada implements Serializable {
 
 	private LlamadaId id;
+	private Long empresaId;
 	private ReceptorLlamada receptorLlamada;
 	private RespuestaLlamada respuestaLlamada;
 	private Date fechahoraInicio;
@@ -21,6 +22,14 @@ public class Llamada implements Serializable {
 
 	public void setId(LlamadaId id) {
 		this.id = id;
+	}	
+	
+	public Long getEmpresaId() {
+		return empresaId;
+	}
+
+	public void setEmpresaId(Long empresaId) {
+		this.empresaId = empresaId;
 	}
 
 	public ReceptorLlamada getReceptorLlamada() {

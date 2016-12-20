@@ -8,5 +8,7 @@ import movilway.service.util.GenericService;
 
 public interface PuntoVentaService<T> extends GenericService<T>  {
 
+	public PuntoVenta getPuntoVentaByPuntoventaId(String puntoventaId, Long empresaId) throws InfraestructureException;
+	
 	public List<PuntoVenta> getListaPuntosVentaByPaisEstadoRegion(Long paisId, Long estadoId, Long provinciaId) throws InfraestructureException;
 }

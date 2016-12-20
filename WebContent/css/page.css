@@ -2305,3 +2305,7 @@ input.to-upper,
 textarea.to-upper {
     text-transform: uppercase;
 }
+
+.timepicker {
+    color: #333;
+}

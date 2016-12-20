@@ -1,6 +1,7 @@
 package movilway.view.helper;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -288,7 +289,9 @@ public class AgenteHelper extends ServicioHelper {
 				permiso = pageAcceso(req, getServicesid(), getContext());
 				if(permiso){						
 					try{
-						List<Agente> listaAgente = getServiceLocator().getAgenteService().getAllEntities(Agente.class);
+						Map<String, Serializable> parameters = new HashMap<>();
+						parameters.put("tipoAgente.empresaId", getEmpresaId());
+						List<Agente> listaAgente = getServiceLocator().getAgenteService().getListAgentes(getEmpresaId());
 						JSONArray lista = new JSONArray();
 						for(Agente agente : listaAgente) {
 							List<Map<String, Object>> options = new ArrayList<>();

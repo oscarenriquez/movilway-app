@@ -8,6 +8,9 @@
             <column name="id" unique="true" />
             <generator class="increment" />
         </id>
+        <property name="empresaId" type="java.lang.Long">
+            <column name="empresa_id" not-null="true" />
+        </property>
         <property name="puntoventaId" type="java.lang.String" unique="true">
             <column name="puntoventa_Id" length="100" />
         </property>

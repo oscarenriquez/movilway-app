@@ -12,6 +12,9 @@
                 <column name="corr_llamada" />
             </key-property>
         </composite-id>
+        <property name="empresaId" type="java.lang.Long">
+            <column name="empresa_id" not-null="true" />
+        </property>
         <many-to-one name="receptorLlamada" class="movilway.dao.domain.ReceptorLlamada" fetch="join">
             <column name="receptor_id" />
         </many-to-one>
