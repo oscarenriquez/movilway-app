@@ -8,5 +8,5 @@ import movilway.service.util.GenericService;
 
 public interface EstadoService<T> extends GenericService<T> {
 
-	public List<Estado> getListaEstadosByPais(Long paisId) throws InfraestructureException;
+	public List<Estado> getListaEstadosByPais(Long paisId, String paisesId) throws InfraestructureException;
 }

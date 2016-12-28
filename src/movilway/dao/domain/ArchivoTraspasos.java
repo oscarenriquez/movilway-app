@@ -6,9 +6,11 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class ArchivoTraspasos implements Serializable {
 
+	public static final String TXT  = ".txt";
 	private Long archivotraspasosId;
 	private Long empresaId;
 	private byte[] archivo;
+	private String nombreArchivo;
 	private Integer numLinea;
 	private String texto;
 	private Date fechahoraCarga;
@@ -40,6 +42,14 @@ public class ArchivoTraspasos implements Serializable {
 
 	public void setArchivo(byte[] archivo) {
 		this.archivo = archivo;
+	}
+
+	public String getNombreArchivo() {
+		return nombreArchivo;
+	}
+
+	public void setNombreArchivo(String nombreArchivo) {
+		this.nombreArchivo = nombreArchivo;
 	}
 
 	public Integer getNumLinea() {

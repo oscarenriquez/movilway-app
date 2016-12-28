@@ -119,4 +119,9 @@ public class ServiceLocatorBean implements ServiceLocator {
 		return RegionProvinciaServiceImpl.getInstance();
 	}
 
+	@Override
+	public HistoricoSaldosService<HistoricoSaldos> getHistoricoSaldosService()	throws InfraestructureException {
+		return HistoricoSaldosServiceImpl.getInstance();
+	}
+
 }

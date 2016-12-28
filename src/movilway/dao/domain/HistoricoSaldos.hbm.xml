@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17/11/2016 03:43:34 PM by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="movilway.dao.domain.HistoricoSaldos" table="historico_saldos" optimistic-lock="version">
+        <id name="historicosaldosId" type="java.lang.Long">
+            <column name="historicosaldos_id" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="archivoSaldos" class="movilway.dao.domain.ArchivoSaldos" fetch="join">
+            <column name="archivosaldos_id" />
+        </many-to-one>
+        <property name="empresaId" type="java.lang.Long">
+            <column name="empresa_id" />
+        </property>
+        <many-to-one name="puntoVenta" class="movilway.dao.domain.PuntoVenta" fetch="join">
+            <column name="puntoventatb_id" />
+        </many-to-one>
+        <property name="puntoventaId" type="java.lang.String">
+            <column name="puntoventa_id" />
+        </property>
+        <property name="saldo" type="java.math.BigDecimal">
+            <column name="saldo" />
+        </property>
+        <property name="fechaSaldo" type="java.util.Date">
+            <column name="fechasaldo" />
+        </property>
+    </class>
+</hibernate-mapping>

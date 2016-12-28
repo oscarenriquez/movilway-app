@@ -14,6 +14,9 @@
         <property name="archivo" type="binary">
             <column name="archivo" not-null="true" />
         </property>
+        <property name="nombreArchivo" type="java.lang.String">
+            <column name="nombre_archivo" length="500" />
+        </property>
         <property name="numLinea" type="java.lang.Integer">
             <column name="num_linea" />
         </property>
@@ -26,5 +29,11 @@
         <property name="usuarioCarga" type="java.lang.String">
             <column name="usuario_carga" length="100" />
         </property>
+        <set name="setSaldos" table="historico_saldos" inverse="false" lazy="true" fetch="select" cascade="save-update">
+            <key>
+                <column name="puntoventatb_id" not-null="true" />
+            </key>
+            <one-to-many class="movilway.dao.domain.HistoricoSaldos" />
+        </set>
     </class>
 </hibernate-mapping>

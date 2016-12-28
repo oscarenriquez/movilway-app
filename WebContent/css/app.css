@@ -635,7 +635,7 @@ html:not(.ismobile) .page-loader .preloader p {
 .line-wrap,
 .line-wrap .line {
     width: 18px;
-    -o-transition: all
+    -o-transition: all;
 }
 
 .actions>a>i,
@@ -705,4 +705,16 @@ html:not(.ismobile) .page-loader .preloader p {
 .smalltext {
     padding-top: 5px;
     font-size: 16px;
+}
+
+.slim-bottom {
+    margin-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.slim-top {
+    margin-top: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }

@@ -2309,3 +2309,18 @@ textarea.to-upper {
 .timepicker {
     color: #333;
 }
+
+.wizard .form-horizontal {
+    border-radius: 2px;
+    box-shadow: 0 1px 1px #ccc;
+    font-size: 16px;
+    padding: 30px 20px;
+}
+
+.wizard .form-horizontal legend {
+    color: #ccc;
+    font-size: 32px;
+    font-weight: normal;
+    line-height: 1;
+    text-shadow: 0 3px 0 rgba(255, 255, 255, 0.3);
+}

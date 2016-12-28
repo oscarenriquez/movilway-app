@@ -6,13 +6,16 @@
     <class name="movilway.dao.domain.ArchivoTraspasos" table="archivo_traspasos" optimistic-lock="version">
         <id name="archivotraspasosId" type="java.lang.Long">
             <column name="archivotraspasos_id" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="empresaId" type="java.lang.Long">
             <column name="empresa_id" not-null="true" />
         </property>
         <property name="archivo" type="binary">
             <column name="archivo" not-null="true" />
+        </property>
+        <property name="nombreArchivo" type="java.lang.String">
+            <column name="nombre_archivo" length="500" />
         </property>
         <property name="numLinea" type="java.lang.Integer">
             <column name="num_linea" />

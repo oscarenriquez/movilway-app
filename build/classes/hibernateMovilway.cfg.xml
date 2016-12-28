@@ -25,7 +25,7 @@
   <property name="hibernate.current_session_context_class">thread</property>
   <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
   <property name="hibernate.hibernate.query.substitutions">true=1, false=0</property>
-  <property name="hibernate.show_sql">false</property>
+  <property name="hibernate.show_sql">true</property>
   <property name="hibernate.max_fetch_depth">3</property>
   <property name="hibernate.default_batch_fetch_size">4</property>
   <property name="hibernate.generate_statistics">false</property>
@@ -51,5 +51,6 @@
   <mapping resource="movilway/dao/domain/TipoPuntoVenta.hbm.xml"/>
   <mapping resource="movilway/dao/domain/Traslado.hbm.xml"/>
   <mapping resource="movilway/dao/domain/Usuario.hbm.xml"/>
+  <mapping resource="movilway/dao/domain/HistoricoSaldos.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>

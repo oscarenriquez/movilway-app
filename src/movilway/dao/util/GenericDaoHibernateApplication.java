@@ -21,7 +21,7 @@ public abstract class GenericDaoHibernateApplication <T> implements GenericDao<T
 	}
 
 	/**
-	 * Permite obtener el Dialecto de base de datos con el que se obtuvo la conexión a la base de datos.
+	 * Permite obtener el Dialecto de base de datos con el que se obtuvo la conexion a la base de datos.
 	 * 
 	 * @return
 	 */
@@ -30,7 +30,7 @@ public abstract class GenericDaoHibernateApplication <T> implements GenericDao<T
 	}
 
 	/**
-	 * Facilitador para obtener la sesión actual
+	 * Facilitador para obtener la sesion actual
 	 * 
 	 * @return
 	 * @throws InfraestructureException
@@ -40,7 +40,7 @@ public abstract class GenericDaoHibernateApplication <T> implements GenericDao<T
 	}
 	
 	/**
-	 * Permite persistir cualquier entidad que recibe como parámetro.
+	 * Permite persistir cualquier entidad que recibe como parametro.
 	 * 
 	 * @param entity
 	 * @return
@@ -50,15 +50,25 @@ public abstract class GenericDaoHibernateApplication <T> implements GenericDao<T
 	public synchronized void saveEntity(T entity) throws InfraestructureException {
 		try {
 			Session session = getSession();
-			session.persist(entity);
+			session.persist(entity);		
 			HibernateUtil.flushSession();
+		} catch (HibernateException he) {
+			throw new InfraestructureException(he);
+		}
+	}
+	
+	@Override
+	public synchronized Long saveUpdateEntity(T entity) throws InfraestructureException {
+		try {
+			Session session = getSession();
+			return (Long) session.save(entity);					
 		} catch (HibernateException he) {
 			throw new InfraestructureException(he);
 		}
 	}
 
 	/**
-	 * Permite actualizar cualquier entidad que recibe como parámetro.
+	 * Permite actualizar cualquier entidad que recibe como parametro.
 	 * 
 	 * @param entity
 	 * @throws InfraestructureException
@@ -74,7 +84,7 @@ public abstract class GenericDaoHibernateApplication <T> implements GenericDao<T
 	}
 
 	/**
-	 * Permite eliminar cualquier entidad que recibe como parámetro.
+	 * Permite eliminar cualquier entidad que recibe como parametro.
 	 * 
 	 * @param entity
 	 * @throws InfraestructureException
@@ -90,7 +100,7 @@ public abstract class GenericDaoHibernateApplication <T> implements GenericDao<T
 	}
 
 	/**
-	 * Obtiene de la base de datos la entidad del tipo de la clase y entityID que recibe como parámetro.
+	 * Obtiene de la base de datos la entidad del tipo de la clase y entityID que recibe como parametro.
 	 * 
 	 * @param entityClass
 	 * @param entityID
@@ -109,7 +119,7 @@ public abstract class GenericDaoHibernateApplication <T> implements GenericDao<T
 	}
 
 	/**
-	 * Retorna una lista de entidades del tipo de la clase que recibe como parámetro.
+	 * Retorna una lista de entidades del tipo de la clase que recibe como parametro.
 	 * 
 	 * @param entityClass
 	 * @return
@@ -168,7 +178,7 @@ public abstract class GenericDaoHibernateApplication <T> implements GenericDao<T
 	}
 	
 	/**
-	 * Permite obtener una lista de entidades con pagineo de acuerdo al hql que recibe como parámetro.
+	 * Permite obtener una lista de entidades con pagineo de acuerdo al hql que recibe como parametro.
 	 * 
 	 * @param hql
 	 * @param parameters

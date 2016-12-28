@@ -31,7 +31,7 @@ public class EstadoServiceImpl<T> extends GenericServiceImpl<T> implements Estad
 	}
 
 	@Override
-	public List<Estado> getListaEstadosByPais(Long paisId) throws InfraestructureException {		
-		return dao.getListaEstadosByPais(paisId);
+	public List<Estado> getListaEstadosByPais(Long paisId, String paisesId) throws InfraestructureException {		
+		return dao.getListaEstadosByPais(paisId, paisesId);
 	}
 }

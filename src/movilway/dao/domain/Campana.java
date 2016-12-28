@@ -3,11 +3,15 @@ package movilway.dao.domain;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @SuppressWarnings("serial")
 public class Campana implements Serializable {
 
+	public static final String EN_ESPERA = "EN ESPERA";
+	public static final String ASIGNADA = "ASIGNADA";	
+	public static final String COMPLETADO = "COMPLETADO";	
 	private Long campanaId;
 	private TipoCampana tipoCampana;
 	private Date fechahoraInicio;
@@ -91,5 +95,76 @@ public class Campana implements Serializable {
 	public void setCampanaDetalles(Set<CampanaDetalle> campanaDetalles) {
 		this.campanaDetalles = campanaDetalles;
 	}
+	
+	public void addCampanaDetalle(CampanaDetalle campanaDetalle) {
+		if(campanaDetalles == null) {
+			campanaDetalles = new HashSet<>();
+		}
+		
+		campanaDetalle.setCampana(this);
+		campanaDetalles.add(campanaDetalle);
+	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((campanaId == null) ? 0 : campanaId.hashCode());
+		result = prime * result + ((estatus == null) ? 0 : estatus.hashCode());
+		result = prime * result + ((fechahoraFin == null) ? 0 : fechahoraFin.hashCode());
+		result = prime * result + ((fechahoraInicio == null) ? 0 : fechahoraInicio.hashCode());
+		result = prime * result + ((observaciones == null) ? 0 : observaciones.hashCode());
+		result = prime * result + ((tipoCampana == null) ? 0 : tipoCampana.hashCode());
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Campana other = (Campana) obj;
+		if (campanaId == null) {
+			if (other.campanaId != null)
+				return false;
+		} else if (!campanaId.equals(other.campanaId))
+			return false;
+		if (estatus == null) {
+			if (other.estatus != null)
+				return false;
+		} else if (!estatus.equals(other.estatus))
+			return false;
+		if (fechahoraFin == null) {
+			if (other.fechahoraFin != null)
+				return false;
+		} else if (!fechahoraFin.equals(other.fechahoraFin))
+			return false;
+		if (fechahoraInicio == null) {
+			if (other.fechahoraInicio != null)
+				return false;
+		} else if (!fechahoraInicio.equals(other.fechahoraInicio))
+			return false;
+		if (observaciones == null) {
+			if (other.observaciones != null)
+				return false;
+		} else if (!observaciones.equals(other.observaciones))
+			return false;
+		if (tipoCampana == null) {
+			if (other.tipoCampana != null)
+				return false;
+		} else if (!tipoCampana.equals(other.tipoCampana))
+			return false;
+		if (userId == null) {
+			if (other.userId != null)
+				return false;
+		} else if (!userId.equals(other.userId))
+			return false;
+		return true;
+	} 
+
+	
 }

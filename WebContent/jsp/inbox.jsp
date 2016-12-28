@@ -13,12 +13,11 @@
         </aside>
         <section id="content">
             <div class="container">
-                <div class="well well-sm text-center alert-info">
+                <div class="well well-sm text-center alert-info slim-bottom">
                     <button type="button" id="toggle-sidebar" class="btn btn-primary hidden-lg pull-right"> <i class="glyphicon glyphicon-chevron-right"></i></button>
                     <h2>Inbox</h2>
                 </div>
-
-                <div class="card">
+                <div class="card slim-top">
                     <div class="list-group lg-odd-black">
                         <div class="action-header clearfix">
                             <div class="ah-label"></div>

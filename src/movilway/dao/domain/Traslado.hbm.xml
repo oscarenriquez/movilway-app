@@ -17,10 +17,10 @@
         <property name="montoDespuesDestino" type="big_decimal">
             <column name="monto_despues_destino" precision="15" />
         </property>
-        <property name="puntoOrigenId" type="java.lang.Long">
+        <property name="puntoOrigenId" type="java.lang.String">
             <column name="punto_origen_id" />
         </property>
-        <property name="puntoDestinoId" type="java.lang.Long">
+        <property name="puntoDestinoId" type="java.lang.String">
             <column name="punto_destino_id" />
         </property>
         <property name="fechahora" type="java.util.Date">

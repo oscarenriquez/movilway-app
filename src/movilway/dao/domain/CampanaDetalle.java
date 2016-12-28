@@ -11,6 +11,7 @@ public class CampanaDetalle implements Serializable {
 	public static final String ASIGNADA = "ASIGNADA";
 	public static final String LLAMADA_ENCURSO = "LLAMADA EN CURSO";
 	public static final String COMPLETADO = "COMPLETADO";
+	public static final String CANCELADO = "CANCELADO";
 	private Long detalleId;
 	private Agente agente;
 	private Campana campana;
@@ -22,6 +23,20 @@ public class CampanaDetalle implements Serializable {
 		@Override
 		public int compare(CampanaDetalle o1, CampanaDetalle o2) {	
 			return o1.detalleId.compareTo(o2.detalleId);
+		}
+	};
+	
+	public static final Comparator<CampanaDetalle> BY_SALDO = new Comparator<CampanaDetalle>() {
+		@Override
+		public int compare(CampanaDetalle o1, CampanaDetalle o2) {	
+			return o1.puntoVenta.getSaldo().compareTo(o2.puntoVenta.getSaldo());
+		}
+	};
+	
+	public static final Comparator<CampanaDetalle> BY_AGENTE = new Comparator<CampanaDetalle>() {
+		@Override
+		public int compare(CampanaDetalle o1, CampanaDetalle o2) {	
+			return o1.agente.getAgenteId().compareTo(o2.agente.getAgenteId());
 		}
 	};
 	

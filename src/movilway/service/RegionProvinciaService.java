@@ -8,5 +8,5 @@ import movilway.service.util.GenericService;
 
 public interface RegionProvinciaService<T> extends GenericService<T>  {
 
-	public List<RegionProvincia> getListaRegionProvincia(Long provinciaId) throws InfraestructureException;
+	public List<RegionProvincia> getListaRegionProvincia(Long provinciaId, String provinciasId) throws InfraestructureException;
 }

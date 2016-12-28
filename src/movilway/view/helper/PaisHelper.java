@@ -349,7 +349,7 @@ public class PaisHelper extends ServicioHelper {
 			String msg = "";
 			
 			if(getSession() != null){												
-				permiso = pageAcceso(req, getServicesid(), getContext());
+				permiso = true; //pageAcceso(req, getServicesid(), getContext());
 				if(permiso){						
 					try{
 						

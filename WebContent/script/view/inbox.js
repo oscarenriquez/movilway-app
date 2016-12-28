@@ -292,8 +292,8 @@ $(document).ready(function() {
                 clearTimeout(InboxCtrl.llamadaEncurso);
                 buildFormPost($(e.target).serialize(), function() {
                     setTimeout(function() {
-                        $("[name=respuestaId]").val("").trigger("liszt:updated");
-                        $("[name=receptorId]").val("").trigger("liszt:updated");
+                        $("[name=respuestaId]").val("").trigger("chosen:updated");
+                        $("[name=receptorId]").val("").trigger("chosen:updated");
                     }, 500);
                     frmValidate.clean();
                     InboxCtrl.chrono.stopClock();
@@ -344,7 +344,7 @@ $(document).ready(function() {
                 clearTimeout(InboxCtrl.llamadaEncurso);
                 buildFormPost($(e.target).serialize(), function() {
                     setTimeout(function() {
-                        $(".combo-punto-venta").val("").trigger("liszt:updated");
+                        $(".combo-punto-venta").val("").trigger("chosen:updated");
                     }, 500);
                     frmValidate.clean();
                     $.when(cargarInforGeneral()).then(function() {
@@ -366,7 +366,7 @@ $(document).ready(function() {
             e.stopPropagation();
             clearTimeout(InboxCtrl.llamadaEncurso);
             setTimeout(function() {
-                $(".combo-punto-venta").val("").trigger("liszt:updated");
+                $(".combo-punto-venta").val("").trigger("chosen:updated");
             }, 500);
             var frmValidate = new FormValidate(document.getElementById("form-new-llamada-venta"));
             frmValidate.clean();

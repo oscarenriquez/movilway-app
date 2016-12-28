@@ -19,6 +19,11 @@ public abstract class GenericServiceImpl<T> implements GenericService<T> {
 	public void saveEntity(T entity) throws InfraestructureException {
 		getGenericDao().saveEntity(entity);
 	}
+	
+	@Override
+	public Long saveUpdateEntity(T entity) throws InfraestructureException {
+		return getGenericDao().saveUpdateEntity(entity);
+	}
 
 	@Override
 	public void updateEntity(T entity) throws InfraestructureException {

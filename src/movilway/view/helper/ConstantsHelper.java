@@ -14,7 +14,7 @@ public class ConstantsHelper {
 	public static final String App2 = "MOVILWAY";
 	public static final String ver = "v1.1";
 	public static final String Home = "/movilway";
-	public static final String Title = "movilway @2015";
+	public static final String Title = "movilway @2017";
 	public static final String Title2 = "@2010-2017 Todos los derechos reservados.";
 	public static final String Title3 = "Movilway @2017";
 	public static final String Acceso = "Usted no posee acceso a esta opcion, comuniquese con el Administrador !!! ";

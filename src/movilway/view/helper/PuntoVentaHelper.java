@@ -1,7 +1,9 @@
 package movilway.view.helper;
 
+import static movilway.service.util.FechaHoraUtil.getParseDateLong;
+import static movilway.service.util.FechaHoraUtil.getStringDate;
+
 import java.io.IOException;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +22,7 @@ import movilway.dao.domain.RegionProvincia;
 import movilway.dao.domain.TipoPuntoVenta;
 import movilway.dao.exception.InfraestructureException;
 import movilway.dao.util.HibernateUtil;
-import static movilway.service.util.FechaHoraUtil.*;
+import movilway.view.util.DataTableObject;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -349,15 +351,16 @@ public class PuntoVentaHelper extends ServicioHelper {
 			Boolean isSuccess = true;
 			Boolean permiso = false;
 			String msg = "";
+			DataTableObject dt = getInstanceDataTable(req);
+			JSONArray lista = new JSONArray();
 			
 			if(getSession() != null){												
-				permiso = pageAcceso(req, getServicesid(), getContext());
+				permiso = true; //pageAcceso(req, getServicesid(), getContext());
 				if(permiso){						
-					try{
-						Map<String, Serializable> parameters = new HashMap<>();
-						parameters.put("empresaId", getEmpresaId());
-						List<PuntoVenta> listaPuntoVenta = getServiceLocator().getPuntoVentaService().getAllEntitiesFiltered(PuntoVenta.class, parameters);
-						JSONArray lista = new JSONArray();
+					try{											
+						List<PuntoVenta> listaPuntoVenta = getServiceLocator().getPuntoVentaService().getListaPuntoVentaDataTable(getEmpresaId(), dt.getSearchSQL(), dt.getsSearch(), dt.getStart(), dt.getAmount());
+						dt.setiTotalDisplayRecords(getServiceLocator().getPuntoVentaService().getTotalPuntoVenta(getEmpresaId(), dt.getSearchSQL(), dt.getsSearch()));
+						dt.setiTotalRecords(dt.getiTotalDisplayRecords());						
 						for(PuntoVenta puntoVenta : listaPuntoVenta) {
 							List<Map<String, Object>> options = new ArrayList<>();
 							Map<String, Object> option = new HashMap<>();
@@ -403,8 +406,7 @@ public class PuntoVentaHelper extends ServicioHelper {
 								System.err.println(e.getMessage());
 								System.out.println(puntoVenta.toString());
 							}														
-						}
-						result.put("lista", lista);
+						}						
 					} catch (InfraestructureException ie) {
 						try {
 							HibernateUtil.rollbackTransaction();
@@ -433,6 +435,10 @@ public class PuntoVentaHelper extends ServicioHelper {
 			result.put("isSuccess", isSuccess);
 			result.put("permiso", permiso);
 			result.put("msg", msg);
+			result.put("sEcho", dt.getEcho());
+			result.put("iTotalRecords", dt.getiTotalRecords());
+			result.put("iTotalDisplayRecords", dt.getiTotalDisplayRecords());
+			result.put("aaData", lista);
 			
 			printJson(resp, result);
 		} catch(Exception e){
@@ -506,5 +512,31 @@ public class PuntoVentaHelper extends ServicioHelper {
 			e.printStackTrace();
 			getAlerta().enviarAlerta("comboBoxPuntosDeVenta", e, getUsuarioBean(), ServicioHelper.EMAIL);
 		}
+	}
+	
+	protected DataTableObject getInstanceDataTable(HttpServletRequest req){
+		DataTableObject dataTable = new DataTableObject();
+		String sStart = (req.getParameter("iDisplayStart") == null ? "" : req.getParameter("iDisplayStart"));
+		String sAmount = (req.getParameter("iDisplayLength") == null ? "" : req.getParameter("iDisplayLength"));
+		String sEcho = (req.getParameter("sEcho") == null ? "" : req.getParameter("sEcho"));
+		String sCol = (req.getParameter("iSortCol_0") == null ? "" : req.getParameter("iSortCol_0"));
+		String sdir = (req.getParameter("sSortDir_0") == null ? "" : req.getParameter("sSortDir_0"));
+		String searchTerm = (req.getParameter("sSearch") == null ? "" : req.getParameter("sSearch"));
+		
+		String[] cols = { "accion", "t1.puntoventaId", "t1.tipoPuntoVenta.descripcion", "t1.direccion", "t1.telefono", "t1.saldo", "t1.saldoFechahora", "t1.puntoAbastecimiento" };
+
+		String sSearchSQL = " and (t1.puntoventaId like ('%'||:searchTerm||'%') "
+				+ " or t1.tipoPuntoVenta.descripcion like ('%'||:searchTerm||'%') "
+				+ " or t1.direccion like ('%'||:searchTerm||'%') "
+				+ " or t1.telefono like ('%'||:searchTerm||'%') "
+				+ " or t1.saldo like ('%'||:searchTerm||'%') "				
+				+ " or t1.saldoFechahora like ('%'||:searchTerm||'%') "
+				+ " or t1.puntoAbastecimiento like ('%'||:searchTerm||'%')) ";
+
+		dataTable.setsColumns(cols);
+		dataTable.setSearchSQL(sSearchSQL);
+		dataTable.processDataTable(sStart, sAmount, sEcho, sCol, sdir, searchTerm);
+
+		return dataTable;
 	}
 }

@@ -7,7 +7,9 @@ import movilway.dao.exception.InfraestructureException;
 
 public interface GenericService<T> {
 
-public void saveEntity(T entity) throws InfraestructureException;
+	public void saveEntity(T entity) throws InfraestructureException;
+	
+	public Long saveUpdateEntity(T entity) throws InfraestructureException;
 	
 	public void updateEntity(T entity) throws InfraestructureException;
 	

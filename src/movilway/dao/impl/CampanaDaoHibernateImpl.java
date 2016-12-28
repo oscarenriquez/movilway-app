@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.HibernateException;
+import org.hibernate.criterion.Restrictions;
 
 import movilway.dao.CampanaDao;
 import movilway.dao.domain.Campana;
@@ -28,6 +29,37 @@ public class CampanaDaoHibernateImpl<T> extends GenericDaoHibernateApplication<T
 		return dao;
 	}
 
+	@Override
+	public Campana getCampanaActiva(Long empresaId, String estatus) throws InfraestructureException {
+		try {
+			
+			return (Campana) getSession()
+							.createQuery("from Campana where tipoCampana.empresaId = :empresaId and upper(estatus) = :estatus order by fechahoraInicio desc ")
+							.setLong("empresaId", empresaId)
+							.setString("estatus", estatus.toUpperCase().trim())							
+							.setMaxResults(1)
+							.uniqueResult();
+		} catch (HibernateException he) {
+			throw new InfraestructureException(he);
+		}
+	}
+	
+	@Override
+	public Campana getCampanaAbastecimientoActiva(Long empresaId, String estatus, Long tipocampanaId) throws InfraestructureException {
+		try {
+			
+			return (Campana) getSession()
+							.createQuery("from Campana where tipoCampana.tipocampanaId = :tipocampanaId and tipoCampana.empresaId = :empresaId and upper(estatus) = :estatus order by fechahoraInicio desc ")
+							.setLong("tipocampanaId", tipocampanaId)
+							.setLong("empresaId", empresaId)
+							.setString("estatus", estatus.toUpperCase().trim())							
+							.setMaxResults(1)
+							.uniqueResult();
+		} catch (HibernateException he) {
+			throw new InfraestructureException(he);
+		}
+	}	
+	
 	@Override
 	public List<Map<String, Object>> getInforCampanasByUser(Long userId, String estatus) throws InfraestructureException {
 		try {
@@ -82,7 +114,7 @@ public class CampanaDaoHibernateImpl<T> extends GenericDaoHibernateApplication<T
 			sb.append(" where c.campanaId = :campanaId ");
 			sb.append(" and cd.estatus = :estatus ");
 			sb.append(" and ( cd.fechaProgramada is null or cd.fechaProgramada < addtime(now(), :dateSubstract) ) ");
-			sb.append(" order by cd.detalleId asc ");
+			sb.append(" order by cd.puntoVenta.saldoFechahora, cd.puntoVenta.saldo, cd.detalleId asc ");
 			
 			StringBuilder sb2 = new StringBuilder();
 			sb2.append(" select cd from Campana c inner join c.campanaDetalles cd ");
@@ -122,4 +154,20 @@ public class CampanaDaoHibernateImpl<T> extends GenericDaoHibernateApplication<T
 			throw new InfraestructureException(he);
 		}				
 	}
+
+	@Override
+	public List<Campana> getListaCampanas(Long empresaId) throws InfraestructureException {
+		try {
+			
+			List<?> list = getSession().createCriteria(Campana.class).createCriteria("tipoCampana").add(Restrictions.eq("empresaId", empresaId)).list();					
+			List<Campana> listaCampana = new ArrayList<>();
+			
+			for(Object obj : list) {
+				listaCampana.add( (Campana) obj);
+			}
+			return listaCampana;
+		} catch (HibernateException he) {
+			throw new InfraestructureException(he);
+		}
+	}	
 }

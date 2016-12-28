@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 
 import movilway.dao.RegionProvinciaDao;
 import movilway.dao.domain.RegionProvincia;
@@ -24,14 +25,26 @@ public class RegionProvinciaDaoHibernateImpl<T> extends GenericDaoHibernateAppli
 	}
 	
 	@Override
-	public List<RegionProvincia> getListaRegionProvincia(Long provinciaId) throws InfraestructureException {
+	public List<RegionProvincia> getListaRegionProvincia(Long provinciaId, String provinciasId) throws InfraestructureException {
 		try {
-			List<?> list = getSession().createQuery("from RegionProvincia where provincia.provinciaId = :provinciaId").setLong("provinciaId", provinciaId).list();
-			List<RegionProvincia> provincias = new ArrayList<>();
-			for(Object obj : list){
-				provincias.add((RegionProvincia)obj);
+			StringBuilder sbHql = new StringBuilder();
+			sbHql.append(" from RegionProvincia ");
+			if(provinciaId != null && !provinciaId.equals(0L) && provinciaId > 0L){
+				sbHql.append(" where provincia.provinciaId = :provinciaId ");
+			} else {
+				sbHql.append(" where provincia.provinciaId in (").append(provinciasId).append(") "); 
 			}
-			return provincias;
+			
+			Query query = getSession().createQuery(sbHql.toString());
+			if(provinciaId != null && !provinciaId.equals(0L) && provinciaId > 0L){
+				query.setLong("estadoId", provinciaId);
+			}
+			List<?> list = query.list();
+			List<RegionProvincia> regiones = new ArrayList<>();
+			for(Object obj : list){
+				regiones.add((RegionProvincia)obj);
+			}
+			return regiones;
 		} catch (HibernateException he){
 			throw new InfraestructureException(he);
 		}

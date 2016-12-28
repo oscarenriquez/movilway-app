@@ -1,7 +1,10 @@
 package movilway.service.impl;
 
+import java.util.List;
+
 import movilway.dao.CampanaDetalleDao;
 import movilway.dao.domain.CampanaDetalle;
+import movilway.dao.exception.InfraestructureException;
 import movilway.dao.impl.CampanaDetalleDaoHibernateImpl;
 import movilway.dao.util.GenericDao;
 import movilway.service.CampanaDetalleService;
@@ -23,5 +26,10 @@ public class CampanaDetalleServiceImpl<T> extends GenericServiceImpl<T> implemen
 			service = new CampanaDetalleServiceImpl<>();
 		}			
 		return service;
+	}
+
+	@Override
+	public List<CampanaDetalle> getListaCampanaDetalleByAgente(Long agenteId, String estatus) throws InfraestructureException {
+		return dao.getListaCampanaDetalleByAgente(agenteId, estatus);
 	}
 }

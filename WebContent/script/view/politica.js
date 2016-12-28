@@ -55,7 +55,7 @@ $(document).ready(function() {
             param.politicaId = politicaId;
             param.key = 28;
             buildFormPost(param, function(data) {
-                $("[name=tipoCampana]").val('').trigger("liszt:updated");
+                $("[name=tipoCampana]").val('').trigger("chosen:updated");
                 for (var item in data.model) {
                     if (typeof(data.model[item]) === "boolean") {
                         $("#edit_" + item).prop("checked", data.model[item]);
@@ -63,7 +63,7 @@ $(document).ready(function() {
                         $("#edit_" + item).val(data.model[item]);
                     }
                 }
-                setTimeout(function() { $("[name=tipoCampana]").trigger("liszt:updated"); }, 500);
+                setTimeout(function() { $("[name=tipoCampana]").trigger("chosen:updated"); }, 500);
                 $("#editPolitica").modal("show");
             }, true);
         }

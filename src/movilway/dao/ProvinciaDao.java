@@ -8,6 +8,6 @@ import movilway.dao.util.GenericDao;
 
 public interface ProvinciaDao<T> extends GenericDao<T>  {
 
-	public List<Provincia> getListaProvinciasByEstado(Long estadoId) throws InfraestructureException;
+	public List<Provincia> getListaProvinciasByEstado(Long estadoId, String estadosId) throws InfraestructureException;
 		
 }

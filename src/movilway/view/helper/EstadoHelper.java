@@ -293,7 +293,7 @@ public class EstadoHelper extends ServicioHelper {
 					permiso = pageAcceso(req, getServicesid(), getContext());
 					if(permiso){						
 						try{							
-							List<Estado> listaEstado = getServiceLocator().getEstadoService().getListaEstadosByPais(Long.valueOf(paisId));
+							List<Estado> listaEstado = getServiceLocator().getEstadoService().getListaEstadosByPais(Long.valueOf(paisId), null);
 							JSONArray lista = new JSONArray();
 							for(Estado estado : listaEstado) {
 								List<Map<String, Object>> options = new ArrayList<>();
@@ -618,7 +618,7 @@ public class EstadoHelper extends ServicioHelper {
 					permiso = pageAcceso(req, getServicesid(), getContext());
 					if(permiso){						
 						try{							
-							List<Provincia> listaProvincia = getServiceLocator().getProvinciaService().getListaProvinciasByEstado(Long.valueOf(estadoId));
+							List<Provincia> listaProvincia = getServiceLocator().getProvinciaService().getListaProvinciasByEstado(Long.valueOf(estadoId), null);
 							JSONArray lista = new JSONArray();
 							for(Provincia provincia : listaProvincia) {
 								List<Map<String, Object>> options = new ArrayList<>();
@@ -939,7 +939,7 @@ public class EstadoHelper extends ServicioHelper {
 					permiso = pageAcceso(req, getServicesid(), getContext());
 					if(permiso){						
 						try{							
-							List<RegionProvincia> listaRegionProvincia = getServiceLocator().getRegionProvinciaService().getListaRegionProvincia(Long.valueOf(provinciaId));
+							List<RegionProvincia> listaRegionProvincia = getServiceLocator().getRegionProvinciaService().getListaRegionProvincia(Long.valueOf(provinciaId), null);
 							JSONArray lista = new JSONArray();
 							for(RegionProvincia region : listaRegionProvincia) {
 								List<Map<String, Object>> options = new ArrayList<>();
@@ -1013,12 +1013,15 @@ public class EstadoHelper extends ServicioHelper {
 			String msg = "";
 			
 			if(getSession() != null){												
-				permiso = pageAcceso(req, getServicesid(), getContext());
+				permiso = true; //pageAcceso(req, getServicesid(), getContext());
 				if(permiso){
 					String paisId = getNumberValue(req.getParameter("pais"));
-					if(vParam(paisId)){
-						try{														
-							List<Estado> listaEstados = getServiceLocator().getEstadoService().getListaEstadosByPais(Long.valueOf(paisId));
+					String paisesId = getStringValue(req.getParameter("paises"));
+					if(vParam(paisId) || vParam(paisesId)){
+						try{
+							if(paisId.isEmpty())
+								paisId = "0";
+							List<Estado> listaEstados = getServiceLocator().getEstadoService().getListaEstadosByPais(Long.valueOf(paisId), paisesId);
 							JSONArray lista = new JSONArray();
 							JSONObject seleccione = new JSONObject();
 							seleccione.put("ID", "");
@@ -1083,12 +1086,15 @@ public class EstadoHelper extends ServicioHelper {
 			String msg = "";
 			
 			if(getSession() != null){												
-				permiso = pageAcceso(req, getServicesid(), getContext());
+				permiso = true; //pageAcceso(req, getServicesid(), getContext());
 				if(permiso){
 					String estadoId = getNumberValue(req.getParameter("estado"));
-					if(vParam(estadoId)){
-						try{														
-							List<Provincia> listaProvincias = getServiceLocator().getProvinciaService().getListaProvinciasByEstado(Long.valueOf(estadoId));
+					String estadosId = getStringValue(req.getParameter("estados"));
+					if(vParam(estadoId) || vParam(estadosId)){
+						try{		
+							if(estadoId.isEmpty())
+								estadoId = "0";
+							List<Provincia> listaProvincias = getServiceLocator().getProvinciaService().getListaProvinciasByEstado(Long.valueOf(estadoId), estadosId);
 							JSONArray lista = new JSONArray();
 							JSONObject seleccione = new JSONObject();
 							seleccione.put("ID", "");
@@ -1153,12 +1159,15 @@ public class EstadoHelper extends ServicioHelper {
 			String msg = "";
 			
 			if(getSession() != null){												
-				permiso = pageAcceso(req, getServicesid(), getContext());
+				permiso = true; //pageAcceso(req, getServicesid(), getContext());
 				if(permiso){
 					String provinciaId = getNumberValue(req.getParameter("provincia"));
-					if(vParam(provinciaId)){
-						try{														
-							List<RegionProvincia> listaRegiones = getServiceLocator().getRegionProvinciaService().getListaRegionProvincia(Long.valueOf(provinciaId));
+					String provinciasId = getStringValue(req.getParameter("provincias"));
+					if(vParam(provinciaId) || vParam(provinciasId)){
+						try{	
+							if(provinciaId.isEmpty())
+								provinciaId = "0";
+							List<RegionProvincia> listaRegiones = getServiceLocator().getRegionProvinciaService().getListaRegionProvincia(Long.valueOf(provinciaId), provinciasId);
 							JSONArray lista = new JSONArray();
 							JSONObject seleccione = new JSONObject();
 							seleccione.put("ID", "");

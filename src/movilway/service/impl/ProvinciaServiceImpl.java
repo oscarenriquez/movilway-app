@@ -29,8 +29,8 @@ public class ProvinciaServiceImpl<T> extends GenericServiceImpl<T> implements Pr
 	}
 
 	@Override
-	public List<Provincia> getListaProvinciasByEstado(Long estadoId) throws InfraestructureException {		
-		return dao.getListaProvinciasByEstado(estadoId);
+	public List<Provincia> getListaProvinciasByEstado(Long estadoId, String estadosId) throws InfraestructureException {		
+		return dao.getListaProvinciasByEstado(estadoId, estadosId);
 	}
 
 }

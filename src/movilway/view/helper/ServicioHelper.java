@@ -46,16 +46,20 @@ public class ServicioHelper implements Serializable {
 	protected static final String FALTA_PERMISOS = "No posee permisos para completar esta solicitud, comuniquese con el administrador!!";
 	protected static final String PARAM_NECESARIOS = "No es posible realizar esta solicitud, no cuenta con los parametros necesarios!!";
 	protected static final String VALIDATE_FORM = "Complete todos los campos requeridos!!";
-	protected static final String AMOUNT_NOT_AVAILABLE = "¡El monto ingresado no esta disponible en el punto venta origen!";
-	protected static final String DISABLED_BD = "Este servicio no se encuentra disponible en este momento, intente mas tarde!!";
+	protected static final String AMOUNT_NOT_AVAILABLE = "El monto ingresado no esta disponible en el punto venta origen!";
+	protected static final String DISABLED_BD = "Este servicio no se encuentra disponible en este momento, intente mas tarde!!";	
 	protected static final String SIN_INFO = "No existe informacion para esta consulta!!";
-	protected static final String CREATE = "¡Registro creado!";
-	protected static final String UPDATE = "¡Registro actualizado!";
-	protected static final String DELETE = "¡Registro eliminado!";
+	protected static final String FILE_SAVED = "Archivo Guardado!";
+	protected static final String CREATE = "Registro creado!";
+	protected static final String UPDATE = "Registro actualizado!";
+	protected static final String DELETE = "Registro eliminado!";
+	
+	protected static final String ABAST_UNAVAILABLE = "! El tipo de Campana \"NOTIFICACION\" no existe o no esta activa, verifique por favor !";
 
 	protected static final String ICON_VER = "glyphicon glyphicon-eye-open";
 	protected static final String ICON_INACTIVO = "glyphicon glyphicon-eye-close";
 	protected static final String ICON_EDITAR = "glyphicon glyphicon-edit";
+	protected static final String ICON_USER = "glyphicon glyphicon-user";
 	protected static final String ICON_ELIMINAR = "glyphicon glyphicon-trash";
 	protected static final String ICON_DETALLE = "glyphicon glyphicon-th-list";
 	protected static final String ICON_AUTORIZA = "glyphicon glyphicon-check";
@@ -65,7 +69,7 @@ public class ServicioHelper implements Serializable {
 
 	public static final String SESION_EXPIRADA = "Su sesion ha Expirado, por favor ingrese nuevamente!!";
 
-	public static final String EMAIL = "webapp@empagua.com";
+	public static final String EMAIL = "dirseog@gmail.com";
 
 	private ServiceLocator serviceLocator;
 	protected PropertyResourceBundle bundle;
@@ -253,7 +257,7 @@ public class ServicioHelper implements Serializable {
 		return user;
 	}
 
-	protected Long getEmpresaId() throws InfraestructureException {
+	protected Long getEmpresaId() {
 		Long idEmpresa = 0L;
 		if (getSession() != null) {
 			idEmpresa = (Long) getSession().getAttribute(SessionHelper.ID_ENTIDAD);

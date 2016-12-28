@@ -458,13 +458,13 @@ public class InboxHelper extends ServicioHelper {
 								Traslado traslado = new Traslado();
 								traslado.setEmpresaId(getEmpresaId());
 								traslado.setFechahora(new Date());
-								traslado.setPuntoDestinoId(puntoDestino.getId());
-								traslado.setPuntoOrigenId(puntoOrigen.getId());
+								traslado.setPuntoDestinoId(puntoDestino.getPuntoventaId());
+								traslado.setPuntoOrigenId(puntoOrigen.getPuntoventaId());
 								traslado.setMontoAntesDestino(saldoDestino);
 								traslado.setMontoAntesOrigen(saldoOrigen);
 								traslado.setMontoDespuesOrigen(saldoOrigen.subtract(montoTraspasoBg)); // Saldo origen menos monto traslado
 								traslado.setMontoTransf(montoTraspasoBg);
-								traslado.setMontoDespuesDestino(saldoDestino.add(montoTraspasoBg)); // Saldo destion más monto traslado
+								traslado.setMontoDespuesDestino(saldoDestino.add(montoTraspasoBg)); // Saldo destion mas monto traslado
 																
 								getServiceLocator().getTrasladoService().saveEntity(traslado);
 								

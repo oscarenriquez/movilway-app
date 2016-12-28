@@ -3,6 +3,7 @@ package movilway.dao.domain;
 import com.vividsolutions.jts.geom.Point;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.Date;
 
 
@@ -30,6 +31,13 @@ public class PuntoVenta implements Serializable {
 	private Float longitud;
 	private BigDecimal puntoAbastecimiento;
 	private String contacto;
+	
+	public static final Comparator<PuntoVenta> BY_SALDO = new Comparator<PuntoVenta>() {
+		@Override
+		public int compare(PuntoVenta o1, PuntoVenta o2) {	
+			return o1.saldo.compareTo(o2.saldo);
+		}
+	};
 	
 	public Long getId() {
 		return id;
@@ -197,6 +205,14 @@ public class PuntoVenta implements Serializable {
 
 	public void setContacto(String contacto) {
 		this.contacto = contacto;
+	}
+	
+	public Boolean generaOrden() {
+		if(this.saldo == null || this.saldo.compareTo(new BigDecimal(0)) == 0)
+			return true;
+		if(this.puntoAbastecimiento == null)
+			return false;
+		return this.saldo.compareTo(this.puntoAbastecimiento) <= 0;
 	}
 
 	@Override

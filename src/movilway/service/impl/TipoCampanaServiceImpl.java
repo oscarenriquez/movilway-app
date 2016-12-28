@@ -2,6 +2,7 @@ package movilway.service.impl;
 
 import movilway.dao.TipoCampanaDao;
 import movilway.dao.domain.TipoCampana;
+import movilway.dao.exception.InfraestructureException;
 import movilway.dao.impl.TipoCampanaDaoHibernateImpl;
 import movilway.dao.util.GenericDao;
 import movilway.service.TipoCampanaService;
@@ -23,5 +24,10 @@ public class TipoCampanaServiceImpl<T> extends GenericServiceImpl<T> implements 
 			service = new TipoCampanaServiceImpl<TipoCampana>();
 		}		
 		return service;
+	}
+
+	@Override
+	public TipoCampana getTipoCampanaAbastecimiento(Long empresaId, String descripcion)	throws InfraestructureException {
+		return dao.getTipoCampanaAbastecimiento(empresaId, descripcion);
 	}
 }

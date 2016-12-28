@@ -29,8 +29,8 @@ public class RegionProvinciaServiceImpl<T> extends GenericServiceImpl<T> impleme
 	}
 	
 	@Override
-	public List<RegionProvincia> getListaRegionProvincia(Long provinciaId) throws InfraestructureException {		
-		return dao.getListaRegionProvincia(provinciaId);
+	public List<RegionProvincia> getListaRegionProvincia(Long provinciaId, String provinciasId) throws InfraestructureException {		
+		return dao.getListaRegionProvincia(provinciaId, provinciasId);
 	}
 
 }

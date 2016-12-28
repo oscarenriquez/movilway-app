@@ -1,7 +1,6 @@
 package movilway.view.helper;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import movilway.dao.domain.Agente;
+import movilway.dao.domain.CampanaDetalle;
 import movilway.dao.domain.TipoAgente;
 import movilway.dao.domain.Usuario;
 import movilway.dao.exception.InfraestructureException;
@@ -288,9 +288,7 @@ public class AgenteHelper extends ServicioHelper {
 			if(getSession() != null){												
 				permiso = pageAcceso(req, getServicesid(), getContext());
 				if(permiso){						
-					try{
-						Map<String, Serializable> parameters = new HashMap<>();
-						parameters.put("tipoAgente.empresaId", getEmpresaId());
+					try{						
 						List<Agente> listaAgente = getServiceLocator().getAgenteService().getListAgentes(getEmpresaId());
 						JSONArray lista = new JSONArray();
 						for(Agente agente : listaAgente) {
@@ -412,6 +410,133 @@ public class AgenteHelper extends ServicioHelper {
 		} catch(Exception e){
 			e.printStackTrace();
 			getAlerta().enviarAlerta("comboBoxUsuariosAgentes", e, getUsuarioBean(), ServicioHelper.EMAIL);
+		}
+	}
+	
+	public void comboBoxAgentes (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+		try{
+			setDefaultValues(req, key);
+			JSONObject result = new JSONObject();
+			JSONObject formulario = new JSONObject();
+			Boolean isSuccess = true;
+			Boolean permiso = false;
+			String msg = "";
+			
+			if(getSession() != null){												
+				permiso = pageAcceso(req, getServicesid(), getContext());
+				if(permiso){						
+					try{
+						List<Agente> listaAgentes = getServiceLocator().getAgenteService().getListAgentes(getEmpresaId());						
+						JSONArray lista = new JSONArray();											
+						for(Agente agente : listaAgentes) {
+							if(agente.getEstatus()) {
+								JSONObject jsObj = new JSONObject();
+								jsObj.put("ID", agente.getId());
+								jsObj.put("DESCRIPCION", agente.getNombre());
+								lista.add(jsObj);
+							}
+						}
+						formulario.put("comboBox", lista);
+					} catch (InfraestructureException ie) {
+						try {
+							HibernateUtil.rollbackTransaction();
+						} catch (InfraestructureException e) {
+							e.printStackTrace();
+						}
+						getAlerta().enviarAlerta("comboBoxAgentes", ie, getUsuarioBean(),  EMAIL);
+						ie.printStackTrace();
+						msg = DISABLED_BD;
+						isSuccess = false;
+					} catch (Exception e){
+						getAlerta().enviarAlerta("comboBoxAgentes", e, getUsuarioBean(),  EMAIL);
+						e.printStackTrace();
+						msg = DISABLED_BD;
+						isSuccess = false;
+					}						
+				} else {
+					isSuccess = false;
+					msg = FALTA_PERMISOS;
+				}				
+			} else {
+				isSuccess = false;
+				msg = SESION_EXPIRADA;
+			}
+			
+			result.put("isSuccess", isSuccess);
+			result.put("permiso", permiso);
+			result.put("msg", msg);
+			result.put("formulario", formulario);
+			
+			printJson(resp, result);
+		} catch(Exception e){
+			e.printStackTrace();
+			getAlerta().enviarAlerta("comboBoxAgentes", e, getUsuarioBean(), ServicioHelper.EMAIL);
+		}
+	}
+	
+	public void comboBoxAgentesByCampana (HttpServletRequest req, HttpServletResponse resp, int key) throws ServletException, IOException {		
+		try{
+			setDefaultValues(req, key);
+			JSONObject result = new JSONObject();
+			JSONObject formulario = new JSONObject();
+			Boolean isSuccess = true;
+			Boolean permiso = false;
+			String msg = "";
+			
+			if(getSession() != null){												
+				permiso = pageAcceso(req, getServicesid(), getContext());
+				if(permiso){
+					
+					String campanaId = getNumberValue(req.getParameter("campanaId"));
+					if(vParam(campanaId)) {
+						try{
+							List<Map<String, Object>> listaAgentes = getServiceLocator().getAgenteService().getListAgentesByCampana(Long.valueOf(campanaId), CampanaDetalle.ASIGNADA);						
+							JSONArray lista = new JSONArray();
+							for(Map<String, Object> mapa : listaAgentes) {								
+								JSONObject jsObj = new JSONObject();
+								jsObj.put("ID", mapa.get("agenteId"));
+								jsObj.put("DESCRIPCION", mapa.get("nombre") + " - " + mapa.get("cant"));
+								lista.add(jsObj);								
+							}
+							formulario.put("comboBox", lista);
+						} catch (InfraestructureException ie) {
+							try {
+								HibernateUtil.rollbackTransaction();
+							} catch (InfraestructureException e) {
+								e.printStackTrace();
+							}
+							getAlerta().enviarAlerta("comboBoxAgentesByCampana", ie, getUsuarioBean(),  EMAIL);
+							ie.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						} catch (Exception e){
+							getAlerta().enviarAlerta("comboBoxAgentesByCampana", e, getUsuarioBean(),  EMAIL);
+							e.printStackTrace();
+							msg = DISABLED_BD;
+							isSuccess = false;
+						}
+					} else {
+						isSuccess = false;
+						msg = PARAM_NECESARIOS;
+					}
+				} else {
+					isSuccess = false;
+					msg = FALTA_PERMISOS;
+				}				
+			} else {
+				isSuccess = false;
+				msg = SESION_EXPIRADA;
+			}
+			
+			result.put("isSuccess", isSuccess);
+			result.put("permiso", permiso);
+			result.put("msg", msg);
+			result.put("formulario", formulario);
+			
+			printJson(resp, result);
+		} catch(Exception e){
+			e.printStackTrace();
+			getAlerta().enviarAlerta("comboBoxAgentesByCampana", e, getUsuarioBean(), ServicioHelper.EMAIL);
 		}
 	}
 }

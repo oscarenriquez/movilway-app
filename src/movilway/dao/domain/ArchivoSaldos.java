@@ -2,17 +2,23 @@ package movilway.dao.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @SuppressWarnings("serial")
 public class ArchivoSaldos implements Serializable {
 
+	public static final String XLS = ".xls";
+	public static final String XLSX = ".xlsx";
 	private Long archivosaldosId;
 	private Long empresaId;
 	private byte[] archivo;
+	private String nombreArchivo;
 	private Integer numLinea;
 	private String texto;
 	private Date fechahoraCarga;
 	private String usuarioCarga;
+	private Set<HistoricoSaldos> setSaldos;
 	
 	public Long getId() {
 		return this.archivosaldosId;
@@ -40,6 +46,14 @@ public class ArchivoSaldos implements Serializable {
 
 	public void setArchivo(byte[] archivo) {
 		this.archivo = archivo;
+	}
+
+	public String getNombreArchivo() {
+		return nombreArchivo;
+	}
+
+	public void setNombreArchivo(String nombreArchivo) {
+		this.nombreArchivo = nombreArchivo;
 	}
 
 	public Integer getNumLinea() {
@@ -74,4 +88,20 @@ public class ArchivoSaldos implements Serializable {
 		this.usuarioCarga = usuarioCarga;
 	}
 
+	public Set<HistoricoSaldos> getSetSaldos() {
+		return setSaldos;
+	}
+
+	public void setSetSaldos(Set<HistoricoSaldos> setSaldos) {
+		this.setSaldos = setSaldos;
+	}
+
+	public void addHistoricoSaldos (HistoricoSaldos historicoSaldos) {
+		if(setSaldos == null) {
+			setSaldos = new HashSet<>();
+		}
+		
+		historicoSaldos.setArchivoSaldos(this);
+		setSaldos.add(historicoSaldos);
+	}
 }

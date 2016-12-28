@@ -3,6 +3,7 @@ package movilway.service.impl;
 import movilway.service.AgenteService;
 
 import java.util.List;
+import java.util.Map;
 
 import movilway.dao.AgenteDao;
 import movilway.dao.domain.Agente;
@@ -32,6 +33,11 @@ public class AgenteServiceImpl<T> extends GenericServiceImpl<T> implements Agent
 	@Override
 	public List<Agente> getListAgentes(Long empresaId) throws InfraestructureException {		
 		return dao.getListAgentes(empresaId);
+	}
+
+	@Override
+	public List<Map<String, Object>> getListAgentesByCampana(Long campanaId, String estatus) throws InfraestructureException {
+		return dao.getListAgentesByCampana(campanaId, estatus);
 	}
 
 }

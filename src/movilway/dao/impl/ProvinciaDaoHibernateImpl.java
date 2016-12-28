@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 
 import movilway.dao.ProvinciaDao;
 import movilway.dao.domain.Provincia;
@@ -24,9 +25,21 @@ public class ProvinciaDaoHibernateImpl<T> extends GenericDaoHibernateApplication
 	}
 
 	@Override
-	public List<Provincia> getListaProvinciasByEstado(Long estadoId) throws InfraestructureException {
+	public List<Provincia> getListaProvinciasByEstado(Long estadoId, String estadosId) throws InfraestructureException {
 		try {
-			List<?> list = getSession().createQuery("from Provincia where estado.estadoId = :estadoId").setLong("estadoId", estadoId).list();
+			StringBuilder sbHql = new StringBuilder();
+			sbHql.append(" from Provincia ");
+			if(estadoId != null && !estadoId.equals(0L) && estadoId > 0L){
+				sbHql.append(" where estado.estadoId = :estadoId ");
+			} else {
+				sbHql.append(" where estado.estadoId in (").append(estadosId).append(") "); 
+			}
+			
+			Query query = getSession().createQuery(sbHql.toString());
+			if(estadoId != null && !estadoId.equals(0L) && estadoId > 0L){
+				query.setLong("estadoId", estadoId);
+			}
+			List<?> list = query.list();
 			List<Provincia> provincias = new ArrayList<>();
 			for(Object obj : list){
 				provincias.add((Provincia)obj);

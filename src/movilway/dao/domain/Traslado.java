@@ -12,8 +12,8 @@ public class Traslado implements Serializable {
 	private BigDecimal montoTransf;
 	private BigDecimal montoAntesDestino;
 	private BigDecimal montoDespuesDestino;
-	private Long puntoOrigenId;
-	private Long puntoDestinoId;
+	private String puntoOrigenId;
+	private String puntoDestinoId;
 	private Date fechahora;
 	private BigDecimal montoAntesOrigen;
 	private BigDecimal montoDespuesOrigen;
@@ -55,19 +55,19 @@ public class Traslado implements Serializable {
 		this.montoDespuesDestino = montoDespuesDestino;
 	}
 
-	public Long getPuntoOrigenId() {
+	public String getPuntoOrigenId() {
 		return this.puntoOrigenId;
 	}
 
-	public void setPuntoOrigenId(Long puntoOrigenId) {
+	public void setPuntoOrigenId(String puntoOrigenId) {
 		this.puntoOrigenId = puntoOrigenId;
 	}
 
-	public Long getPuntoDestinoId() {
+	public String getPuntoDestinoId() {
 		return this.puntoDestinoId;
 	}
 
-	public void setPuntoDestinoId(Long puntoDestinoId) {
+	public void setPuntoDestinoId(String puntoDestinoId) {
 		this.puntoDestinoId = puntoDestinoId;
 	}
 

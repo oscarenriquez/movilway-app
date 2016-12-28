@@ -787,6 +787,8 @@ var FormValidate;
                     if (this.textAreaElement[i].required && this.textAreaElement[i].value === '') {
                         this.textAreaElement[i].style.border = '1px solid red';
                         isValid = false;
+                    } else {
+                        this.textAreaElement[i].style.border = 'none';
                     }
                 }
 
@@ -794,6 +796,8 @@ var FormValidate;
                     if (this.selectElement[i].required && this.selectElement[i].value === '') {
                         this.selectElement[i].style.border = '1px solid red';
                         isValid = false;
+                    } else {
+                        this.selectElement[i].style.border = 'none';
                     }
                 }
             }
@@ -817,6 +821,12 @@ var FormValidate;
 
             for (var i = 0; i < this.selectElement.length; i++) {
                 this.selectElement[i].value = '';
+                if (this.selectElement[i].multiple) {
+                    var options = this.selectElement[i].getElementsByTagName("option");
+                    for (var j = 0; j < options.length; j++) {
+                        options[j].removeAttribute("selected");
+                    }
+                }
             }
         };
     };

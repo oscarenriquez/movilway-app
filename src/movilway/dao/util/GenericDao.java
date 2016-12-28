@@ -10,6 +10,8 @@ public interface GenericDao<T> {
 
 	public void saveEntity(T entity) throws InfraestructureException;
 	
+	public Long saveUpdateEntity(T entity) throws InfraestructureException;
+	
 	public void updateEntity(T entity) throws InfraestructureException;
 	
 	public void deleteEntity(T entity) throws InfraestructureException;

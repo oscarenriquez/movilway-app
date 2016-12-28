@@ -62,7 +62,7 @@ if(sessionRequest == null){
 			<link rel="stylesheet" href="./css/alertify.default.css"/>
 		    <link rel="stylesheet" href="./css/alertify.bootstrap.css"  id="toggleCSS"  />
 		    <link rel="stylesheet" href="./css/highslide.css" />
-		    <link rel="stylesheet" href="./css/chosen-black.css"/>
+		    <link rel="stylesheet" href="./css/chosen-black2.css"/>
 			<link rel="stylesheet" href="./css/page.css" />
 			<link rel="stylesheet" href="./css/idleTimeOut.css" />
 			<link rel="stylesheet" href="./css/datepicker.css" />
@@ -171,7 +171,7 @@ if(sessionRequest == null){
 	    <script src="./script/alertify.js"></script>
 	    
 	    <!-- Choosen -->
-	    <script src="./script/chosen.jquery.js"></script>
+	    <script src="./script/chosen.jquery.min.js"></script>
 	    
 	    <!-- datepicker -->	    
 	    <script src="./script/prototype.js"></script>	    	   

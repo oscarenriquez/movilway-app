@@ -62,7 +62,7 @@ $(document).ready(function() {
             param.agenteId = agenteId;
             param.key = 4;
             buildFormPost(param, function(data) {
-                $("[name=tipoAgente]").val('').trigger("liszt:updated");
+                $("[name=tipoAgente]").val('').trigger("chosen:updated");
                 for (var item in data.model) {
                     if (typeof(data.model[item]) === "boolean") {
                         $("#edit_" + item).prop("checked", data.model[item]);
@@ -71,8 +71,8 @@ $(document).ready(function() {
                     }
                 }
                 setTimeout(function() {
-                    $("[name=tipoAgente]").trigger("liszt:updated");
-                    $("[name=userId]").trigger("liszt:updated");
+                    $("[name=tipoAgente]").trigger("chosen:updated");
+                    $("[name=userId]").trigger("chosen:updated");
                 }, 500);
                 $("#editAgente").modal("show");
             }, true);

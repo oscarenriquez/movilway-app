@@ -23,6 +23,9 @@
                     </tr>
                 </thead>
                 <tbody id="table-punto-venta">
+                    <tr class="even" style="color: white;">
+                        <td colspan="8">Obteniendo data del servidor</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
