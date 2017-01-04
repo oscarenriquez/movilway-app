@@ -8,7 +8,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,6 +28,7 @@ import javax.servlet.http.HttpSession;
 import movilway.dao.domain.Usuario;
 import movilway.dao.exception.InfraestructureException;
 import movilway.service.util.Alerta;
+import movilway.service.util.FechaHoraUtil;
 import movilway.view.ServiceLocator;
 import movilway.view.bean.ServiceLocatorBean;
 import net.sf.json.JSONObject;
@@ -66,10 +69,30 @@ public class ServicioHelper implements Serializable {
 	protected static final String ICON_ANULAR = "glyphicon glyphicon-remove";
 	protected static final String ICON_PAGOS = "glyphicon glyphicon-usd";
 	protected static final String ICON_CALCULO = "glyphicon glyphicon-sound-5-1";
+	
+	protected static final String[] COLORS = { "#4572A7", "#24CBE5", "#AA4643", "#64E572", "#8BBC21",
+	        "#910000", "#3D96AE", "#ED561B", "#DDDF00", "#50B432",
+	        "#2F7ED8", "#DB843D", "#80699B", "#89A54E", "#AA4643",
+	        "#77A1E5", "#FFF263", "#FF9655", "#6AF9C4", "#A47D7C",
+	        "#C42525", "#A6C96A", "#4572A7", "#AA4643", "#89A54E",
+	        "#80699B", "#3D96AE", "#DB843D", "#50B432", "#64E572",
+	        "#0D233A", "#263C53", "#5bc0de", "#5cb85c", "#d9534f",
+	        "#ED561B", "#f0ad4e", "#428bca", "#5bc0de", "#5cb85c",
+	        "#d9534f", "#ED561B", "#f0ad4e", "#428bca", "#5bc0de",
+	        "#5cb85c", "#d9534f", "#ED561B", "#f0ad4e", "#428bca",
+	        "#0D233A", "#BD8E4E", "#BA4D51", "#1EC193", "#E6C966",
+	        "#F714FE", "#F539CB", "#57EB27", "#D44F19", "#DDA4B3",
+	        "#2D9999", "#EDC353", "#D02D8B", "#0964B2", "#AA3954",
+	        "#745020", "#38266C", "#D9C729", "#AD0C55", "#927D0F"
+	};
 
 	public static final String SESION_EXPIRADA = "Su sesion ha Expirado, por favor ingrese nuevamente!!";
 
 	public static final String EMAIL = "dirseog@gmail.com";
+	
+	public static Long ABASTECIMIENTO;
+	public static Long NOTIFICACION;
+	public static Long RUTERO;
 
 	private ServiceLocator serviceLocator;
 	protected PropertyResourceBundle bundle;
@@ -88,6 +111,10 @@ public class ServicioHelper implements Serializable {
 		serviceLocator = ServiceLocatorBean.getInstance();
 		alerta = new Alerta();
 		bundle = (PropertyResourceBundle) PropertyResourceBundle.getBundle("applicationMovilway");
+		
+		ABASTECIMIENTO = Long.valueOf(bundle.getString("movilway.tipoCampana.abastecimiento"));
+		NOTIFICACION = Long.valueOf(bundle.getString("movilway.tipoCampana.notifica"));
+		RUTERO = Long.valueOf(bundle.getString("movilway.tipoPuntoVenta.rutero"));
 	}
 
 	@SuppressWarnings("static-access")
@@ -743,6 +770,20 @@ public class ServicioHelper implements Serializable {
 			result.append(NEW_LINE);
 		}
 		return result.toString();
+	}
+	
+	protected String getTituloGrafica(Date fechaIni, Date fechaFin) throws Exception {		
+		StringBuilder subtitle = new StringBuilder();
+		if(fechaIni != null && fechaFin != null) {
+			subtitle.append("Del ");
+			subtitle.append(FechaHoraUtil.getFechaString(fechaIni)).append(" al ");
+			subtitle.append(FechaHoraUtil.getFechaString(fechaFin)).append(", Generado: ");
+		} else {
+			subtitle.append("Generado: ");
+			subtitle.append(FechaHoraUtil.getFechaLarga(Calendar.getInstance()));
+		}				
+		       		        		
+		return subtitle.toString().trim();
 	}
 
 }

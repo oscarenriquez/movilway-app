@@ -5,9 +5,7 @@ import java.util.Comparator;
 
 @SuppressWarnings("serial")
 public class TipoCampana implements Serializable, Comparable<TipoCampana> {
-
-	public static final Long VENTA = 1L;
-	public static final Long NOTIFICACION = 2L;
+	
 	private Long tipocampanaId;
 	private Long empresaId;
 	private String descripcion;

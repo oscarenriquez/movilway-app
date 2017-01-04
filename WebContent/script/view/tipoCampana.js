@@ -5,9 +5,9 @@ $(document).ready(function() {
 
         function fnListaTipoCampana() {
             buildFormPost({ key: 54 }, function(data) {
-
-                $("#table-tipocampana").parent("table").dataTable().fnDestroy();
-
+                if (TipoCampanaCtrl.table) {
+                    TipoCampanaCtrl.table.fnDestroy();
+                }
                 createTable(data.lista, "table-tipocampana");
                 var options = $.extend(true, {}, tableOptions, {
                     "aoColumns": [
@@ -17,7 +17,7 @@ $(document).ready(function() {
                     ]
                 });
 
-                $("#table-tipocampana").parent("table").dataTable(options);
+                TipoCampanaCtrl.table = $("#table-tipocampana").parent("table").dataTable(options);
 
             }, true);
         }

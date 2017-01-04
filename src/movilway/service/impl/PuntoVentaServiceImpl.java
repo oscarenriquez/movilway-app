@@ -3,6 +3,7 @@ package movilway.service.impl;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import movilway.dao.PuntoVentaDao;
 import movilway.dao.domain.PuntoVenta;
@@ -31,8 +32,8 @@ public class PuntoVentaServiceImpl<T> extends GenericServiceImpl<T> implements P
 	}
 
 	@Override
-	public List<PuntoVenta> getListaPuntosVentaByPaisEstadoRegion(Long paisId, Long estadoId, Long provinciaId)	throws InfraestructureException {
-		return dao.getListaPuntosVentaByPaisEstadoRegion(paisId, estadoId, provinciaId);
+	public List<PuntoVenta> getListaPuntosVentaByPaisEstadoRegion(String puntoventaId, Integer nivel, Long paisId, Long estadoId, Long provinciaId) throws InfraestructureException {
+		return dao.getListaPuntosVentaByPaisEstadoRegion(puntoventaId, nivel, paisId, estadoId, provinciaId);
 	}
 
 	@Override
@@ -56,11 +57,21 @@ public class PuntoVentaServiceImpl<T> extends GenericServiceImpl<T> implements P
 	}
 
 	@Override
-	public List<PuntoVenta> getListaPuntoVentaFiltered(Long empresaId, String[] tipoPuntoVenta, String puntoVentaSuperior, String nivel,
+	public List<PuntoVenta> getListaPuntoVentaFiltered(Long tipoPuntoVentaPadre, Long empresaId, String[] tipoPuntoVenta, String puntoVentaSuperior, String nivel,
 			BigDecimal saldoMin, BigDecimal saldoMax, Date saldoFechaInicio, Date saldoFechaFin, BigDecimal abstMin,
 			BigDecimal abstMax, String[] paises, String[] estados, String[] provincias, String[] regiones,
 			String[] respuestas) throws InfraestructureException {		
-		return dao.getListaPuntoVentaFiltered(empresaId, tipoPuntoVenta, puntoVentaSuperior, nivel, saldoMin, saldoMax, saldoFechaInicio, saldoFechaFin, 
+		return dao.getListaPuntoVentaFiltered(tipoPuntoVentaPadre, empresaId, tipoPuntoVenta, puntoVentaSuperior, nivel, saldoMin, saldoMax, saldoFechaInicio, saldoFechaFin, 
+				abstMin, abstMax, paises, estados, provincias, regiones, respuestas);
+	}
+
+	@Override
+	public List<Map<String, Object>> getListaPuntoVentaFilteredReport(Long tipoPuntoVentaPadre, Long empresaId,
+			String[] tiposPuntoVenta, String puntoVentaSuperior, String nivel, BigDecimal saldoMin, BigDecimal saldoMax,
+			Date saldoFechaInicio, Date saldoFechaFin, BigDecimal abstMin, BigDecimal abstMax, String[] paises,
+			String[] estados, String[] provincias, String[] regiones, String[] respuestas)
+			throws InfraestructureException {		
+		return dao.getListaPuntoVentaFilteredReport(tipoPuntoVentaPadre, empresaId, tiposPuntoVenta, puntoVentaSuperior, nivel, saldoMin, saldoMax, saldoFechaInicio, saldoFechaFin, 
 				abstMin, abstMax, paises, estados, provincias, regiones, respuestas);
 	}
 }

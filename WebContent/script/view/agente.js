@@ -23,7 +23,10 @@ $(document).ready(function() {
             var d2 = $.Deferred();
             buildFormPost({ key: 6 }, function(data) {
                 d2.resolve("resolve");
-                $("#table-agente").parent("table").dataTable().fnDestroy();
+
+                if (AgenteCtrl.table) {
+                    AgenteCtrl.table.fnDestroy();
+                }
 
                 createTable(data.lista, "table-agente");
                 var options = $.extend(true, {}, tableOptions, {
@@ -35,7 +38,7 @@ $(document).ready(function() {
                     ]
                 });
 
-                $("#table-agente").parent("table").dataTable(options);
+                AgenteCtrl.table = $("#table-agente").parent("table").dataTable(options);
 
             }, true);
             return d2;

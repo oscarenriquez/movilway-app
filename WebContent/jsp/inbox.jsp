@@ -107,7 +107,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group" id="content-fecha-programada" style="display:none;">
+                        <div class="form-group content-fecha-programada" style="display:none;">
                             <label for="fechaProgramada" class="control-label col-md-2 col-lg-2">Fecha Programada:</label>
                             <div class="col-md-10 col-lg-10">
                                 <div class='input-group date' id='datetimepicker_fechaProgramada'>
@@ -141,7 +141,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn btn-danger" data-dismiss="modal" id="cerrarLlamada">Cerrar <i class="glyphicon glyphicon-remove"></i></a>
+                    <a class="btn btn-default" data-dismiss="modal" id="cerrarVentana">Cerrar <i class="glyphicon glyphicon-remove"></i></a>
+                    <a class="btn btn-danger" id="cerrarLlamada" style="display: none;">Cancelar <i class="glyphicon glyphicon-remove"></i></a>
                     <button class="btn btn-primary" type="submit" style="display: none;" id="guardarLlamada">Guardar Llamada <i class="glyphicon glyphicon-floppy-saved"></i></button>
                 </div>
             </form>
@@ -168,8 +169,24 @@
                     </div>
                     <div class="form-horizontal" style="display:none;" id="content-new-llamada-venta">
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 info-llamada"></div>
-                            <div class="col-lg-6 col-md-6 info-direccion"></div>
+                            <div class="col-lg-4 col-md-4 info-llamada"></div>
+                            <div class="col-lg-4 col-md-4 info-direccion"></div>
+                            <div class="col-lg-4 col-md-4 text-center tiempos">
+                                <div id="clockdiv2" class="pull-right">
+                                    <div>
+                                        <span class="hours"></span>
+                                        <div class="smalltext">Horas</div>
+                                    </div>
+                                    <div>
+                                        <span class="minutes"></span>
+                                        <div class="smalltext">Minutos</div>
+                                    </div>
+                                    <div>
+                                        <span class="seconds"></span>
+                                        <div class="smalltext">Segundos</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12 col-md-12 info-politica jumbotron">
@@ -179,17 +196,55 @@
                         <input type="hidden" name="detalleId" id="venta-detalleId" value="0" />
                         <input type="hidden" name="key" id="venta-key" value="77" />
                         <div class="form-group">
-                            <label for="origenPuntoventaId" class="control-label col-md-2 col-lg-2">Punto Origen: </label>
-                            <div class="col-md-10 col-lg-10">
-                                <select name="origenPuntoventaId" id="origenPuntoventaId" class="form-control combo-punto-venta" required>
+                            <label for="receptorId" class="control-label col-md-2 col-lg-2">Receptor: </label>
+                            <div class="col-md-4 col-lg-4">
+                                <select name="receptorId" id="venta-receptorId" class="form-control" required>
+
+                                </select>
+                            </div>
+                            <label for="respuestaId" class="control-label col-md-2 col-lg-2">Respuesta: </label>
+                            <div class="col-md-4 col-lg-4">
+                                <select name="respuestaId" id="venta-respuestaId" class="form-control" required>
 
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="destinoPuntoventaId" class="control-label col-md-2 col-lg-2">Punto Destino: </label>
+
+                        <div class="form-group content-fecha-programada" style="display:none;">
+                            <label for="venta_fechaProgramada" class="control-label col-md-2 col-lg-2">Fecha Programada:</label>
                             <div class="col-md-10 col-lg-10">
-                                <select name="destinoPuntoventaId" id="destinoPuntoventaId" class="form-control combo-punto-venta" required>
+                                <div class='input-group date' id='datetimepicker_fechaProgramadaVenta'>
+                                    <input type="text" name="fechaProgramada" id="venta-fechaProgramada" class="form-control" placeholder="Fecha Programada" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefonoLlamado" class="control-label col-md-2 col-lg-2"><i class="glyphicon glyphicon-earphone"></i> Tel&eacute;fono:</label>
+                            <div class="col-md-4 col-lg-4">
+                                <input type="tel" name="telefonoLlamado" id="venta-telefonoLlamado" class="form-control" placeholder="Telefono" required />
+                            </div>
+                            <label for="referencia" class="control-label col-md-2 col-lg-2"><i class="glyphicon glyphicon-user"></i> Referencia:</label>
+                            <div class="col-md-4 col-lg-4">
+                                <input type="text" name="referencia" id="venta-referencia" class="form-control" placeholder="Referencia" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comentarios" class="control-label col-md-2 col-lg-2">Comentarios: </label>
+                            <div class="col-md-10 col-lg-10">
+                                <textarea class="form-control" id="venta-comentarios" name="comentarios" placeholder="Comentarios" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="origenPuntoventaId" class="control-label col-md-2 col-lg-2">Punto Origen: </label>
+                            <div class="col-md-10 col-lg-10">
+                                <select name="origenPuntoventaId" id="origenPuntoventaId" class="form-control combo-punto-venta">
 
                                 </select>
                             </div>
@@ -200,21 +255,15 @@
                             <div class="col-md-10 col-lg-10 text-right">
                                 <div class="input-group">
                                     <span class="input-group-addon">Q</span>
-                                    <input type="number" name="montoTraspaso" id="montoTraspaso" class="form-control" placeholder="Monto Traspaso" required step="0.01" aria-label="Amount (to the nearest dollar)" />
+                                    <input type="number" name="montoTraspaso" id="montoTraspaso" class="form-control" placeholder="Monto Traspaso" step="0.01" aria-label="Amount (to the nearest dollar)" />
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="comentarios" class="control-label col-md-2 col-lg-2">Comentarios: </label>
-                            <div class="col-md-10 col-lg-10">
-                                <textarea class="form-control" id="comentarios" name="comentarios" placeholder="Comentarios" required></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn btn-danger" data-dismiss="modal" id="cerrarLlamadaVenta">Cerrar <i class="glyphicon glyphicon-remove"></i></a>
+                    <a class="btn btn-default" data-dismiss="modal" id="cerrarVentanaVenta">Cerrar <i class="glyphicon glyphicon-remove"></i></a>
+                    <a class="btn btn-danger" id="cerrarLlamadaVenta" style="display: none;">Cancelar <i class="glyphicon glyphicon-remove"></i></a>
                     <button class="btn btn-primary" type="submit" style="display: none;" id="guardarLlamadaVenta">Guardar Llamada <i class="glyphicon glyphicon-floppy-saved"></i></button>
                 </div>
             </form>

@@ -177,7 +177,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="respuestas" class="control-label col-md-3 col-lg-3">Ultimas Respuestas</label>
+                                    <label for="respuestas" class="control-label col-md-3 col-lg-3">Ultima Respuesta</label>
                                     <div class="col-lg-8 col-md-8">
                                         <select data-placeholder="Seleccione una opcion" name="respuestas" id="respuestas" class="form-control" multiple></select>
                                     </div>
@@ -197,7 +197,7 @@
 </div>
 
 <div class="modal fade" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" aria-hidden="true" data-keyboard="false" id="detalleCampana">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg" style="width: 90%;">
         <div class="modal-content">
             <form method="POST" id="form-asigna-agentes">
                 <div class="modal-header">
@@ -218,8 +218,8 @@
                                 <select data-placeholder="Seleccione una opcion" name="agentes" id="agentes" class="form-control" multiple required></select>
                             </div>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table-condensed display" style="width: auto !important; font-size: 90%; margin-top: 10px;">
+                        <div class="table-responsive demo">
+                            <table class="table-condensed display" style="font-size: 90%;">
                                 <thead>
                                     <tr>
                                         <th class="text-center">ID</th>

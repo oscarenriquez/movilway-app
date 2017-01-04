@@ -460,23 +460,23 @@ function llenaComboRel(data, obj, sele, isSelec, isChosen) {
         if (isSelec) {
             if (sele instanceof Array) {
                 var opt = "";
-                opt = "<option value='" + el.ID + "' data-type='" + el.TYPE_EXTRA + "'>" + el.DESCRIPCION.toUpperCase() + "</option> ";
+                opt = "<option value='" + el.ID + "' data-extra='" + el.TYPE_EXTRA + "'>" + el.DESCRIPCION.toUpperCase() + "</option> ";
                 for (var i = 0; i < sele.length; i++) {
                     if (sele[i] == el.ID) {
-                        opt = "<option value='" + el.ID + "' data-type='" + el.TYPE_EXTRA + "' selected>" + el.DESCRIPCION.toUpperCase() + "</option> ";
+                        opt = "<option value='" + el.ID + "' data-extra='" + el.TYPE_EXTRA + "' selected>" + el.DESCRIPCION.toUpperCase() + "</option> ";
                         break;
                     }
                 }
                 obj.append(opt);
             } else {
                 if (el.ID == sele) {
-                    obj.append("<option value='" + el.ID + "' data-type='" + el.TYPE_EXTRA + "' selected>" + el.DESCRIPCION.toUpperCase() + "</option> ");
+                    obj.append("<option value='" + el.ID + "' data-extra='" + el.TYPE_EXTRA + "' selected>" + el.DESCRIPCION.toUpperCase() + "</option> ");
                 } else {
-                    obj.append("<option value='" + el.ID + "' data-type='" + el.TYPE_EXTRA + "'>" + el.DESCRIPCION.toUpperCase() + "</option> ");
+                    obj.append("<option value='" + el.ID + "' data-extra='" + el.TYPE_EXTRA + "'>" + el.DESCRIPCION.toUpperCase() + "</option> ");
                 }
             }
         } else {
-            obj.append("<option value='" + el.ID + "' data-type='" + el.TYPE_EXTRA + "'>" + el.DESCRIPCION.toUpperCase() + "</option> ");
+            obj.append("<option value='" + el.ID + "' data-extra='" + el.TYPE_EXTRA + "'>" + el.DESCRIPCION.toUpperCase() + "</option> ");
         }
 
     });

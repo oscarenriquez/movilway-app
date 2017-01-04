@@ -8,7 +8,7 @@
 				<i class="glyphicon glyphicon-plus"></i> Nuevo
 			</button>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive demo">
             <table class="table table-condensed table-bordered table-striped display" style="width: 100% !important; font-size: 80%;">
                 <thead>
                     <tr>
@@ -129,13 +129,8 @@
                         </div>
 
                         <div class='form-group'>
-                            <label for='puntoAbastecimiento' class='control-label col-md-2 col-lg-2'>Punto Abast:</label>
-                            <div class='col-md-4 col-lg-4'>
-                                <input type='text' name='puntoAbastecimiento' id='puntoAbastecimiento' value='' placeholder='Punto Abastecimiento' class='form-control'>
-                            </div>
-
                             <label for='contacto' class='control-label col-md-2 col-lg-2'>Contacto:</label>
-                            <div class='col-md-4 col-lg-4'>
+                            <div class='col-md-10 col-lg-10'>
                                 <input type='text' name='contacto' id='contacto' value='' placeholder='Contacto' class='form-control'>
                             </div>
                         </div>
@@ -158,6 +153,13 @@
                             <label for='descripcion' class='control-label col-md-2 col-lg-2'>Descripci&oacute;n:</label>
                             <div class='col-md-10 col-lg-10'>
                                 <input type='text' name='descripcion' id='descripcion' value='' placeholder='Descripci&oacute;n' class='form-control'>
+                            </div>
+                        </div>
+
+                        <div class='form-group' style="background-color: red;">
+                            <label for='puntoAbastecimiento' class='control-label col-md-4 col-lg-4'>Punto Abastecimiento:</label>
+                            <div class='col-md-8 col-lg-8'>
+                                <input type='text' name='puntoAbastecimiento' id='puntoAbastecimiento' value='' placeholder='Punto Abastecimiento' class='form-control'>
                             </div>
                         </div>
 
@@ -268,13 +270,8 @@
                         </div>
 
                         <div class='form-group'>
-                            <label for='puntoAbastecimiento' class='control-label col-md-2 col-lg-2'>Punto Abast:</label>
-                            <div class='col-md-4 col-lg-4'>
-                                <input type='text' name='puntoAbastecimiento' id='edit_puntoAbastecimiento' value='' placeholder='Punto Abastecimiento' class='form-control'>
-                            </div>
-
                             <label for='contacto' class='control-label col-md-2 col-lg-2'>Contacto:</label>
-                            <div class='col-md-4 col-lg-4'>
+                            <div class='col-md-10 col-lg-10'>
                                 <input type='text' name='contacto' id='edit_contacto' value='' placeholder='Contacto' class='form-control'>
                             </div>
                         </div>
@@ -297,6 +294,13 @@
                             <label for='descripcion' class='control-label col-md-2 col-lg-2'>Descripci&oacute;n:</label>
                             <div class='col-md-10 col-lg-10'>
                                 <input type='text' name='descripcion' id='edit_descripcion' value='' placeholder='Descripci&oacute;n' class='form-control'>
+                            </div>
+                        </div>
+
+                        <div class='form-group' style="background-color: red;">
+                            <label for='puntoAbastecimiento' class='control-label col-md-4 col-lg-4'>Punto Abastecimiento:</label>
+                            <div class='col-md-8 col-lg-8'>
+                                <input type='text' name='puntoAbastecimiento' id='edit_puntoAbastecimiento' value='' placeholder='Punto Abastecimiento' class='form-control'>
                             </div>
                         </div>
                     </div>

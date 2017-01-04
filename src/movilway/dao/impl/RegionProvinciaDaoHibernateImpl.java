@@ -37,7 +37,7 @@ public class RegionProvinciaDaoHibernateImpl<T> extends GenericDaoHibernateAppli
 			
 			Query query = getSession().createQuery(sbHql.toString());
 			if(provinciaId != null && !provinciaId.equals(0L) && provinciaId > 0L){
-				query.setLong("estadoId", provinciaId);
+				query.setLong("provinciaId", provinciaId);
 			}
 			List<?> list = query.list();
 			List<RegionProvincia> regiones = new ArrayList<>();

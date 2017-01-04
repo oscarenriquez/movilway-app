@@ -69,5 +69,8 @@
         <property name="contacto" type="java.lang.String">
             <column name="contacto" length="100" />
         </property>
+        <many-to-one name="ultimaRespuesta" class="movilway.dao.domain.RespuestaLlamada" fetch="select">
+            <column name="ult_respuesta" />
+        </many-to-one>
     </class>
 </hibernate-mapping>

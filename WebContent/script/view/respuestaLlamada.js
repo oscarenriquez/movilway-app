@@ -5,9 +5,9 @@ $(document).ready(function() {
 
         function fnListaRespuesta() {
             buildFormPost({ key: 42 }, function(data) {
-
-                $("#table-respuesta").parent("table").dataTable().fnDestroy();
-
+                if (RespuestaCtrl.table) {
+                    RespuestaCtrl.table.fnDestroy();
+                }
                 createTable(data.lista, "table-respuesta");
                 var options = $.extend(true, {}, tableOptions, {
                     "aoColumns": [
@@ -20,7 +20,7 @@ $(document).ready(function() {
                     ]
                 });
 
-                $("#table-respuesta").parent("table").dataTable(options);
+                RespuestaCtrl.table = $("#table-respuesta").parent("table").dataTable(options);
 
             }, true);
         }

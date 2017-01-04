@@ -1,5 +1,7 @@
 package movilway.service.impl;
 
+import java.util.List;
+
 import movilway.dao.LlamadaVentaDao;
 import movilway.dao.domain.LlamadaVenta;
 import movilway.dao.exception.InfraestructureException;
@@ -29,5 +31,10 @@ public class LlamadaVentaServiceImpl<T> extends GenericServiceImpl<T> implements
 	@Override
 	public Integer getCorrelativoLlamadaVenta(Long detalleId) throws InfraestructureException {		
 		return dao.getCorrelativoLlamadaVenta(detalleId);
+	}
+
+	@Override
+	public List<LlamadaVenta> getLlamadaVentaByDetalle(Long detalleId) throws InfraestructureException {		
+		return dao.getLlamadaVentaByDetalle(detalleId);
 	}
 }

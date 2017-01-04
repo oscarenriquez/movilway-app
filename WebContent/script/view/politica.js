@@ -15,8 +15,9 @@ $(document).ready(function() {
             var d2 = $.Deferred();
             buildFormPost({ key: 30 }, function(data) {
                 d2.resolve("resolve");
-                $("#table-politica").parent("table").dataTable().fnDestroy();
-
+                if (PoliticaCtrl.table) {
+                    PoliticaCtrl.table.fnDestroy();
+                }
                 createTable(data.lista, "table-politica");
                 var options = $.extend(true, {}, tableOptions, {
                     "aoColumns": [
@@ -28,7 +29,7 @@ $(document).ready(function() {
                     ]
                 });
 
-                $("#table-politica").parent("table").dataTable(options);
+                PoliticaCtrl.table = $("#table-politica").parent("table").dataTable(options);
 
             }, true);
             return d2;

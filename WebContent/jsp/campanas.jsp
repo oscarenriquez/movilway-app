@@ -3,8 +3,8 @@
         <div class="panel-title">Administraci&oacute;n Agente</div>
     </div>
     <div class="panel-body">
-        <div class="table-responsive">
-            <table class="table-condensed table-bordered display">
+        <div class="table-responsive demo">
+            <table class="display" style="width: 100%;">
                 <thead>
                     <tr>
                         <th></th>
@@ -22,7 +22,7 @@
 </div>
 
 <div class="modal fade" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" aria-hidden="true" data-keyboard="false" id="detalleCampana">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg" style="width: 90%;">
         <div class="modal-content">
             <form method="POST" id="form-asigna-agentes">
                 <div class="modal-header">
@@ -43,8 +43,8 @@
                                 <select data-placeholder="Seleccione una opcion" name="agentes" id="agentes" class="form-control" multiple required></select>
                             </div>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table-condensed display" style="width: auto !important; font-size: 90%; margin-top: 10px;">
+                        <div class="table-responsive demo">
+                            <table class="display" style="font-size: 90%;">
                                 <thead>
                                     <tr>
                                         <th class="text-center">ID</th>
@@ -105,15 +105,15 @@
 </div>
 
 <div class="modal fade" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" aria-hidden="true" data-keyboard="false" id="detalleCampana2">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg" style="width: 90%;">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Detalles de Campa&ntilde;a</h4>
             </div>
             <div class="modal-body">
                 <div class="form-horizontal">
-                    <div class="table-responsive">
-                        <table class="table-condensed display" style="width: auto !important; font-size: 90%; margin-top: 10px;">
+                    <div class="table-responsive demo">
+                        <table class="display" style="font-size: 90%;">
                             <thead>
                                 <tr>
                                     <th class="text-center">ID</th>

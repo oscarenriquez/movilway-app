@@ -18,6 +18,7 @@ public class CampanaDetalle implements Serializable {
 	private PuntoVenta puntoVenta;
 	private Date fechaProgramada;
 	private String estatus;
+	private Boolean efectiva;
 	
 	public static final Comparator<CampanaDetalle> BY_ID = new Comparator<CampanaDetalle>() {
 		@Override
@@ -90,6 +91,45 @@ public class CampanaDetalle implements Serializable {
 
 	public void setEstatus(String estatus) {
 		this.estatus = estatus;
+	}
+
+	public Boolean getEfectiva() {
+		return efectiva;
+	}
+
+	public void setEfectiva(Boolean efectiva) {
+		this.efectiva = efectiva;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((campana == null) ? 0 : campana.hashCode());
+		result = prime * result + ((puntoVenta == null) ? 0 : puntoVenta.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CampanaDetalle other = (CampanaDetalle) obj;
+		if (campana == null) {
+			if (other.campana != null)
+				return false;
+		} else if (!campana.equals(other.campana))
+			return false;
+		if (puntoVenta == null) {
+			if (other.puntoVenta != null)
+				return false;
+		} else if (!puntoVenta.equals(other.puntoVenta))
+			return false;
+		return true;
 	}
 
 }

@@ -57,6 +57,7 @@ if(sessionRequest == null){
 			.css_right { float: right; }
 			
 			</style>
+			<link rel="stylesheet" href="./css/animate.min.css">  
 			<link rel="stylesheet" href="./css/component.css" />
 			<link rel="stylesheet" href="./css/alertify.core.css" />
 			<link rel="stylesheet" href="./css/alertify.default.css"/>
@@ -66,9 +67,9 @@ if(sessionRequest == null){
 			<link rel="stylesheet" href="./css/page.css" />
 			<link rel="stylesheet" href="./css/idleTimeOut.css" />
 			<link rel="stylesheet" href="./css/datepicker.css" />
-	    	<link rel="stylesheet" href="./css/datetimepicker.min.css" />	    	   		   
-	    	<link rel="stylesheet" href="./css/bootstrap-switch.css">     	    	
-	    	<link rel="stylesheet" href="./css/animate.min.css">  	    	
+	    	<link rel="stylesheet" href="./css/datetimepicker.min.css" />
+	    	<link rel="stylesheet" href="./css/demo_style.css">
+	    	<link rel="stylesheet" href="./css/bootstrap-switch.css">	    		    
 	    	
 			<script src="./script/modernizr.custom.js"></script>
 			
@@ -131,10 +132,13 @@ if(sessionRequest == null){
 		<!-- Contenido Principal -->
 		<div class="container-fluid"  id="principal">
 			<!-- Contenido -->
-		</div>			
+		</div>
+		<!-- Script Mapa -->
+		<script src="http://maps.google.com/maps/api/js?libraries=places&key=AIzaSyADM3DzQOZtEvTcFcDhJkhkuZQJZVPj88s"></script>
+		<script src="./script/mapa/googleMaps.markerWithLabel.js"></script>
+		<script src="./script/mapa/infobubble-compiled.js"></script>
+		<script src="./script/mapa/markerclusterer.js"></script>
 		
-		<script src="http://maps.google.com/maps/api/js?sensor=false"></script> 
-		<script src="./script/infobubble-compiled.js"></script> 
 		<script src="./script/jquery-1.9.1.js"></script>
 		<script src="./script/jquery-ui-1.9.2.custom.min.js"></script>		
 		<script src="./bower_components/moment/min/moment.min.js"></script>
@@ -180,9 +184,9 @@ if(sessionRequest == null){
 	    <!-- App Own -->
 	    <script src="./script/menu.js"></script>
 	    <script src="./script/page.js"></script>   
-	    <script src="script/jquery.noty.packaged.min.js"></script>
-	    <script src="script/maplace-0.1.3.js"></script>	  
-		<script src="./script/mapaScript.js"></script>		  	    	    	    
+	    <script src="./script/jquery.noty.packaged.min.js"></script>	   
+	    <script src="./script/mapa/maplace-0.1.3.js"></script>	    
+	    <script src="./script/mapa/mapaScript.js"></script>	    	    	   
 	      
 	</body>
 </html>

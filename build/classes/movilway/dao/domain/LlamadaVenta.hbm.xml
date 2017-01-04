@@ -24,6 +24,9 @@
         <property name="destinoPuntoventaId" type="java.lang.String">
             <column name="destino_puntoventa_id" not-null="true" />
         </property>
+        <property name="fechaLlamada" type="java.util.Date">
+            <column name="fecha_llamada" not-null="true" />
+        </property>
         <property name="comentarios" type="java.lang.String">
             <column name="comentarios" length="4000" />
         </property>

@@ -115,13 +115,14 @@ $(document).ready(function() {
                     $("#cant").html(data.cant);
                     $("#campanaId").val(data.campanaId);
                     fnListaCampanaDetalle(data.detalle);
-                    $("[href=#campana]").tab("show")
+                    $("[href=#campana]").tab("show");
                     setTimeout(function() {
                         $("select").trigger("chosen:updated");
                         $("#detalleCampana").modal("show");
                     }, 500);
                 }, true);
             } else {
+                $("[href=#campana]").tab("show");
                 noty({ text: "¡ Complete los campos requeridos !", type: 'warning', timeout: 3000 });
             }
         }
@@ -157,8 +158,9 @@ $(document).ready(function() {
         }
 
         function fnListaCampanaDetalle(lista) {
-            $("#table-campana-detalle").parent("table").dataTable().fnDestroy();
-
+            if (CampanaCtrl.tableDetalle) {
+                CampanaCtrl.tableDetalle.fnDestroy();
+            }
             createTable(lista, "table-campana-detalle");
             var options = $.extend(true, {}, tableOptions, {
                 "aoColumns": [
@@ -171,7 +173,7 @@ $(document).ready(function() {
                 ]
             });
 
-            $("#table-campana-detalle").parent("table").dataTable(options);
+            CampanaCtrl.tableDetalle = $("#table-campana-detalle").parent("table").dataTable(options);
         }
 
         $("#datetimepicker_fechaInicio").datetimepicker({ locale: "es" });

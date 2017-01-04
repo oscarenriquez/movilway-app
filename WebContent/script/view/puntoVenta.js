@@ -77,10 +77,6 @@ $(document).ready(function() {
                 "bSort": false,
                 //"bFilter": false,
                 "bServerSide": true,
-                "bJQueryUI": true,
-                "bDestroy": true,
-                "bAutoWidth": false,
-                "sPaginationType": "full_numbers",
                 "sAjaxSource": "Session",
                 "fnServerData": function(sSource, aoData, fnCallback, oSettings) {
                     aoData.push({ "name": "key", "value": 84 });

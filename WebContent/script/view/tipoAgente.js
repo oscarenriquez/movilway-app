@@ -5,9 +5,9 @@ $(document).ready(function() {
 
         function fnListaTipoAgente() {
             buildFormPost({ key: 48 }, function(data) {
-
-                $("#table-tipoagente").parent("table").dataTable().fnDestroy();
-
+                if (TipoAgenteCtrl.table) {
+                    TipoAgenteCtrl.table.fnDestroy();
+                }
                 createTable(data.lista, "table-tipoagente");
                 var options = $.extend(true, {}, tableOptions, {
                     "aoColumns": [
@@ -18,7 +18,7 @@ $(document).ready(function() {
                     ]
                 });
 
-                $("#table-tipoagente").parent("table").dataTable(options);
+                TipoAgenteCtrl.table = $("#table-tipoagente").parent("table").dataTable(options);
 
             }, true);
         }

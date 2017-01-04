@@ -31,6 +31,7 @@ public class PuntoVenta implements Serializable {
 	private Float longitud;
 	private BigDecimal puntoAbastecimiento;
 	private String contacto;
+	private RespuestaLlamada ultimaRespuesta;
 	
 	public static final Comparator<PuntoVenta> BY_SALDO = new Comparator<PuntoVenta>() {
 		@Override
@@ -207,12 +208,53 @@ public class PuntoVenta implements Serializable {
 		this.contacto = contacto;
 	}
 	
+	public RespuestaLlamada getUltimaRespuesta() {
+		return ultimaRespuesta;
+	}
+
+	public void setUltimaRespuesta(RespuestaLlamada ultimaRespuesta) {
+		this.ultimaRespuesta = ultimaRespuesta;
+	}
+
 	public Boolean generaOrden() {
 		if(this.saldo == null || this.saldo.compareTo(new BigDecimal(0)) == 0)
 			return true;
 		if(this.puntoAbastecimiento == null)
 			return false;
 		return this.saldo.compareTo(this.puntoAbastecimiento) <= 0;
+	}
+	
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((puntoventaId == null) ? 0 : puntoventaId.hashCode());
+		result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PuntoVenta other = (PuntoVenta) obj;
+		if (puntoventaId == null) {
+			if (other.puntoventaId != null)
+				return false;
+		} else if (!puntoventaId.equals(other.puntoventaId))
+			return false;
+		if (telefono == null) {
+			if (other.telefono != null)
+				return false;
+		} else if (!telefono.equals(other.telefono))
+			return false;
+		return true;
 	}
 
 	@Override

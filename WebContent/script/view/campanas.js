@@ -27,24 +27,28 @@ $(document).ready(function() {
         function fnListaCampana() {
             var d2 = $.Deferred();
             buildFormPost({ key: 101 }, function(data) {
-                d2.resolve("resolve");
-                $("#table-campana").parent("table").dataTable().fnDestroy();
+                    d2.resolve("resolve");
 
-                createTable(data.lista, "table-campana");
-                var options = $.extend(true, {}, tableOptions, {
-                    "aoColumns": [
-                        { "sClass": "left", "bSortable": false },
-                        { "sClass": "left", "bSortable": true },
-                        { "sClass": "left", "bSortable": true },
-                        { "sClass": "left", "bSortable": true },
-                        { "sClass": "center", "bSortable": true },
-                        { "sClass": "center", "bSortable": true }
-                    ]
-                });
+                    if (CampanaCtrl.table) {
+                        CampanaCtrl.table.fnDestroy();
+                    }
 
-                $("#table-campana").parent("table").dataTable(options);
+                    createTable(data.lista, "table-campana");
+                    var options = $.extend(true, {}, tableOptions, {
+                        "aoColumns": [
+                            { "sClass": "left", "bSortable": false },
+                            { "sClass": "left", "bSortable": true },
+                            { "sClass": "left", "bSortable": true },
+                            { "sClass": "left", "bSortable": true },
+                            { "sClass": "center", "bSortable": true },
+                            { "sClass": "center", "bSortable": true }
+                        ]
+                    });
 
-            }, true);
+                    CampanaCtrl.table = $("#table-campana").parent("table").dataTable(options);
+
+                },
+                true);
             return d2;
         }
 
@@ -85,7 +89,7 @@ $(document).ready(function() {
         }
 
         function fnFinalizarCampana(campanaId) {
-            alertify.confirm("<h3>Esta seguro de finalizar esta campa&ntilde;a?", function(e) {
+            alertify.confirm("<h3>Recuerde Cargar el archivo de traslados Antes!!<br>Esta seguro de finalizar esta campa&ntilde;a?", function(e) {
                 if (e) {
                     buildFormPost({ key: 99, campanaId: campanaId }, function() {
                         fnListaCampana();
@@ -138,7 +142,9 @@ $(document).ready(function() {
         }
 
         function fnListaCampanaDetalle(lista) {
-            $("#table-campana-detalle").parent("table").dataTable().fnDestroy();
+            if (CampanaCtrl.tableDetalle) {
+                CampanaCtrl.tableDetalle.fnDestroy();
+            }
 
             createTable(lista, "table-campana-detalle");
             var options = $.extend(true, {}, tableOptions, {
@@ -154,12 +160,13 @@ $(document).ready(function() {
                 ]
             });
 
-            $("#table-campana-detalle").parent("table").dataTable(options);
+            CampanaCtrl.tableDetalle = $("#table-campana-detalle").parent("table").dataTable(options);
         }
 
         function fnListaCampanaDetalle2(lista) {
-            $("#table-campana-detalle2").parent("table").dataTable().fnDestroy();
-
+            if (CampanaCtrl.tableDetalle2) {
+                CampanaCtrl.tableDetalle2.fnDestroy();
+            }
             createTable(lista, "table-campana-detalle2");
             var options = $.extend(true, {}, tableOptions, {
                 "bSort": false,
@@ -174,7 +181,7 @@ $(document).ready(function() {
                 ]
             });
 
-            $("#table-campana-detalle2").parent("table").dataTable(options);
+            CampanaCtrl.tableDetalle2 = $("#table-campana-detalle2").parent("table").dataTable(options);
         }
 
         CampanaCtrl.fnAsignarAgente = fnAsignarAgente;

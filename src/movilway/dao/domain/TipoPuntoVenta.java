@@ -6,6 +6,7 @@ import java.util.Comparator;
 @SuppressWarnings("serial")
 public class TipoPuntoVenta implements Serializable, Comparable<TipoPuntoVenta> {
 	
+	public static final Long RUTERO = 1L;
 	private Long tipopuntoventaId;
 	private Long empresaId;
 	private String descripcion;

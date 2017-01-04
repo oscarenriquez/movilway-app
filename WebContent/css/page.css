@@ -667,7 +667,7 @@ a.list-group-item.tile-dark:focus {
     color: #555 !important;
 }
 
-#demo {
+.demo {
     font-size: 12px;
 }
 
@@ -2323,4 +2323,9 @@ textarea.to-upper {
     font-weight: normal;
     line-height: 1;
     text-shadow: 0 3px 0 rgba(255, 255, 255, 0.3);
+}
+
+#content {
+    padding-top: 20px;
+    padding-right: 20px;
 }

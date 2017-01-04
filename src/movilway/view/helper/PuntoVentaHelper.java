@@ -460,21 +460,30 @@ public class PuntoVentaHelper extends ServicioHelper {
 				permiso = pageAcceso(req, getServicesid(), getContext());
 				if(permiso){						
 					try{
+						String puntoventaId = getStringValue(req.getParameter("puntoventaId"));
+						String nivel = getNumberValue(req.getParameter("nivel"));
 						String paisId = getNumberValue(req.getParameter("paisId"));
 						String estadoId = getNumberValue(req.getParameter("estadoId"));
 						String provinciaId = getNumberValue(req.getParameter("provinciaId"));
 						JSONArray lista = new JSONArray();										
-						List<PuntoVenta> listaPuntosVenta = getServiceLocator().getPuntoVentaService().getListaPuntosVentaByPaisEstadoRegion(Long.valueOf(paisId), Long.valueOf(estadoId), Long.valueOf(provinciaId));
+						List<PuntoVenta> listaPuntosVenta = getServiceLocator().getPuntoVentaService().getListaPuntosVentaByPaisEstadoRegion(
+								puntoventaId,
+								Integer.valueOf(nivel),
+								Long.valueOf(paisId), 
+								Long.valueOf(estadoId), 
+								Long.valueOf(provinciaId));
 						JSONObject seleccione = new JSONObject();
 						seleccione.put("ID", "");
 						seleccione.put("DESCRIPCION", "-- seleccione --");
 						lista.add(seleccione);
 						for(PuntoVenta puntoVenta : listaPuntosVenta) {
-							JSONObject jsObj = new JSONObject();							
-							String label = puntoVenta.getRegionProvincia().getDescripcion() + " - "+ puntoVenta.getDescripcion().toUpperCase() + " -  Q " + df.format(puntoVenta.getSaldo());
-							jsObj.put("ID", puntoVenta.getPuntoventaId());
-							jsObj.put("DESCRIPCION", label);
-							lista.add(jsObj);
+							if(puntoVenta.getSaldo() != null) {
+								JSONObject jsObj = new JSONObject();							
+								String label = puntoVenta.getEstado().getDescripcion() + " - "+ puntoVenta.getDescripcion().toUpperCase() + " -  Q " + df.format(puntoVenta.getSaldo());
+								jsObj.put("ID", puntoVenta.getPuntoventaId());
+								jsObj.put("DESCRIPCION", label);
+								lista.add(jsObj);
+							}							
 						}
 						formulario.put("comboBox", lista);
 					} catch (InfraestructureException ie) {

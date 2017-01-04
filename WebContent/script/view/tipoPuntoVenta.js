@@ -5,9 +5,9 @@ $(document).ready(function() {
 
         function fnListaTipoPuntoVenta() {
             buildFormPost({ key: 60 }, function(data) {
-
-                $("#table-tipopuntoventa").parent("table").dataTable().fnDestroy();
-
+                if (TipoPuntoVentaCtrl.table) {
+                    TipoPuntoVentaCtrl.table.fnDestroy();
+                }
                 createTable(data.lista, "table-tipopuntoventa");
                 var options = $.extend(true, {}, tableOptions, {
                     "aoColumns": [
@@ -17,7 +17,7 @@ $(document).ready(function() {
                     ]
                 });
 
-                $("#table-tipopuntoventa").parent("table").dataTable(options);
+                TipoPuntoVentaCtrl.table = $("#table-tipopuntoventa").parent("table").dataTable(options);
 
             }, true);
         }

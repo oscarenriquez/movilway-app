@@ -20,8 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 import movilway.dao.domain.Agente;
 import movilway.dao.domain.Campana;
 import movilway.dao.domain.CampanaDetalle;
+import movilway.dao.domain.LlamadaVenta;
 import movilway.dao.domain.PuntoVenta;
 import movilway.dao.domain.TipoCampana;
+import movilway.dao.domain.Traslado;
 import movilway.dao.exception.InfraestructureException;
 import movilway.dao.util.HibernateUtil;
 import net.sf.json.JSONArray;
@@ -109,7 +111,7 @@ public class GeneraCampanaHelper extends ServicioHelper {
 								} catch (Exception unused) {}								
 							}
 							
-							List<PuntoVenta> listaPuntoVenta = getServiceLocator().getPuntoVentaService().getListaPuntoVentaFiltered(getEmpresaId(), tipoPuntoVenta, puntoVentaSuperior, nivel, 
+							List<PuntoVenta> listaPuntoVenta = getServiceLocator().getPuntoVentaService().getListaPuntoVentaFiltered(RUTERO,getEmpresaId(), tipoPuntoVenta, puntoVentaSuperior, nivel, 
 									saldoMinbg, saldoMaxbg, saldoFechaInicio, saldoFechaFin, abastMin, abastMax, paises, estados, provincias, regiones, respuestas);
 							Campana campana = new Campana();
 							
@@ -432,14 +434,49 @@ public class GeneraCampanaHelper extends ServicioHelper {
 							Campana campana = getServiceLocator().getCampanaService().loadEntity(Campana.class, Long.valueOf(campanaId));
 							if(campana != null) {
 								Set<CampanaDetalle> detalles = campana.getCampanaDetalles();
-								
-								for(CampanaDetalle detalle : detalles) {
-									if(!detalle.getEstatus().equals(CampanaDetalle.COMPLETADO) && !detalle.getEstatus().equals(CampanaDetalle.CANCELADO))
-										detalle.setEstatus(CampanaDetalle.CANCELADO);									
+								Long tipoCampanaId = campana.getTipoCampana().getTipocampanaId();
+								for( CampanaDetalle detalle : detalles ) {									
+									// Cancela todas las llamadas no ejecutadas.
+									if(!detalle.getEstatus().equals(CampanaDetalle.COMPLETADO) && !detalle.getEstatus().equals(CampanaDetalle.CANCELADO)){
+										detalle.setEstatus(CampanaDetalle.CANCELADO);
+										detalle.setEfectiva(Boolean.FALSE);
+									} else {
+										
+										
+										/**
+										 * EN ESTA PARTE SE VALIDAD LA INFORMACION DE TRASPASOS CON LA LLAMADA DE VENTA 
+										 */
+										
+										if(tipoCampanaId.equals(ABASTECIMIENTO)) { // UNICAMENTE PARA ABASTECIMIENTO
+											// Obtiene llamadas de ventas
+											List<LlamadaVenta> llamadas = getServiceLocator().getLlamadaVentaService().getLlamadaVentaByDetalle(detalle.getDetalleId());
+											if(vList(llamadas)) {
+												LlamadaVenta llamadaVenta = llamadas.get(0); // OBTIENE LA ULTIMA LLAMADA
+												List<Traslado> traslados = getServiceLocator().getTrasladoService().getTrasladoByLlamada(
+														llamadaVenta.getFechaLlamada(), 
+														llamadaVenta.getOrigenPuntoventaId(), 
+														llamadaVenta.getDestinoPuntoventaId());
+												
+												if(vList(traslados)) {
+													Traslado traslado = traslados.get(0);
+													if(llamadaVenta.getMontoTraspaso().equals(traslado.getMontoTransf())) {
+														detalle.setEfectiva(Boolean.TRUE);
+													} else {
+														detalle.setEfectiva(Boolean.FALSE); // SI EL MONTO NO CONINCIDE NO FUE EFECTIVA
+													}
+												} else {
+													detalle.setEfectiva(Boolean.FALSE); // SI NO HAY TRASLADO NO FUE EFECTIVA
+												}
+												
+											} else {
+												detalle.setEfectiva(Boolean.FALSE); // SI NO HAY LLAMADAS DE VENTA NO FUE EFECTIVA
+											}
+											
+										}																				
+									}																		
 								}
 								
 								campana.setEstatus(CampanaDetalle.COMPLETADO);
-								
 								getServiceLocator().getCampanaService().updateEntity(campana);
 								HibernateUtil.flushSession();
 								

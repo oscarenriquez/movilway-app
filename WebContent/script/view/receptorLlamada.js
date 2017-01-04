@@ -5,9 +5,9 @@ $(document).ready(function() {
 
         function fnListaReceptor() {
             buildFormPost({ key: 36 }, function(data) {
-
-                $("#table-receptor").parent("table").dataTable().fnDestroy();
-
+                if (ReceptorCtrl.table) {
+                    ReceptorCtrl.table.fnDestroy();
+                }
                 createTable(data.lista, "table-receptor");
                 var options = $.extend(true, {}, tableOptions, {
                     "aoColumns": [
@@ -18,7 +18,7 @@ $(document).ready(function() {
                     ]
                 });
 
-                $("#table-receptor").parent("table").dataTable(options);
+                ReceptorCtrl.table = $("#table-receptor").parent("table").dataTable(options);
 
             }, true);
         }

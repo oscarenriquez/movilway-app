@@ -64,7 +64,7 @@ public class DownloadServlet extends HttpServlet implements Servlet {
 					HttpServletResponse response = (HttpServletResponse) asyncContext.getResponse();
 
 					String fileName = request.getParameter("nombre");
-					String filePath = request.getServletContext().getRealPath("/reportes/");
+					String filePath = request.getServletContext().getRealPath("/report/");
 
 					String fullPath = filePath + "/" + fileName;
 					File file = new File(fullPath);

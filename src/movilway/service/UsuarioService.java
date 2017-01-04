@@ -26,4 +26,6 @@ public interface UsuarioService {
 	public Usuario getUsuario(String userLogin) throws InfraestructureException;
 	
 	public List<Usuario> getListaUsuariosXGrupoID(String id_Users)throws InfraestructureException;
+	
+	public void enviarInforme(String email, String attachFile) throws InfraestructureException;
 }

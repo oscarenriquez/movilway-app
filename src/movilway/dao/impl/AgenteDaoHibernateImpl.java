@@ -59,7 +59,7 @@ public class AgenteDaoHibernateImpl<T> extends GenericDaoHibernateApplication<T>
 				Object[] oobj = (Object[]) obj;
 				String nombre = (String) oobj[0];
 				Number agenteId = (Number) oobj[1];
-				Number cant = (Number) oobj[1];
+				Number cant = (Number) oobj[2];
 				
 				Map<String, Object> map = new HashMap<>();
 				map.put("nombre", nombre);

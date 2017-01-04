@@ -7,9 +7,9 @@ $(document).ready(function() {
 
         function fnListaPais() {
             buildFormPost({ key: 24 }, function(data) {
-
-                $("#table-pais").parent("table").dataTable().fnDestroy();
-
+                if (PaisCtrl.table) {
+                    PaisCtrl.table.fnDestroy();
+                }
                 createTable(data.lista, "table-pais");
                 var options = $.extend(true, {}, tableOptions, {
                     "aoColumns": [
@@ -19,7 +19,7 @@ $(document).ready(function() {
                     ]
                 });
 
-                $("#table-pais").parent("table").dataTable(options);
+                PaisCtrl.table = $("#table-pais").parent("table").dataTable(options);
 
             }, true);
         }
@@ -108,9 +108,9 @@ $(document).ready(function() {
         // Funciones Estado
         function fnListaEstado() {
             buildFormPost({ key: 13, pais: EstadoCtrl.pais }, function(data) {
-
-                $("#table-estado").parent("table").dataTable().fnDestroy();
-
+                if (EstadoCtrl.table) {
+                    EstadoCtrl.table.fnDestroy();
+                }
                 createTable(data.lista, "table-estado");
                 var options = $.extend(true, {}, tableOptions, {
                     "aoColumns": [
@@ -120,7 +120,7 @@ $(document).ready(function() {
                     ]
                 });
 
-                $("#table-estado").parent("table").dataTable(options);
+                EstadoCtrl.table = $("#table-estado").parent("table").dataTable(options);
 
             }, true);
         }
@@ -208,9 +208,9 @@ $(document).ready(function() {
         // Funciones Provincia
         function fnListaProvincia() {
             buildFormPost({ key: 18, estado: EstadoCtrl.estado }, function(data) {
-
-                $("#table-provincia").parent("table").dataTable().fnDestroy();
-
+                if (EstadoCtrl.tableProv) {
+                    EstadoCtrl.tableProv.fnDestroy();
+                }
                 createTable(data.lista, "table-provincia");
                 var options = $.extend(true, {}, tableOptions, {
                     "aoColumns": [
@@ -220,7 +220,7 @@ $(document).ready(function() {
                     ]
                 });
 
-                $("#table-provincia").parent("table").dataTable(options);
+                EstadoCtrl.tableProv = $("#table-provincia").parent("table").dataTable(options);
 
             }, true);
         }
@@ -309,9 +309,9 @@ $(document).ready(function() {
         // Funciones Region
         function fnListaRegion() {
             buildFormPost({ key: 68, provincia: EstadoCtrl.provincia }, function(data) {
-
-                $("#table-region").parent("table").dataTable().fnDestroy();
-
+                if (EstadoCtrl.tableReg) {
+                    EstadoCtrl.tableReg.fnDestroy();
+                }
                 createTable(data.lista, "table-region");
                 var options = $.extend(true, {}, tableOptions, {
                     "aoColumns": [
@@ -321,7 +321,7 @@ $(document).ready(function() {
                     ]
                 });
 
-                $("#table-region").parent("table").dataTable(options);
+                EstadoCtrl.tableReg = $("#table-region").parent("table").dataTable(options);
 
             }, true);
         }

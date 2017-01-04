@@ -9,7 +9,7 @@
 				<i class="glyphicon glyphicon-plus"></i> Nuevo
 			</button>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive demo">
             <table class="table table-condensed table-bordered table-striped display" style="width: 100% !important;">
                 <thead>
                     <tr>
@@ -39,7 +39,7 @@
 				<i class="glyphicon glyphicon-plus"></i> Nuevo
 			</button>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive demo">
             <table class="table table-condensed table-bordered table-striped display" style="width: 100% !important;">
                 <thead>
                     <tr>
@@ -66,7 +66,7 @@
 				<i class="glyphicon glyphicon-plus"></i> Nuevo
 			</button>
             </div>
-            <div class="table-responsive">
+            <div class="table-responsive demo">
                 <table class="table table-condensed table-bordered table-striped display" style="width: 100% !important;">
                     <thead>
                         <tr>
@@ -94,7 +94,7 @@
 				<i class="glyphicon glyphicon-plus"></i> Nuevo
 			</button>
             </div>
-            <div class="table-responsive">
+            <div class="table-responsive demo">
                 <table class="table table-condensed table-bordered table-striped display" style="width: 100% !important;">
                     <thead>
                         <tr>

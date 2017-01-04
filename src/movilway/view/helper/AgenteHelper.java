@@ -363,17 +363,27 @@ public class AgenteHelper extends ServicioHelper {
 				permiso = pageAcceso(req, getServicesid(), getContext());
 				if(permiso){						
 					try{
-						List<Usuario> listaUsuarios = getListagUsuariosAplicacionRol(getContext(), Long.valueOf(getBundle().getString("movilway.roles.agente.id").trim()));						
+						List<Usuario> listaUsuarios = getListagUsuariosAplicacionRol(getContext(), Long.valueOf(getBundle().getString("movilway.roles.agente.id").trim()));
+						List<Agente> listaAgentes = getServiceLocator().getAgenteService().getListAgentes(getEmpresaId());
 						JSONArray lista = new JSONArray();
 						JSONObject seleccione = new JSONObject();
 						seleccione.put("ID", "");
 						seleccione.put("DESCRIPCION", "-- seleccione --");
 						lista.add(seleccione);
 						for(Usuario usuario : listaUsuarios) {
-							JSONObject jsObj = new JSONObject();
-							jsObj.put("ID", usuario.getId());
-							jsObj.put("DESCRIPCION", usuario.getNombre() + " " + usuario.getApellido());
-							lista.add(jsObj);
+							Boolean existe = false;
+							for(Agente agente : listaAgentes) {
+								if(agente.getUserId().equals(usuario.getId())) {
+									existe = true;
+									break;
+								}
+							}
+							if(!existe) {
+								JSONObject jsObj = new JSONObject();
+								jsObj.put("ID", usuario.getId());
+								jsObj.put("DESCRIPCION", usuario.getNombre() + " " + usuario.getApellido());
+								lista.add(jsObj);
+							}							
 						}
 						formulario.put("comboBox", lista);
 					} catch (InfraestructureException ie) {
@@ -495,7 +505,7 @@ public class AgenteHelper extends ServicioHelper {
 							for(Map<String, Object> mapa : listaAgentes) {								
 								JSONObject jsObj = new JSONObject();
 								jsObj.put("ID", mapa.get("agenteId"));
-								jsObj.put("DESCRIPCION", mapa.get("nombre") + " - " + mapa.get("cant"));
+								jsObj.put("DESCRIPCION", mapa.get("nombre") + " -  (" + mapa.get("cant") +")");
 								lista.add(jsObj);								
 							}
 							formulario.put("comboBox", lista);

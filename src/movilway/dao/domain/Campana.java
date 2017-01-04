@@ -104,6 +104,13 @@ public class Campana implements Serializable {
 		campanaDetalle.setCampana(this);
 		campanaDetalles.add(campanaDetalle);
 	}
+	
+	public boolean existeEnCampana(CampanaDetalle campanaDetalle) {
+		if(campanaDetalles == null) {
+			campanaDetalles = new HashSet<>();
+		}
+		return campanaDetalles.contains(campanaDetalle);
+	}
 
 	@Override
 	public int hashCode() {

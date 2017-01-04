@@ -2,6 +2,7 @@ package movilway.dao.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @SuppressWarnings("serial")
 public class LlamadaVenta implements Serializable {
@@ -11,6 +12,7 @@ public class LlamadaVenta implements Serializable {
 	private BigDecimal montoTraspaso;
 	private String origenPuntoventaId;
 	private String destinoPuntoventaId;
+	private Date fechaLlamada;
 	private String comentarios;
 	
 	public LlamadaVentaId getId() {
@@ -51,6 +53,14 @@ public class LlamadaVenta implements Serializable {
 
 	public void setDestinoPuntoventaId(String destinoPuntoventaId) {
 		this.destinoPuntoventaId = destinoPuntoventaId;
+	}
+
+	public Date getFechaLlamada() {
+		return fechaLlamada;
+	}
+
+	public void setFechaLlamada(Date fechaLlamada) {
+		this.fechaLlamada = fechaLlamada;
 	}
 
 	public String getComentarios() {

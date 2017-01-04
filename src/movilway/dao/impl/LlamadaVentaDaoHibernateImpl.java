@@ -1,6 +1,11 @@
 package movilway.dao.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.HibernateException;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.StandardBasicTypes;
 
 import movilway.dao.LlamadaVentaDao;
@@ -28,6 +33,22 @@ public class LlamadaVentaDaoHibernateImpl<T> extends GenericDaoHibernateApplicat
 								.addScalar("Correlativo", StandardBasicTypes.INTEGER)
 								.setLong("detalleId", detalleId)
 								.uniqueResult();
+		} catch (HibernateException he) {
+			throw new InfraestructureException(he);
+		}
+	}
+
+	@Override
+	public List<LlamadaVenta> getLlamadaVentaByDetalle(Long detalleId) throws InfraestructureException {
+		try {
+			List<?> list = getSession().createCriteria(LlamadaVenta.class).add(Restrictions.eq("id.detalleId", detalleId)).addOrder(Order.desc("id.corrLlamada")).list();
+			List<LlamadaVenta> llamadas = new ArrayList<>();
+			
+			for(Object obj : list) {
+				llamadas.add((LlamadaVenta) obj);
+			}
+			
+			return llamadas;
 		} catch (HibernateException he) {
 			throw new InfraestructureException(he);
 		}

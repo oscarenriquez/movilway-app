@@ -87,7 +87,7 @@ public class UploadExcelHelper extends ServicioHelper {
 							for(HistoricoSaldos historicoSaldos : lista) {
 								archivoSaldos.addHistoricoSaldos(historicoSaldos);
 								
-								// OBTIENE LISTA DE PUNTOS DE VENTAS QUE GENERAN CAMPAÑA
+								// OBTIENE LISTA DE PUNTOS DE VENTAS QUE GENERAN CAMPANA
 								PuntoVenta puntoVenta = historicoSaldos.getPuntoVenta(); 
 								if(puntoVenta.generaOrden()){
 									listaPuntoVenta.add(puntoVenta);
@@ -134,11 +134,14 @@ public class UploadExcelHelper extends ServicioHelper {
 									campanaDetalle.setPuntoVenta(puntoVenta);
 									campanaDetalle.setEstatus(CampanaDetalle.ASIGNADA);									
 									campanaDetalle.setAgente(listaAgentes.get(i));									
-									campana.addCampanaDetalle(campanaDetalle);
 									
-									i++;
-									if(i == numAgentes)
-										i = 0;
+									if(!campana.existeEnCampana(campanaDetalle)) { // SI NO EXISTE
+										campana.addCampanaDetalle(campanaDetalle); // SE AGREGA A LA CAMPANA
+										
+										i++;
+										if(i == numAgentes)
+											i = 0;
+									}
 								}
 								campana.setEstatus(Campana.ASIGNADA);
 								getServiceLocator().getCampanaService().updateEntity(campana);

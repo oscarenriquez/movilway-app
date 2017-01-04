@@ -678,7 +678,8 @@ html:not(.ismobile) .page-loader .preloader p {
     z-index: 10
 }
 
-#clockdiv {
+#clockdiv,
+#clockdiv2 {
     font-family: sans-serif;
     color: #fff;
     display: inline-block;
@@ -688,14 +689,16 @@ html:not(.ismobile) .page-loader .preloader p {
     margin-bottom: 20px;
 }
 
-#clockdiv>div {
+#clockdiv>div,
+#clockdiv2>div {
     padding: 10px;
     border-radius: 3px;
     background: #00BF96;
     display: inline-block;
 }
 
-#clockdiv div>span {
+#clockdiv div>span,
+#clockdiv2 div>span {
     padding: 15px;
     border-radius: 3px;
     background: #00816A;
