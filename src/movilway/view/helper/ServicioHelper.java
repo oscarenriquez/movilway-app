@@ -513,9 +513,9 @@ public class ServicioHelper implements Serializable {
 
 	protected void setDefaultValues(HttpServletRequest req, int key) {
 		setSession(req.getSession(false));
-		String context = req.getContextPath();
-		context = context.substring(1, context.length()).trim();
-		//String context = req.getServerName().substring(0, req.getServerName().indexOf("."));
+		/*String context = req.getContextPath();
+		context = context.substring(1, context.length()).trim();*/
+		String context = req.getServerName().substring(0, req.getServerName().indexOf("."));
 		setContext(context);
 		setServicesid((long) key);
 		ip = req.getRemoteAddr();

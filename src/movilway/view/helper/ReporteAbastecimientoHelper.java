@@ -227,7 +227,7 @@ public class ReporteAbastecimientoHelper extends ServicioHelper {
 						formatter = new SimpleDateFormat("ss");
 						String vSeg = formatter.format(new Date());						
 
-						vArchivo = "ReporteAnaliticas" + vDia + vMes + vAno + vHora + vMin + vSeg + ".xlsx";
+						vArchivo = "ReporteMovilWay" + vDia + vMes + vAno + vHora + vMin + vSeg + ".xlsx";
 						archivoSalida = req.getServletContext().getRealPath("/report") + "/" + vArchivo;
 						archivoBase = req.getServletContext().getRealPath("/report/PlantillaGenerica.xlsx");
 						
